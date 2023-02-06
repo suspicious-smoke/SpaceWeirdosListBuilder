@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Users</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='test.css') }}" />
+</head>
+<body>
+<div class="center">
+
+    <br/>
+  <h1>Random Users</h1>
+  <form method="post" action="{{ url_for('result') }}" id="user_form">
+      Number of Users: <input type="text" name="number_of_users" id ="number_of_users" value="{{number_of_users}}">
+      <input type="submit" value="save to csv">
+  </form>
+
+    <!-- Jinja logic to check for successful operation -->
+    {% if success == True %}
+        <br/>
+        <p class="success">Success: {{status}}</p>
+
+    {% endif %}
+    {% if success == False %}
+        <br/>
+        <p class="error">Error: {{status}}</p>
+    {% endif %}
+</div>
+</body>
+</html>

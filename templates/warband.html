@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Warband{% endblock %}
+
+{% block content %}
+    <h1 class="title">Warband</h1>
+    <table class="table">
+      <tr>
+        <th>Name:</th>
+        <td>{{ warband.name }}</td>
+      </tr>
+      {% if warband.warband_trait %}
+      <tr>
+        <th>Warband Trait:</th>
+        <td>{{ warband.warband_trait }}</td>
+      </tr>
+      {% endif %}
+    </table>
+{% endblock %}

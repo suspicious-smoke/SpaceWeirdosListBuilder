@@ -1,4 +1,6 @@
-#
+import sqlite3 as dbapi2
+
+
 # class Equipment:
 #     def __init__(self, name, e_type, notes, points):
 #         self.name = name
@@ -78,32 +80,49 @@ class Warband:
 
 
 class Database:
-    def __init__(self):
-        self.warbands = {}
-        self._last_warband_key = 0
+    def __init__(self, dbfile):
+        self.dbfile = dbfile
 
     def add_warband(self, warband):
-        self._last_warband_key += 1
-        self.warbands[self._last_warband_key] = warband
-        return self._last_warband_key
+        with dbapi2.connect(self.dbfile) as conn:
+            cursor = conn.cursor()
+            query = "INSERT INTO WARBAND (NAME, WARBAND_TRAIT) VALUES (?, ?)"
+            cursor.execute(query, (warband.name, warband.warband_trait))
+            conn.commit()
+            warband_key = cursor.lastrowid
+        return warband_key
+
+    def update_warband(self, warband_key, warband):
+        with dbapi2.connect(self.dbfile) as conn:
+            cursor = conn.cursor()
+            query = "UPDATE WARBAND SET NAME = ?, WARBAND_TRAIT = ? WHERE (ID = ?)"
+            cursor.execute(query, (warband.name, warband.warband_trait, warband_key))
+            conn.commit()
 
     def delete_warband(self, warband_key):
-        if warband_key in self.warbands:
-            del self.warbands[warband_key]
+        with dbapi2.connect(self.dbfile) as conn:
+            cursor = conn.cursor()
+            query = "DELETE FROM WARBAND WHERE (ID = ?)"
+            cursor.execute(query, (warband_key,))
+            conn.commit()
 
     def get_warband(self, warband_key):
-        warband = self.warbands.get(warband_key)
-        if warband is None:
-            return None
-        warband_ = Warband(warband.name, warband_trait=warband.warband_trait)
-        return warband_
+        with dbapi2.connect(self.dbfile) as conn:
+            cursor = conn.cursor()
+            query = "SELECT NAME, WARBAND_TRAIT FROM WARBAND WHERE (ID = ?)"
+            cursor.execute(query, (warband_key,))
+            name, warband_trait = cursor.fetchone()
+        _warband = Warband(name, warband_trait=warband_trait)
+        return _warband
 
     def get_warbands(self):
         warbands = []
-        for warband_key, warband in self.warbands.items():
-            warband_ = Warband(warband.name, warband_trait=warband.warband_trait)
-            warbands.append((warband_key, warband_))
+        with dbapi2.connect(self.dbfile) as conn:
+            cursor = conn.cursor()
+            query = "SELECT ID, NAME, WARBAND_TRAIT FROM WARBAND ORDER BY ID"
+            cursor.execute(query)
+            for warband_key, name, warband_trait in cursor:
+                warbands.append((warband_key, Warband(name, warband_trait)))
         return warbands
 
-    def update_warband(self, warband_key, warband):
-          self.warbands[warband_key] = warband
+

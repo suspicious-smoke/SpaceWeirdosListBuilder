@@ -8,6 +8,11 @@
             <input type="text" name="name" class="input" required="required"
                  value="{{ values['name'] }}"/>
         </div>
+        {% if 'name' in values.errors %}
+        <p class="help has-background-warning">
+            {{ values.errors['name'] }}
+        </p>
+        {% endif %}
     </div>
 
     <div class="field">

@@ -1,6 +1,8 @@
+import os
+
 from flask import Flask
 import views
-from models import Database, Warband
+from datastructure import Database, Warband
 
 
 def create_app():
@@ -15,9 +17,8 @@ def create_app():
     _app.add_url_rule("/warband/<int:warband_key>/edit", view_func=views.warband_edit_page, methods=["GET", "POST"])
     # _app.add_url_rule("/weirdo/<int:weirdo_key>", view_func=views.weirdo_page)
 
-    db = Database()
-    db.add_warband(Warband("Chaos", warband_trait="Unrelenting"))
-    db.add_warband(Warband("Order"))
+    home_dir = os.path.expanduser("~")
+    db = Database(os.path.join(home_dir, "warbands.sqlite"))
     _app.config["db"] = db
 
     return _app

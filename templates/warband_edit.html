@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}Edit warband{% endblock %}
+{% block content %}
+<form action="" method="post" name="warband_edit">
+    <div class="field">
+        <label for="name" class="label">Name</label>
+        <div class="control">
+            <input type="text" name="name" class="input" required="required"
+                 value="{{ values['name'] }}"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="warband_trait" class="label">Warband trait</label>
+        <div class="control">
+            <input type="text" name="warband_trait" class="input"
+                 value="{{ values['warband_trait'] }}"/>
+        </div>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-primary is-small">Save</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

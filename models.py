@@ -104,3 +104,6 @@ class Database:
             warband_ = Warband(warband.name, warband_trait=warband.warband_trait)
             warbands.append((warband_key, warband_))
         return warbands
+
+    def update_warband(self, warband_key, warband):
+          self.warbands[warband_key] = warband

@@ -1,18 +1,24 @@
 {% extends "layout.html" %}
 {% block title %}Warband{% endblock %}
-
 {% block content %}
-    <h1 class="title">Warband</h1>
-    <table class="table">
-      <tr>
+<table class="table">
+    <tr>
         <th>Name:</th>
         <td>{{ warband.name }}</td>
-      </tr>
-      {% if warband.warband_trait %}
-      <tr>
+    </tr>
+    {% if warband.warband_trait %}
+    <tr>
         <th>Warband Trait:</th>
         <td>{{ warband.warband_trait }}</td>
-      </tr>
-      {% endif %}
-    </table>
+    </tr>
+    {% endif %}
+</table>
+
+<div class="field is-grouped">
+    <div class="control">
+        <a class="button is-primary is-outlined is-small"
+           href="{{ request.path }}/edit">Edit</a>
+    </div>
+</div>
+
 {% endblock %}

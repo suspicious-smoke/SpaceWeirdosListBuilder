@@ -7,9 +7,12 @@ def create_app():
     _app = Flask(__name__)
     _app.config.from_object("settings")  # Loads the settings from settings.py
 
-    _app.add_url_rule("/", view_func=views.home_page)
+    _app.add_url_rule("/", view_func=views.warbands_page, methods=["GET", "POST"])
+
+    _app.add_url_rule("/edit-warband", view_func=views.warband_add_page, methods=["GET", "POST"])
     _app.add_url_rule("/warband/<int:warband_key>", view_func=views.warband_page)
 
+    _app.add_url_rule("/warband/<int:warband_key>/edit", view_func=views.warband_edit_page, methods=["GET", "POST"])
     # _app.add_url_rule("/weirdo/<int:weirdo_key>", view_func=views.weirdo_page)
 
     db = Database()

@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 import views
-from datastructure import Database, Warband
+from database import Database, Warband
 
 
 def create_app():

@@ -1,6 +1,6 @@
 from flask import abort, current_app, render_template, request, url_for, redirect
 
-from database import Warband
+from models import Warband
 
 
 # Connects to the warbands page

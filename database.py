@@ -9,8 +9,8 @@ class Database:
     def add_warband(self, warband):
         with sqlite.connect(self.dbfile) as conn:
             cursor = conn.cursor()
-            query = "INSERT INTO WARBAND (name, warband_trait) VALUES (?, ?)"
-            cursor.execute(query, (warband.name, warband.warband_trait))
+            query = "INSERT INTO WARBAND (name, warband_trait, warband_power) VALUES (?, ?, ?)"
+            cursor.execute(query, (warband.name, warband.warband_trait, warband.warband_power))
             conn.commit()
             warband_key = cursor.lastrowid
         return warband_key

@@ -62,9 +62,25 @@ DROP TABLE IF EXISTS WARBAND;
 CREATE TABLE WARBAND (
   warband_id INTEGER PRIMARY KEY AUTOINCREMENT,
   name VARCHAR(80) NOT NULL,
-  warband_trait VARCHAR(80),
-  warband_power VARCHAR(80)
+  warband_trait_id INTEGER
 );
+
+DROP TABLE IF EXISTS WARBAND_TRAIT;
+CREATE TABLE WARBAND_TRAIT (
+  warband_trait_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(80),
+  power VARCHAR(300)
+);
+
+INSERT INTO WARBAND_TRAIT (name, power)
+VALUES
+("Cyborgs", "All members of the Warband can purchase 1 additional piece of equipment."),
+("Fanatics", "Roll Willpower with +1DT for all rolls except Psychic Powers."),
+("Living Weapons", "Unarmed attacks do not have -1DT to Prowess rolls."),
+("Heavily Armed", "All Ranged weapons cost 1 point less."),
+("Mutants", "Speed, Claws & Teeth, Horrible Claws & Teeth, and Whip/Tail cost 1 less point."),
+("Soldiers", "Grenades, Heavy Armor, and Medkits may be purchased for free. They still use a model’s equipment slots."),
+("Undead", "A second staggered condition does not take models in thisWarband out of action.");
 
 
 INSERT INTO ATTRIBUTE (name, lvl, points)

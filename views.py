@@ -9,7 +9,7 @@ def warbands_page():
     if request.method == "GET":
         # Get the warbands and return warbands page
         warbands = db.get_warbands()
-        return render_template('warbands.html', warbands=sorted(warbands))
+        return render_template('home.html', warbands=sorted(warbands))
     else:  # POST
         # the only post for the homepage is in removing warbands.
         form_warband_keys = request.form.getlist("warband_keys")
@@ -26,13 +26,13 @@ def warband_page(warband_key):
     if warband is None:
         abort(404)
     # will want to pass all the weirdos as well later on
-    return render_template('warband.html', warband=warband)
+    return render_template('warband_view.html', warband=warband)
 
 
 # called from the warband page. Either gets the warband selected
 def warband_add_page():
     if request.method == "GET":
-        values = {"name": "", "warband_trait": ""}
+        values = {"name": "", "warband_trait": "", "warband_power": ""}
         return render_template("warband_edit.html", values=values)
     else:  # post = saving the warband.
         valid = validate_warband_form(request.form)
@@ -41,8 +41,9 @@ def warband_add_page():
             return render_template("warband_edit.html", values=request.form)
 
         _name = request.form["name"]
-        _warband_trait = request.form["warband_trait"]
-        warband = Warband(_name, warband_trait=_warband_trait if _warband_trait else None)
+        _wt = request.form["warband_trait"]
+        _wp = request.form["warband_power"]
+        warband = Warband(_name, warband_trait=_wt if _wt else None, warband_power=_wp if _wp else None)
         db = current_app.config["db"]
         warband_key = db.add_warband(warband)
         return redirect(url_for("warband_page", warband_key=warband_key))  # Call the above warband url

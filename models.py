@@ -1,5 +1,4 @@
 
-
 class Equipment:
     def __init__(self, name, e_type, notes, points):
         self.name = name
@@ -53,10 +52,10 @@ class Weirdo:
 
 
 class Warband:
-    def __init__(self, name):
+    def __init__(self, name, warband_trait=None, warband_power=None):
         self.name = name
-        self.warband_trait = None
-        self.warband_power = None
+        self.warband_trait = warband_trait
+        self.warband_power = warband_power
         # self.weirdos = []  # list.append(geeks(22, 33))
         # self._last_weirdo_key = 0
 
@@ -79,8 +78,3 @@ class Warband:
     #     for weirdo_key, weirdo in self.weirdos.items():
     #         weirdos.append(weirdo)
     #     return weirdos
-
-
-
-
-

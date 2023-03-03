@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-import views
+import controller
 from database import Database
 
 
@@ -9,11 +9,11 @@ def create_app():
     _app.config.from_object("settings")  # Loads the settings from settings.py
 
     # load up and connect each webpage to their views
-    _app.add_url_rule("/", view_func=views.warbands_page, methods=["GET", "POST"])
-    _app.add_url_rule("/edit-warband", view_func=views.warband_add_page, methods=["GET", "POST"])
-    _app.add_url_rule("/warband/<int:warband_key>", view_func=views.warband_page)
-    _app.add_url_rule("/warband/<int:warband_key>/edit", view_func=views.warband_edit_page, methods=["GET", "POST"])
-    # _app.add_url_rule("/weirdo/<int:weirdo_key>", view_func=views.weirdo_page)
+    _app.add_url_rule("/", view_func=controller.home_page, methods=["GET", "POST"])
+    _app.add_url_rule("/create-warband", view_func=controller.warband_create_page, methods=["GET", "POST"])
+    _app.add_url_rule("/warband/<int:warband_key>", view_func=controller.warband_edit_page, methods=["GET", "POST"])
+# _app.add_url_rule("/warband/<int:warband_key>/edit", view_func=controller.warband_edit_page, methods=["GET", "POST"])
+# _app.add_url_rule("/weirdo/<int:weirdo_key>", view_func=controller.weirdo_page)
 
     # grab the database
     home_dir = os.path.expanduser("~")

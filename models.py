@@ -52,10 +52,9 @@ class Weirdo:
 
 
 class Warband:
-    def __init__(self, name, warband_trait=None, warband_power=None):
+    def __init__(self, name, warband_trait_id=None):
         self.name = name
-        self.warband_trait = warband_trait
-        self.warband_power = warband_power
+        self.warband_trait_id = warband_trait_id
         # self.weirdos = []  # list.append(geeks(22, 33))
         # self._last_weirdo_key = 0
 

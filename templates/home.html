@@ -2,73 +2,60 @@
 {% block title %}Space Weirdos{% endblock %}
 
 {% block content %}
-
-<section class="hero">
-    <div class="hero-body">
-        <div class="container has-text-centered">
-            <h1 class="title">Space Weirdos</h1>
-        </div>
+<div class="b-example-divider"></div>
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Space Weirdos</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">An unofficial list builder for Space Weirdos by Garske Games. <a
+                href="https://www.wargamevault.com/product/359157/Space-Weirdos">Support the developer</a>.</p>
     </div>
-    {% if warbands %}
-    <form action="" method="post" name="warband_list">
-        <table class="table is-striped is-fullwidth">
-            {% for warband_key, warband in warbands %}
-            <tr>
-                <td>
-                    <label class="checkbox">
-                        <input type="checkbox" name="warband_keys" value="{{ warband_key }}"/>
-
-                    </label>
-                    <a href="{{ url_for('warband_page', warband_key=warband_key) }}">
-                        {{ warband.name }}
-                        {% if warband.warband_trait %}
-                        ({{ warband.warband_trait }})
-                        {% endif %}
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        <div class="field is-grouped">
-            <div class="control">
-                <button class="button is-danger is-small">Delete</button>
-            </div>
-        </div>
-    </form>
-    {% endif %}
-<div class="container text-center">
-  <div class="row align-items-start">
-    <div class="col">
-      One of three columns
-    </div>
-    <div class="col border">
-      <form>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-    <div class="col">
-      One of three columns
-    </div>
-  </div>
 </div>
+<div class="b-example-divider"></div>
+{% if band_list %}
+<div class="list-group w-auto">
+    {% for warband_key, name, warband_trait_name in band_list %}
+    <a href="{{ url_for('warband_edit_page', warband_key=warband_key) }}"
+       class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+        <!--        <img src="https://github.com/twbs.png" alt="twbs" class="rounded-circle flex-shrink-0" width="32" height="32">-->
+        <div class="d-flex gap-2 w-100 justify-content-between">
+            <div>
+                <h6 class="mb-0">{{ name}}</h6>
+                {% if warband_trait_name %}
+                <p class="mb-0 opacity-75">({{ warband_trait_name }})</p>
+                {% endif %}
+            </div>
+            <small class="opacity-50 text-nowrap">Points: </small>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+<div class="b-example-divider"></div>
+{% endif %}
 
+<!--<form action="" method="post" name="warband_list">-->
+<!--    <table class="table is-striped is-fullwidth">-->
+<!--        {% for warband_key, warband in warbands %}-->
+<!--        <tr>-->
+<!--            <td>-->
+<!--                <label class="checkbox">-->
+<!--                    <input type="checkbox" name="warband_keys" value="{{ warband_key }}"/>-->
 
-
-
-</section>
+<!--                </label>-->
+<!--                <a href="{{ url_for('warband_page', warband_key=warband_key) }}">-->
+<!--                    {{ warband.name }}-->
+<!--                    {% if warband.warband_trait %}-->
+<!--                    ({{ warband.warband_trait }})-->
+<!--                    {% endif %}-->
+<!--                </a>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
+<!--    </table>-->
+<!--    <div class="field is-grouped">-->
+<!--        <div class="control">-->
+<!--            <button class="button is-danger is-small">Delete</button>-->
+<!--        </div>-->
+<!--    </div>-->
 
 
 {% endblock %}

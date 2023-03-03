@@ -72,6 +72,11 @@ CREATE TABLE WARBAND_TRAIT (
   power VARCHAR(300)
 );
 
+INSERT INTO WARBAND (name, warband_trait_id)
+VALUES
+("Dark Oaths", 1),
+("Alien Hive", 1);
+
 INSERT INTO WARBAND_TRAIT (name, power)
 VALUES
 ("Cyborgs", "All members of the Warband can purchase 1 additional piece of equipment."),

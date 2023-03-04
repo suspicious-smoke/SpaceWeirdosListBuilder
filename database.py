@@ -32,11 +32,26 @@ class Database:
     def get_warband(self, warband_key):
         with sqlite.connect(self.dbfile) as conn:
             cursor = conn.cursor()
-            query = "SELECT name, warband_trait FROM WARBAND WHERE (warband_id = ?)"
-            cursor.execute(query, (warband_key,))
-            name, warband_trait = cursor.fetchone()
-        _warband = Warband(name, warband_trait=warband_trait)
+            query = 'SELECT wb.warband_id, wb.name, wt.name' \
+                    ' FROM WARBAND as wb' \
+                    ' LEFT JOIN WARBAND_TRAIT as wt on wb.warband_trait_id = wt.warband_trait_id'
+            cursor.execute(query)
+            warband_id, name, power = cursor.fetchone()
+        _warband = [warband_id, name, power]
         return _warband
+
+    def get_weirdos(self, warband_key):
+        weirdos = []
+        with sqlite.connect(self.dbfile) as conn:
+            cursor = conn.cursor()
+            query = 'SELECT wb.warband_id, wb.name, wt.name' \
+                    ' FROM WARBAND as wb' \
+                    ' LEFT JOIN WARBAND_TRAIT as wt on wb.warband_trait_id = wt.warband_trait_id'
+            cursor.execute(query)
+            for warband_key, name, warband_trait_name in cursor:
+                weirdos.append(
+                    (warband_key, name, warband_trait_name))
+        return weirdos
 
     # Gives the list of warbands for the home page view
     def get_warbands(self):

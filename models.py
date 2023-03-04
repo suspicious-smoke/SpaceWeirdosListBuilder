@@ -38,24 +38,29 @@ class WarbandTrait:
 
 
 class Weirdo:
-    def __init__(self, name):
+    def __init__(self, weirdo_id, name, is_leader, leader_trait_id, total_points, ranged_weapon_id,melee_weapon_id,
+                 speed_id, defense_id, firepower_id, prowess_id, willpower_id, warband_id):
+        self.warband_id = warband_id
+        self.willpower_id = willpower_id
+        self.prowess_id = prowess_id
+        self.firepower_id = firepower_id
+        self.defense_id = defense_id
+        self.speed_id = speed_id
+        self.melee_weapon_id = melee_weapon_id
+        self.ranged_weapon_id = ranged_weapon_id
+        self.total_points = total_points
+        self.leader_trait_id = leader_trait_id
+        self.is_leader = is_leader
         self.name = name
-        self.is_leader = False  # true/false
-        self.leader_trait = None
-        self.leader_effect = None
-        self.attributes = []
-        self.weapons = []
-        self.equipment = []
-        self.psychic_power = []
-
-        self.total_points = 0
-
+        self.weirdo_id = weirdo_id
+        
 
 class Warband:
-    def __init__(self, name, warband_trait_id=None):
+    def __init__(self, warband_id, name, warband_trait_id):
+        self.warband_id = warband_id
         self.name = name
         self.warband_trait_id = warband_trait_id
-        # self.weirdos = []  # list.append(geeks(22, 33))
+        self.weirdos = []  # list.append(geeks(22, 33))
         # self._last_weirdo_key = 0
 
     # def add_weirdo(self, weirdo):

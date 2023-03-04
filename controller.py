@@ -61,17 +61,17 @@ def warband_edit_page(warband_key):
             abort(404)
         values = {"name": warband.name, "warband_trait": warband.warband_trait}
         return render_template("warband_create.html", values=values)
-    else:  # post
-        valid = validate_warband_form(request.form)
-        if not valid:
-            return render_template("warband_create.html", values=request.form)
-
-        form_name = request.form["name"]
-        form_warband_trait = request.form["warband_trait"]
-        warband = Warband(form_name, warband_trait=form_warband_trait if form_warband_trait else None)
-        db.update_warband(warband_key, warband)
-        # reset to get the warband edit page.
-        return redirect(url_for("warband_edit_page", warband_key=warband_key))
+    # else:  # post
+    #     valid = validate_warband_form(request.form)
+    #     if not valid:
+    #         return render_template("warband_create.html", values=request.form)
+    #
+    #     form_name = request.form["name"]
+    #     form_warband_trait = request.form["warband_trait"]
+    #     warband = Warband(form_name, warband_trait=form_warband_trait if form_warband_trait else None)
+    #     db.update_warband(warband_key, warband)
+    #     # reset to get the warband edit page.
+    #     return redirect(url_for("warband_edit_page", warband_key=warband_key))
 
 # def weirdo_page():
 #     return render_template('weirdo.html')

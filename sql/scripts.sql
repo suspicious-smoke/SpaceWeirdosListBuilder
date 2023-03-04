@@ -1,4 +1,4 @@
-'This lists all the creation scripts for the sqlite database. It is not referenced in the code.
+--This lists all the creation scripts for the sqlite database. It is not referenced in the code.
 
 DROP TABLE IF EXISTS EQUIPMENT;
 CREATE TABLE EQUIPMENT (
@@ -43,8 +43,7 @@ CREATE TABLE WEIRDO (
   weirdo_id INTEGER PRIMARY KEY AUTOINCREMENT,
   name VARCHAR(80) NOT NULL,
   is_leader BOOLEAN,
-  leader_trait VARCHAR(80),
-  leader_effect  VARCHAR(80),
+  leader_trait_id VARCHAR(80),
   total_points INTEGER NOT NULL,
   ranged_weapon_id INTEGER,
   melee_weapon_id INTEGER,
@@ -72,10 +71,38 @@ CREATE TABLE WARBAND_TRAIT (
   power VARCHAR(300)
 );
 
+DROP TABLE IF EXISTS LEADER_TRAIT;
+CREATE TABLE LEADER_TRAIT (
+  leader_trait_id INTEGER PRIMARY KEY AUTOINCREMENT,
+   leader_trait VARCHAR(80),
+  leader_effect  VARCHAR(300)
+);
+
+
+--INSERT STATEMENTS
 INSERT INTO WARBAND (name, warband_trait_id)
 VALUES
 ("Dark Oaths", 1),
 ("Alien Hive", 1);
+
+INSERT INTO WEIRDO (name, is_leader, leader_trait_id, total_points, ranged_weapon_id, melee_weapon_id, speed_id,
+ defense_id, firepower_id, prowess_id, willpower_id, warband_id)
+VALUES
+("Commander", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+
+
+INSERT INTO LEADER_TRAIT (leader_trait, leader_effect)
+VALUES
+("Bounty Hunter", "Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action."),
+("Healer", "During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT."),
+("Majestic", "Any time one of your warband has to make a Willpower roll, that model may use the Leader’s Willpower instead."),
+("Monstrous", "Non-Leader models must win a Willpower roll vs. your leader to move into contact."),
+("Political Officer", "During the Initiative Phase, before rolling, take one of your Warband within LOS of your leader out of action to make all other models in the Warband ready, remove the broken condition from your warband, and gain +1DT to this Initiative roll."),
+("Sorcerer", "Psychic Powers actions cost 1 action instead of 2, but may still only use 1 per turn."),
+("Tactician", "+1DT to Initiative rolls.");
+
+
+
 
 INSERT INTO WARBAND_TRAIT (name, power)
 VALUES

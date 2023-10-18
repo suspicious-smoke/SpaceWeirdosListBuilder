@@ -31,9 +31,11 @@ def home_page():
 
 # called from the warband page. Either gets the warband selected
 def warband_create_page():
+    db = current_app.config["db"]
     if request.method == "GET":
         values = {"name": "", "warband_trait": "", "warband_power": ""}
-        return render_template("warband_create.html", values=values)
+        trait_list = db.get_traits()
+        return render_template("warband_create.html", values=values, trait_list=trait_list)
     else:  # post = saving the warband.
         valid = validate_warband_form(request.form)
         if not valid:

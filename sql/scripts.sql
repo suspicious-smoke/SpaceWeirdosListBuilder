@@ -102,8 +102,6 @@ VALUES
 ("Tactician", "+1DT to Initiative rolls.");
 
 
-
-
 INSERT INTO WARBAND_TRAIT (name, power)
 VALUES
 ("Cyborgs", "All members of the Warband can purchase 1 additional piece of equipment."),

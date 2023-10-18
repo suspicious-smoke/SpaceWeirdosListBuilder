@@ -6,11 +6,11 @@
 <div class="px-4 py-5 my-5 text-center">
     <h1 class="display-5 fw-bold">Space Weirdos</h1>
     <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">An unofficial list builder for Space Weirdos by Garske Games. <a
+        <p class="lead mb-6">An unofficial list builder for Space Weirdos by Garske Games. <a
                 href="https://www.wargamevault.com/product/359157/Space-Weirdos">Support the developer</a>.</p>
     </div>
 </div>
-<div class="b-example-divider"></div>
+
 {% if band_list %}
 <div class="list-group w-auto">
     {% for warband_key, name, warband_trait_name in band_list %}
@@ -29,9 +29,9 @@
     </a>
     {% endfor %}
 </div>
-<div class="b-example-divider"></div>
-{% endif %}
 
+{% endif %}
+<hr/>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal

@@ -1,5 +1,6 @@
 import sqlite3 as sqlite
 from models import Warband
+from models import Weirdo
 
 
 class Database:
@@ -64,9 +65,10 @@ class Database:
         band_list = []
         with sqlite.connect(self.dbfile) as conn:
             cursor = conn.cursor()
-            query = 'SELECT wb.warband_id, wb.name, wt.name' \
-                    ' FROM WARBAND as wb' \
-                    ' LEFT JOIN WARBAND_TRAIT as wt on wb.warband_trait_id = wt.warband_trait_id'
+            query = '''SELECT wb.warband_id, wb.name as name, wt.name as trait
+                        FROM WARBAND as wb
+                        LEFT JOIN WARBAND_TRAIT as wt on wb.warband_trait_id = wt.warband_trait_id
+                        '''
             cursor.execute(query)
             for warband_key, name, warband_trait_name in cursor:
                 band_list.append(
@@ -74,16 +76,16 @@ class Database:
         return band_list
 
     # loads up all the weapons, attributes, leader trait, warband trait, psychic powers, equipment
-    def load_options(self):
-        view_bag = []
+    def get_traits(self):
+        trait_list = []
         with sqlite.connect(self.dbfile) as conn:
             cursor = conn.cursor()
-            query = 'SELECT wb.warband_id, wb.name, wt.name' \
-                    ' FROM WARBAND as wb' \
-                    ' LEFT JOIN WARBAND_TRAIT as wt on wb.warband_trait_id = wt.warband_trait_id'
+            query = '''SELECT warband_trait_id, name, power 
+                        FROM WARBAND_TRAIT
+                    '''
             cursor.execute(query)
-            for warband_key, name, warband_trait_name in cursor:
-                band_list.append(
-                    (warband_key, name, warband_trait_name))
-
-        return view_bag
+            # load traits into a list
+            for warband_trait_id, name, power in cursor:
+                trait_list.append(
+                    (warband_trait_id, name, power))
+        return trait_list

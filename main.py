@@ -16,7 +16,8 @@ def create_app():
 # _app.add_url_rule("/weirdo/<int:weirdo_key>", view_func=controller.weirdo_page)
 
     # grab the database
-    home_dir = os.path.expanduser("~")
+    home_dir = os.path.expanduser("~/Databases")
+    os.makedirs(home_dir, exist_ok = True)
     db = Database(os.path.join(home_dir, "warbands.sqlite"))
     _app.config["db"] = db
 

@@ -1,5 +1,6 @@
 import sqlite3 as sqlite
 from models import Warband
+from models import Weirdo
 
 
 class Database:

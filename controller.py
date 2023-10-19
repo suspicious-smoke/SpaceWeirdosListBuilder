@@ -9,7 +9,8 @@ def home_page():
     if request.method == "GET":
         # Get the warbands and return warbands page
         band_list = db.get_warbands()
-        return render_template('home.html', band_list=sorted(band_list, key=lambda x: x[2]))
+        # band_list2=sorted(band_list, id=lambda x: x[2])
+        return render_template('home.html', band_list)
     # else:  # POST
     #     # the only post for the homepage is in removing warbands.
     #     form_warband_keys = request.form.getlist("warband_keys")
@@ -44,12 +45,13 @@ def warband_create_page():
 
         _name = request.form["name"]
         _wt = request.form["warband_trait"]
-        _wp = request.form["warband_power"]
+        _wp = None
+        # _wp = request.form["warband_power"]
         warband = Warband(_name, warband_trait=_wt if _wt else None, warband_power=_wp if _wp else None)
         db = current_app.config["db"]
         warband_key = db.add_warband(warband)
         # reset to warband_edit page
-        return redirect(url_for("warband_edit_page", warband_key=warband_key))  # Call the above warband url
+        return redirect(url_for("warband_create.html", warband_key=warband_key))  # Call the above warband url
 
 
 def warband_edit_page(warband_key):

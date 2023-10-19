@@ -11,8 +11,8 @@ def create_app():
     # load up and connect each webpage to their views
     _app.add_url_rule("/", view_func=controller.home_page, methods=["GET", "POST"])
     _app.add_url_rule("/create-warband", view_func=controller.warband_create_page, methods=["GET", "POST"])
-    _app.add_url_rule("/warband/<int:warband_key>", view_func=controller.warband_edit_page, methods=["GET", "POST"])
-# _app.add_url_rule("/warband/<int:warband_key>/edit", view_func=controller.warband_edit_page, methods=["GET", "POST"])
+    _app.add_url_rule("/warband/<int:warband_id>", view_func=controller.warband_edit_page, methods=["GET", "POST"])
+# _app.add_url_rule("/warband/<int:warband_id>/edit", view_func=controller.warband_edit_page, methods=["GET", "POST"])
 # _app.add_url_rule("/weirdo/<int:weirdo_key>", view_func=controller.weirdo_page)
 
     # grab the database

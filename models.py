@@ -22,7 +22,7 @@ class Weirdo:
         
 
 class Warband:
-    def __init__(self, warband_id, name, warband_trait_id):
+    def __init__(self, name, warband_trait_id, warband_id=None):
         self.warband_id = warband_id
         self.name = name
         self.warband_trait_id = warband_trait_id

@@ -2,16 +2,20 @@
 {% block title %}Create Warband{% endblock %}
 {% block content %}
 <form action="" method="post" name="warband_edit">
-
+    
     <div class="container">
         <div class="row">
+            
             <div class="col-4 border">
+                <div for="warband_id" class="label">Warband ID: {{ values['warband_id'] }}</div>
                 Warband
                 <label for="name" class="label">Name</label>
                 <div class="control">
                     <input type="text" name="name" class="input" required="required"
                            value="{{ values['name'] }}"/>
                 </div>
+                
+
                 {% if 'name' in values.errors %}
                 <p class="help has-background-warning">
                     {{ values.errors['name'] }}
@@ -20,16 +24,21 @@
 
 
                 <!-- <label for="warband_trait" class="label">Warband Trait</label> -->
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseTraits" aria-expanded="false" aria-controls="collapseTraits">
+                <button class="btn btn-primary mt-3" type="button" data-toggle="collapse" data-target="#collapseTraits" aria-expanded="false" aria-controls="collapseTraits">
                     Warband Traits
                 </button>
-                <div>Currently selected: </div>
+                <div class="m-3">Currently selected: </div>
                 
-                <div class="collapse" id="collapseTraits">
+                <div class="collapse m-3" id="collapseTraits">
                     {% for warband_trait_id, name, power in trait_list %}
                     <div class="form-check">
+                        {% if warband_trait_id == 1 %}
+                        <input class="form-check-input" type="radio" name="warband_trait" id="radio_{{warband_trait_id}}" value="{{warband_trait_id}}" checked>
+                        <label class="form-check-label" for="radio_{{warband_trait_id}}"><b>{{name}}</b> {{power}}</label>
+                        {% else %}
                         <input class="form-check-input" type="radio" name="warband_trait" id="radio_{{warband_trait_id}}" value="{{warband_trait_id}}">
                         <label class="form-check-label" for="radio_{{warband_trait_id}}"><b>{{name}}</b> {{power}}</label>
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </div>

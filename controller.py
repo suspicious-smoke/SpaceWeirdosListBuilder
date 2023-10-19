@@ -9,20 +9,20 @@ def home_page():
     if request.method == "GET":
         # Get the warbands and return warbands page
         band_list = db.get_warbands()
-        # band_list2=sorted(band_list, id=lambda x: x[2])
-        return render_template('home.html', band_list)
+        band_list2=sorted(band_list, key=lambda x: x[1]) # sort by name
+        return render_template('home.html', band_list=band_list)
     # else:  # POST
     #     # the only post for the homepage is in removing warbands.
-    #     form_warband_keys = request.form.getlist("warband_keys")
-    #     for key in form_warband_keys:
-    #         db.delete_warband(int(key))
+    #     form_warband_ids = request.form.getlist("warband_ids")
+    #     for id in form_warband_ids:
+    #         db.delete_warband(int(id))
     #     return redirect(url_for("home_page"))
 
 
-# called either from the main warbands page or the specific key is given in the url
-# def warband_page(warband_key):
+# called either from the main warbands page or the specific id is given in the url
+# def warband_page(warband_id):
 #     db = current_app.config["db"]
-#     warband = db.get_warband(warband_key)
+#     warband = db.get_warband(warband_id)
 #     # if warband does not exist, return 404 error
 #     if warband is None:
 #         abort(404)
@@ -34,10 +34,12 @@ def home_page():
 def warband_create_page():
     db = current_app.config["db"]
     if request.method == "GET":
-        values = {"name": "", "warband_trait": "", "warband_power": ""}
+        values = {"name": "", "warband_trait": "", "warband_id":""}
         trait_list = db.get_traits()
         return render_template("warband_create.html", values=values, trait_list=trait_list)
-    else:  # post = saving the warband.
+    
+    # POST = saving the warband.
+    else:  
         valid = validate_warband_form(request.form)
         if not valid:
             # if not valid, return the form
@@ -45,25 +47,22 @@ def warband_create_page():
 
         _name = request.form["name"]
         _wt = request.form["warband_trait"]
-        _wp = None
-        # _wp = request.form["warband_power"]
-        warband = Warband(_name, warband_trait=_wt if _wt else None, warband_power=_wp if _wp else None)
-        db = current_app.config["db"]
-        warband_key = db.add_warband(warband)
+        warband = Warband(_name,_wt)
+        warband_id = db.add_warband(warband)
         # reset to warband_edit page
-        return redirect(url_for("warband_create.html", warband_key=warband_key))  # Call the above warband url
+        return redirect(url_for("warband_edit_page", warband_id=warband_id))  # Call the above warband url
 
 
-def warband_edit_page(warband_key):
+def warband_edit_page(warband_id):
     # add a deletable field to pass to the view for deleting the warband. This
     # button should not show up in the warband_create_page method
     db = current_app.config["db"]
     if request.method == "GET":
         # get the warband from the database
-        warband = db.get_warband(warband_key)
+        warband = db.get_warband(warband_id)
         if warband is None:
             abort(404)
-        values = {"name": warband.name, "warband_trait": warband.warband_trait}
+        values = {"name": warband.name, "warband_trait": warband.warband_trait_id,  "warband_id": warband.warband_id}
         return render_template("warband_create.html", values=values)
     # else:  # post
     #     valid = validate_warband_form(request.form)
@@ -73,9 +72,9 @@ def warband_edit_page(warband_key):
     #     form_name = request.form["name"]
     #     form_warband_trait = request.form["warband_trait"]
     #     warband = Warband(form_name, warband_trait=form_warband_trait if form_warband_trait else None)
-    #     db.update_warband(warband_key, warband)
+    #     db.update_warband(warband_id, warband)
     #     # reset to get the warband edit page.
-    #     return redirect(url_for("warband_edit_page", warband_key=warband_key))
+    #     return redirect(url_for("warband_edit_page", warband_id=warband_id))
 
 # def weirdo_page():
 #     return render_template('weirdo.html')

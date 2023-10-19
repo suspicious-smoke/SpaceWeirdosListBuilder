@@ -13,8 +13,8 @@
 
 {% if band_list %}
 <div class="list-group w-auto">
-    {% for warband_key, name, warband_trait_name in band_list %}
-    <a href="{{ url_for('warband_edit_page', warband_key=warband_key) }}"
+    {% for warband_id, name, warband_trait_name in band_list %}
+    <a href="{{ url_for('warband_edit_page', warband_id=warband_id) }}"
        class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
         <!--        <img src="https://github.com/twbs.png" alt="twbs" class="rounded-circle flex-shrink-0" width="32" height="32">-->
         <div class="d-flex gap-2 w-100 justify-content-between">
@@ -52,14 +52,14 @@
 
 <!--<form action="" method="post" name="warband_list">-->
 <!--    <table class="table is-striped is-fullwidth">-->
-<!--        {% for warband_key, warband in warbands %}-->
+<!--        {% for warband_id, warband in warbands %}-->
 <!--        <tr>-->
 <!--            <td>-->
 <!--                <label class="checkbox">-->
-<!--                    <input type="checkbox" name="warband_keys" value="{{ warband_key }}"/>-->
+<!--                    <input type="checkbox" name="warband_ids" value="{{ warband_id }}"/>-->
 
 <!--                </label>-->
-<!--                <a href="{{ url_for('warband_page', warband_key=warband_key) }}">-->
+<!--                <a href="{{ url_for('warband_page', warband_id=warband_id) }}">-->
 <!--                    {{ warband.name }}-->
 <!--                    {% if warband.warband_trait %}-->
 <!--                    ({{ warband.warband_trait }})-->

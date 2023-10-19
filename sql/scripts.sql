@@ -104,6 +104,7 @@ VALUES
 
 INSERT INTO WARBAND_TRAIT (name, power)
 VALUES
+("No Trait", ""),
 ("Cyborgs", "All members of the Warband can purchase 1 additional piece of equipment."),
 ("Fanatics", "Roll Willpower with +1DT for all rolls except Psychic Powers."),
 ("Living Weapons", "Unarmed attacks do not have -1DT to Prowess rolls."),

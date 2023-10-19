@@ -10,8 +10,8 @@ class Database:
     def add_warband(self, warband):
         with sqlite.connect(self.dbfile) as conn:
             cursor = conn.cursor()
-            query = "INSERT INTO WARBAND (name, warband_trait, warband_power) VALUES (?, ?, ?)"
-            cursor.execute(query, (warband.name, warband.warband_trait, warband.warband_power))
+            query = "INSERT INTO WARBAND (name, warband_trait) VALUES (?, ?)"
+            cursor.execute(query, (warband.name, warband.warband_trait_id))
             conn.commit()
             warband_id = cursor.lastrowid
         return warband_id
@@ -27,18 +27,19 @@ class Database:
         with sqlite.connect(self.dbfile) as conn:
             cursor = conn.cursor()
             query = "DELETE FROM WARBAND WHERE (warband_id = ?)"
-            cursor.execute(query)
+            cursor.execute(query, (warband_id))
             conn.commit()
 
     def get_warband(self, warband_id):
+        warband_id = str(warband_id)
         with sqlite.connect(self.dbfile) as conn:
             cursor = conn.cursor()
             query = ' SELECT warband_id, name, warband_trait_id' \
                     ' FROM WARBAND as wb' \
                     ' WHERE (warband_id = ?)'
             cursor.execute(query, warband_id)
-            warband_id, name, power = cursor.fetchone()
-        _warband = Warband(warband_id, name, power)
+            warband_id, name, warband_trait_id = cursor.fetchone()
+        _warband = Warband(name, warband_trait_id, warband_id=warband_id)
         # _warband.weirdos = Database.get_weirdos(warband_id)
 
         return _warband

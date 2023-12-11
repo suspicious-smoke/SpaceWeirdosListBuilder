@@ -1,31 +1,19 @@
-class Weirdo:
-    # leader_trait_id, is_leader, ranged_weapon_id,melee_weapon_id,
-    def __init__(self, weirdo_id, name, total_points, speed_id, defense_id, firepower_id, prowess_id, willpower_id, warband_id): 
-        self.warband_id = warband_id
-        self.name = name
-        self.weirdo_id = weirdo_id
-
-        self.willpower_id = willpower_id
-        self.prowess_id = prowess_id
-        self.firepower_id = firepower_id
-        self.defense_id = defense_id
-        self.speed_id = speed_id
-
-
-        self.total_points = total_points
-
-        # self.melee_weapon_id = melee_weapon_id
-        # self.ranged_weapon_id = ranged_weapon_id
-        
-        # self.leader_trait_id = leader_trait_id
-        # self.is_leader = is_leader    
-        
+WarbandTraits = {
+'No Trait': '',
+ 'Cyborgs': 'All members of the Warband can purchase 1 additional piece of equipment.',
+ 'Fanatics': 'Roll Willpower with +1DT for all rolls except Psychic Powers.',
+ 'Living Weapons': 'Unarmed attacks do not have -1DT to Prowess rolls.',
+ 'Heavily Armed': 'All Ranged weapons cost 1 point less.',
+ 'Mutants': 'Speed, Claws & Teeth, Horrible Claws & Teeth, and Whip/Tail cost 1 less point.',
+ 'Soldiers': 'Grenades, Heavy Armor, and Medkits may be purchased for free. They still use a model’s equipment slots.',
+ 'Undead': 'A second staggered condition does not take models in thisWarband out of action.'
+}
 
 class Warband:
-    def __init__(self, name, warband_trait_id, warband_id=None):
-        self.warband_id = warband_id
+    def __init__(self, name, trait = 'No Trait'):
         self.name = name
-        self.warband_trait_id = warband_trait_id
+        self.trait = trait
+        self.trait_dropdown=WarbandTraits
         self.weirdos = []  # list.append(geeks(22, 33))
         # self._last_weirdo_key = 0
 
@@ -81,8 +69,25 @@ class Warband:
 #         self.level = level  # either dice or number for speed
 #         self.points = points
 
+class Weirdo:
+    # leader_trait_id, is_leader, ranged_weapon_id,melee_weapon_id,
+    def __init__(self, weirdo_id, name, total_points, speed_id, defense_id, firepower_id, prowess_id, willpower_id, warband_id): 
+        self.warband_id = warband_id
+        self.name = name
+        self.weirdo_id = weirdo_id
 
-# class WarbandTrait:
-#     def __init__(self, name, effect):
-#         self.name = name
-#         self.effect = effect
+        self.willpower_id = willpower_id
+        self.prowess_id = prowess_id
+        self.firepower_id = firepower_id
+        self.defense_id = defense_id
+        self.speed_id = speed_id
+
+
+        self.total_points = total_points
+
+        # self.melee_weapon_id = melee_weapon_id
+        # self.ranged_weapon_id = ranged_weapon_id
+        
+        # self.leader_trait_id = leader_trait_id
+        # self.is_leader = is_leader    
+        

@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="b-example-divider"></div>
-<div class="px-4 py-5 my-5 text-center">
+<div class="my-5 text-center">
     <h1 class="display-5 fw-bold">Space Weirdos</h1>
     <div class="col-lg-6 mx-auto">
         <p class="lead mb-6">An unofficial list builder for Space Weirdos by Garske Games. <a
@@ -11,69 +11,38 @@
     </div>
 </div>
 
-{% if band_list %}
-<div class="list-group w-auto">
-    {% for warband_id, name, warband_trait_name in band_list %}
-    <a href="{{ url_for('warband_edit_page', warband_id=warband_id) }}"
-       class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-        <!--        <img src="https://github.com/twbs.png" alt="twbs" class="rounded-circle flex-shrink-0" width="32" height="32">-->
-        <div class="d-flex gap-2 w-100 justify-content-between">
-            <div>
-                <h6 class="mb-0">{{ name}}</h6>
-                {% if warband_trait_name %}
-                <p class="mb-0 opacity-75">({{ warband_trait_name }})</p>
-                {% endif %}
-            </div>
-            <small class="opacity-50 text-nowrap">Points: </small>
+<form action="" method="post" name="warband_edit" class="text-center">
+    <div class="field">
+        <label for="warband_name" class="label">Name</label>
+        <div class="control">
+            <input type="text" name="warband_name" class="input" required="required" value="{{ warband.name }}" />
         </div>
-    </a>
-    {% endfor %}
-</div>
-
-<p>
-
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-      Button with data-target
-    </button>
-  </p>
-  <div class="collapse" id="collapseExample">
-    <div class="card card-body">
-      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
     </div>
-  </div>
 
+    <div class="field pt-4">
+        <label for="warband_trait" class="label">Trait</label>
+        <div class="control">
+           
+            <select name="warband_trait">
+                {% for name, value in warband.trait_dropdown.items() %}
+                    {% set trait_name=name %}
+                    {% if value != '' %}
+                        {% set trait_name=name+": "+value %}
+                    {% endif %}
+                        <option value="{{name}}" {{'selected' if name == warband.trait}}>{{trait_name}}</option>
+                {% endfor %}
+            </select>
+            
+        </div>
+    </div>
 
-{% endif %}
-<hr/>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
+    <div class="field is-grouped pt-4">
+        <div class="control">
+            <button class="button is-primary is-small">Save</button>
+        </div>
+    </div>
+</form>
 
-<!--<form action="" method="post" name="warband_list">-->
-<!--    <table class="table is-striped is-fullwidth">-->
-<!--        {% for warband_id, warband in warbands %}-->
-<!--        <tr>-->
-<!--            <td>-->
-<!--                <label class="checkbox">-->
-<!--                    <input type="checkbox" name="warband_ids" value="{{ warband_id }}"/>-->
-
-<!--                </label>-->
-<!--                <a href="{{ url_for('warband_page', warband_id=warband_id) }}">-->
-<!--                    {{ warband.name }}-->
-<!--                    {% if warband.warband_trait %}-->
-<!--                    ({{ warband.warband_trait }})-->
-<!--                    {% endif %}-->
-<!--                </a>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        {% endfor %}-->
-<!--    </table>-->
-<!--    <div class="field is-grouped">-->
-<!--        <div class="control">-->
-<!--            <button class="button is-danger is-small">Delete</button>-->
-<!--        </div>-->
-<!--    </div>-->
-
+<hr />
 
 {% endblock %}

@@ -1,105 +1,18 @@
-from flask import abort, current_app, render_template, request, url_for, redirect
-
+from flask import render_template, request, make_response, redirect, url_for
 from models import Warband
-
 
 # Connects to the warbands page
 def home_page():
-    db = current_app.config["db"]
+    # db = current_app.config["db"]
     if request.method == "GET":
         # Get the warbands and return warbands page
-        band_list = db.get_warbands()
-        band_list2=sorted(band_list, key=lambda x: x[1]) # sort by name
-        return render_template('home.html', band_list=band_list)
-    # else:  # POST
-    #     # the only post for the homepage is in removing warbands.
-    #     form_warband_ids = request.form.getlist("warband_ids")
-    #     for id in form_warband_ids:
-    #         db.delete_warband(int(id))
-    #     return redirect(url_for("home_page"))
+        # c = cookies.setcookie()
+        w = Warband('test_name','Mutants')
+        return render_template('home.html', warband = w)
+    else:  # POST
+        warband_name = request.form["warband_name"]
+        warband_trait = request.form["warband_trait"]
+       
+        
 
-
-# called either from the main warbands page or the specific id is given in the url
-# def warband_page(warband_id):
-#     db = current_app.config["db"]
-#     warband = db.get_warband(warband_id)
-#     # if warband does not exist, return 404 error
-#     if warband is None:
-#         abort(404)
-#     # will want to pass all the weirdos as well later on
-#     return render_template('warband_view.html', warband=warband)
-
-
-# called from the warband page. Either gets the warband selected
-def warband_create_page():
-    db = current_app.config["db"]
-    if request.method == "GET":
-        values = {"name": "", "warband_trait": "", "warband_id":""}
-        trait_list = db.get_traits()
-        return render_template("warband_create.html", values=values, trait_list=trait_list)
-    
-    # POST = saving the warband.
-    else:  
-        valid = validate_warband_form(request.form)
-        if not valid:
-            # if not valid, return the form
-            return render_template("warband_create.html", values=request.form)
-
-        _name = request.form["name"]
-        _wt = request.form["warband_trait"]
-        warband = Warband(_name,_wt)
-        warband_id = db.add_warband(warband)
-        # reset to warband_edit page
-        return redirect(url_for("warband_edit_page", warband_id=warband_id))  # Call the above warband url
-
-
-def warband_edit_page(warband_id):
-    # add a deletable field to pass to the view for deleting the warband. This
-    # button should not show up in the warband_create_page method
-    db = current_app.config["db"]
-    if request.method == "GET":
-        # get the warband from the database
-        warband = db.get_warband(warband_id)
-        if warband is None:
-            abort(404)
-        values = {"name": warband.name, "warband_trait": warband.warband_trait_id,  "warband_id": warband.warband_id}
-        return render_template("warband_create.html", values=values)
-    # else:  # post
-    #     valid = validate_warband_form(request.form)
-    #     if not valid:
-    #         return render_template("warband_create.html", values=request.form)
-    #
-    #     form_name = request.form["name"]
-    #     form_warband_trait = request.form["warband_trait"]
-    #     warband = Warband(form_name, warband_trait=form_warband_trait if form_warband_trait else None)
-    #     db.update_warband(warband_id, warband)
-    #     # reset to get the warband edit page.
-    #     return redirect(url_for("warband_edit_page", warband_id=warband_id))
-
-# def weirdo_page():
-#     return render_template('weirdo.html')
-
-
-def validate_warband_form(form):
-    form.data = {}
-    form.errors = {}
-
-    _name = form.get("name", "").strip()
-    if len(_name) == 0:
-        form.errors["name"] = "Name can not be blank."
-    else:
-        form.data["name"] = _name
-
-    # form_year = form.get("warband_trait")
-    # if not form_year:
-    #     form.data["warband_trait"] = None
-    # elif not form_year.isdigit():
-    #     form.errors["warband_trait"] = "warband trait must consist of digits only."
-    # else:
-    #     year = int(form_year)
-    #     if (year < 1887) or (year > datetime.now().year):
-    #         form.errors["year"] = "Year not in valid range."
-    #     else:
-    #         form.data["year"] = year
-
-    return len(form.errors) == 0
+        return redirect(url_for("home_page"), warband_id='')

@@ -10,14 +10,10 @@ def create_app():
 
     # load up and connect each webpage to their views
     _app.add_url_rule("/", view_func=controller.home_page, methods=["GET", "POST"])
+
+    # _app.add_url_rule('/get_data',view_func=controller.get_data, methods=["GET", "POST"])
+
     # _app.add_url_rule("/create-warband", view_func=controller.warband_create_page, methods=["GET", "POST"])
-
-    # grab the database
-    # home_dir = os.path.expanduser("~/Databases")
-    # os.makedirs(home_dir, exist_ok = True)
-    # db = Database(os.path.join(home_dir, "warbands.sqlite"))
-    # _app.config["db"] = db
-
     return _app
 
 

@@ -1,7 +1,12 @@
 {% extends "layout.html" %}
 {% block title %}Space Weirdos{% endblock %}
 
+
+
 {% block content %}
+
+<script src="/static/persistent_data.js"></script>
+
 <div class="b-example-divider"></div>
 <div class="my-5 text-center">
     <h1 class="display-5 fw-bold">Space Weirdos</h1>
@@ -11,37 +16,10 @@
     </div>
 </div>
 
-<form action="" method="post" name="warband_edit" class="text-center">
-    <div class="field">
-        <label for="warband_name" class="label">Name</label>
-        <div class="control">
-            <input type="text" name="warband_name" class="input" required="required" value="{{ warband.name }}" />
-        </div>
-    </div>
+<button id="loadDataExample" class="button is-primary is-small">Save</button>
+<button id="deleteDataExample" class="button is-primary is-small">Delete</button>
+<span id="response">text</span>
 
-    <div class="field pt-4">
-        <label for="warband_trait" class="label">Trait</label>
-        <div class="control">
-           
-            <select name="warband_trait">
-                {% for name, value in warband.trait_dropdown.items() %}
-                    {% set trait_name=name %}
-                    {% if value != '' %}
-                        {% set trait_name=name+": "+value %}
-                    {% endif %}
-                        <option value="{{name}}" {{'selected' if name == warband.trait}}>{{trait_name}}</option>
-                {% endfor %}
-            </select>
-            
-        </div>
-    </div>
-
-    <div class="field is-grouped pt-4">
-        <div class="control">
-            <button class="button is-primary is-small">Save</button>
-        </div>
-    </div>
-</form>
 
 <hr />
 

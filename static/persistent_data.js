@@ -31,31 +31,35 @@
 
 window.onload = function() {
     // button to save flask data
-    document.getElementById('loadDataExample').addEventListener('click', function() {
-        let token = localStorage.setItem('token','yayayaya token')
-        document.getElementById('response').textContent = 'added'
-        // fetch('http://127.0.0.1:5000/postdata', {
-        //     method: 'POST',  // HTTP method
-        //     headers: {
-        //         'Content-Type': 'application/json',  // Specify that we are sending JSON
-        //     },
-        //     body: JSON.stringify(token)  // Convert the data object into a JSON string
-        // })
-        // .then(response => response.json())  // Parse JSON response from Flask server
-        // .then(data => {
-        //     console.log('Success:', data);
-        //     alert('Server Response: ' + data.message);
-        // })
-        // .catch((error) => {
-        //     console.error('Error:', error);
-        //     alert('Failed to send data');
-        // });
-    });
+    // document.getElementById('load_data_example').addEventListener('click', function() {
+    //     let token = localStorage.setItem('token','yayayaya token')
+    //     document.getElementById('response').textContent = 'added'
+    //     // fetch('http://127.0.0.1:5000/postdata', {
+    //     //     method: 'POST',  // HTTP method
+    //     //     headers: {
+    //     //         'Content-Type': 'application/json',  // Specify that we are sending JSON
+    //     //     },
+    //     //     body: JSON.stringify(token)  // Convert the data object into a JSON string
+    //     // })
+    //     // .then(response => response.json())  // Parse JSON response from Flask server
+    //     // .then(data => {
+    //     //     console.log('Success:', data);
+    //     //     alert('Server Response: ' + data.message);
+    //     // })
+    //     // .catch((error) => {
+    //     //     console.error('Error:', error);
+    //     //     alert('Failed to send data');
+    //     // });
+    // });
+    // document.getElementById('delete_data_example').addEventListener('click', function() {
+    //     localStorage.removeItem('token')
+    //     document.getElementById('response').textContent = 'deleted'
+    // });
 
-    document.getElementById('deleteDataExample').addEventListener('click', function() {
-        localStorage.removeItem('token')
-        document.getElementById('response').textContent = 'deleted'
-    });
+
+    // document.getElementById('create_form_entry').addEventListener('click', function() {
+    //     // create new form entry
+    // });
 
 }
 

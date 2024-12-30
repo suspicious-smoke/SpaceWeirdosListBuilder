@@ -7,18 +7,133 @@
 
 <script src="/static/persistent_data.js"></script>
 
-<div class="b-example-divider"></div>
+<!-- <div class="b-example-divider"></div>
 <div class="my-5 text-center">
     <h1 class="display-5 fw-bold">Space Weirdos</h1>
     <div class="col-lg-6 mx-auto">
         <p class="lead mb-6">An unofficial list builder for Space Weirdos by Garske Games. <a
                 href="https://www.wargamevault.com/product/359157/Space-Weirdos">Support the developer</a>.</p>
     </div>
-</div>
+</div> -->
 
-<button id="loadDataExample" class="button is-primary is-small">Save</button>
-<button id="deleteDataExample" class="button is-primary is-small">Delete</button>
+<!-- <button id="load_data_example" class="btn btn-primary">Save</button>
+<button id="delete_data_example" class="btn btn-primary">Delete</button>
 <span id="response">text</span>
+<br /><br /> -->
+
+<!-- New Weirdo Button -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Weirdo</button>
+  
+  <!-- Weirdo Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Weirdo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row g-3">
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="weirdo_name">
+                </div>
+
+                <div class="col-md-2">
+                    <label for="inputState" class="form-label">Speed</label>
+                    <select name="speed_select" class="form-select">
+                        <!-- name is the dice,  -->
+                        {% for die, cost in warband.speed_list.items() %}
+                                <option value="{{cost}}" {{'selected' if die == warband.trait}}>{{die}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- <div class="col-md-2">
+                    <label for="inputState" class="form-label">Defense</label>
+                    <select id="inputState" class="form-select">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="inputState" class="form-label">Firepower</label>
+                    <select id="inputState" class="form-select">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="inputState" class="form-label">Prowess</label>
+                    <select id="inputState" class="form-select">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="inputState" class="form-label">Willpower</label>
+                    <select id="inputState" class="form-select">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div> -->
+
+
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save Weirdo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+
+<!-- <button id="create_form_entry" class="btn btn-primary">Create Weirdo</button> -->
+
+
+
+<!-- 
+<form action="" method="post" name="warband_edit" class="text-center">
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+
+    <div class="form-group">
+        <label for="warband_name" class="label">Name</label>
+        <div class="control">
+            <input type="text" name="warband_name" class="input" required="required" value="{{ warband.name }}" />
+        </div>
+    </div>
+
+    <div class="field pt-4">
+        <label for="warband_trait" class="label">Trait</label>
+        <div class="control">
+            <select name="warband_trait">
+                {% for name, value in warband.trait_dropdown.items() %}
+                    {% set trait_name=name %}
+                    {% if value != '' %}
+                        {% set trait_name=name+": "+value %}
+                    {% endif %}
+                        <option value="{{name}}" {{'selected' if name == warband.trait}}>{{trait_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="field is-grouped pt-4">
+        <div class="control">
+            <button class="button is-primary is-small">Save</button>
+        </div>
+    </div>
+</form> -->
 
 
 <hr />

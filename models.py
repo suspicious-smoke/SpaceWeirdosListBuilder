@@ -9,11 +9,46 @@ WarbandTraits = {
  'Undead': 'A second staggered condition does not take models in thisWarband out of action.'
 }
 
+speed={"1": 0, "2": 1, "3": 3 }
+defense={"2d6": 2, "2d8": 4, "2d10": 8}
+firepower={"0": 0, "2d8": 2, "2d10": 4}
+prowess={"2d6": 2, "2d8": 4, "2d10": 6}
+willpower={"2d6": 2, "2d8": 4, "2d10": 6}
+
+class Weirdo:
+    # leader_trait_id, is_leader, ranged_weapon_id,melee_weapon_id,
+    def __init__(self, weirdo_id, name, total_points, speed_id, defense_id, firepower_id, prowess_id, willpower_id, warband_id): 
+        self.warband_id = warband_id
+        self.weirdo_id = weirdo_id
+        self.name = name
+        self.total_points = total_points
+    
+        self.willpower_id = willpower_id
+        self.prowess_id = prowess_id
+        self.firepower_id = firepower_id
+        self.defense_id = defense_id
+        self.speed_id = speed_id
+
+        # self.melee_weapon_id = melee_weapon_id
+        # self.ranged_weapon_id = ranged_weapon_id
+        
+        # self.leader_trait_id = leader_trait_id
+        # self.is_leader = is_leader    
+
+
 class Warband:
     def __init__(self, name, trait = 'No Trait'):
         self.name = name
         self.trait = trait
-        self.trait_dropdown=WarbandTraits
+        self.trait_dropdown=WarbandTraits # fill the warband traits
+
+        # lists for weirdo selections
+        self.speed_list = speed
+        self.defense_list = defense
+        self.firepower_list = firepower
+        self.prowess_list = prowess
+        self.willpower_list = willpower
+
         self.weirdos = []  # list.append(geeks(22, 33))
         # self._last_weirdo_key = 0
 
@@ -68,26 +103,3 @@ class Warband:
 #         self.name = name
 #         self.level = level  # either dice or number for speed
 #         self.points = points
-
-class Weirdo:
-    # leader_trait_id, is_leader, ranged_weapon_id,melee_weapon_id,
-    def __init__(self, weirdo_id, name, total_points, speed_id, defense_id, firepower_id, prowess_id, willpower_id, warband_id): 
-        self.warband_id = warband_id
-        self.name = name
-        self.weirdo_id = weirdo_id
-
-        self.willpower_id = willpower_id
-        self.prowess_id = prowess_id
-        self.firepower_id = firepower_id
-        self.defense_id = defense_id
-        self.speed_id = speed_id
-
-
-        self.total_points = total_points
-
-        # self.melee_weapon_id = melee_weapon_id
-        # self.ranged_weapon_id = ranged_weapon_id
-        
-        # self.leader_trait_id = leader_trait_id
-        # self.is_leader = is_leader    
-        

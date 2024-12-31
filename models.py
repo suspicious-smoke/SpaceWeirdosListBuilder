@@ -16,11 +16,9 @@ prowess={"2d6": 2, "2d8": 4, "2d10": 6}
 willpower={"2d6": 2, "2d8": 4, "2d10": 6}
 
 class Warband:
-    def __init__(self, name, trait = 'No Trait'):
-        self.name = name
-        self.trait = trait
+    def __init__(self, warband_id):
+        self.warband_id = warband_id
         self.trait_dropdown=WarbandTraits # fill the warband traits
-
         # lists for weirdo selections
         self.speed_list = speed
         self.defense_list = defense
@@ -28,7 +26,7 @@ class Warband:
         self.prowess_list = prowess
         self.willpower_list = willpower
 
-        self.weirdos = []  # list.append(geeks(22, 33))
+        # self.weirdos = []  # list.append(geeks(22, 33))
         # self._last_weirdo_key = 0
 
     # def add_weirdo(self, weirdo):

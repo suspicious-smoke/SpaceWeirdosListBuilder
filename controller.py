@@ -21,4 +21,3 @@ def warband_page(warband_id):
     # get warband id and selects
     _warband = Warband(warband_id)
     return make_response(render_template('warband.html', warband = _warband))
-  

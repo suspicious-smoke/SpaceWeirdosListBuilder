@@ -9,10 +9,13 @@
 
 <!-- New Weirdo Button -->
  <script>
-    
+    const new_warband_url = "{{url_for('warband_page', warband_id=0)}}";
  </script>
+
+ <h1 id="warband_text" class="display-10 fw-bold text-center"></h1>
 <button id="create_weirdo" type="button" class="btn btn-primary" data-warband_id="0" data-bs-toggle="modal" data-bs-target="#weirdo_model">Create Weirdo</button>
 <button id="load_weirdo" type="button" class="btn btn-primary" data-warband_id="0" data-bs-toggle="modal" data-bs-target="#weirdo_model">Load Weirdo</button>
+<input hidden id="warband_id" value="{{warband.warband_id}}">
 
   <!-- Weirdo Modal -->
   <div class="modal fade" id="weirdo_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -24,7 +27,7 @@
         </div>
         <div class="modal-body">
             <div class="row g-3">
-                <input hidden id="warband_id" value="{{warband.warband_id}}">
+                
                 <input hidden id="weirdo_id" value="0">
                 <div class="col-12">
                   <label for="weirdo_name" class="form-label">Name</label>

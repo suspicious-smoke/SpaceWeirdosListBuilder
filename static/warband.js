@@ -1,8 +1,6 @@
+// on warband page load
 window.onload = function() {
     loadWarband();
-
-
-
     // create new weirdo button
     document.getElementById('create_weirdo').addEventListener('click', function() {
         const warband_id = this.dataset.warband_id;
@@ -14,13 +12,64 @@ window.onload = function() {
         resetSelect('defense_select');
         wireSaveWeirdo();
     });
-    
-    document.getElementById('load_weirdo').addEventListener('click', function() {
-        const weirdo = JSON.parse(localStorage.getItem("warband_0"));
-        document.getElementById('weirdo_id').value = weirdo.weirdo_id;
-        document.getElementById('weirdo_name').value = weirdo.weirdo_name;
-    });
+}
 
+
+function loadWarband() {
+    // check warband id
+    const warband_id = document.getElementById('warband_id').value
+    const json_warband = localStorage.getItem('warbands');
+    let warband = null;
+
+    // try to load the specific warband
+    if (json_warband != null) {
+        const warbands = JSON.parse(json_warband)['warbands'];
+        for(const wbnd of warbands) {
+            if (wbnd['warband_id']==warband_id) { // found a saved warband
+                warband = wbnd;
+            }
+        }
+    }
+    if (warband!= null) {
+        // load warband info
+        document.getElementById('warband_text').innerHTML = "Edit Warband";
+        // load warband name and trait
+
+        // load weirdos from warband
+        let weirdos = warband['weirdos'];
+        card_container = document.getElementById('weirdo_cards');
+        for (const weirdo of weirdos) {
+            const content = 
+            `
+            <div class="mt-3 col-sm-6 weirdo_card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${weirdo['weirdo_name']}</h5>
+                        <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                        <div class="row mb-3">
+                            <div class="col 2"><b>Speed:</b> ${weirdo['speed']}</div>
+                            <div class="col 2"><b>Defense:</b> ${weirdo['defense']}</div>
+                            <div class="col 2"><b>Firepower:</b> </div>
+                            <div class="col 2"><b>Prowess:</b> </div>
+                            <div class="col 2"><b>Willpower:</b> </div>
+                        </div>
+                        <div class="float-end">
+                            <button type="button" class="btn btn-sm btn-primary load_weirdo">Edit</button>
+                            <button type="button" class="btn btn-sm btn-danger bs-4 delete_weirdo">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            card_container.innerHTML += content;
+        }
+        
+
+    } else if (warband_id != 0) { //if id doesn't exist, reload to id 0
+        window.location.href = new_warband_url;
+    } else {
+        document.getElementById('warband_text').innerHTML = "Create Warband";
+    }
 }
 
 
@@ -29,35 +78,6 @@ function wireSaveWeirdo() {
         saveWeirdo();
     });
 }
-
-function loadWarband() {
-    // check warband id
-    const warband_id = document.getElementById('warband_id').value
-
-    const json_warband = localStorage.getItem('warbands');
-    let warband = null;
-
-    if (json_warband != null) {
-        const warbands = JSON.parse(json_warband)['warbands'];
-        for (const wbnd of warbands) {
-            if (wbnd['warband_id']==warband_id) { // found a saved warband
-                warband = wbnd;
-            }
-        }
-    }
-    
-    if (warband==null && warband_id != 0) { //if id doesn't exist, reload to id 0
-        window.location.href = new_warband_url;
-    } else if (warband_id == 0) {
-        document.getElementById('warband_text').innerHTML = "Create Warband";
-    } else {
-        document.getElementById('warband_text').innerHTML = "Edit Warband";
-    }
-
-    // fill in table with warband information
-
-}
-
 
 function saveWeirdo() {
     // get weirdo information from modal
@@ -88,7 +108,7 @@ function saveWeirdo() {
 
 function resetSelect(list_name) {
     let select_list = document.getElementById(list_name);
-    for (let i=0; i < select_list.options.length; i++) {
+    for(let i=0; i < select_list.options.length; i++) {
         select_list.options[i].selected = false;
     }
     select_list.options[0].selected = true;

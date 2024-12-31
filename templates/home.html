@@ -1,8 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}Space Weirdos{% endblock %}
 
-
-
 {% block content %}
 
 <!-- <script src="/static/persistent_data.js"></script> -->
@@ -26,22 +24,31 @@
             <th scope="col">Trait</th>
             <th scope="col">Model Count</th>
             <th scope="col">Points</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
+            <td>Flaming Death</td>
+            <td>Tactician</td>
+            <td>4</td>
+            <td>100</td>
+            <td>
+                <button id="load_weirdo" type="button" class="btn btn-sm btn-primary">Edit</button>
+                <button id="load_weirdo" type="button" class="btn btn-sm btn-danger bs-4">Delete</button>
+            </td>
         </tr>
         <tr>
             <th scope="row">2</th>
             <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td>@mdo</td>
+            <td>Cyborgs</td>
+            <td>5</td>
+            <td>100</td>
+            <td>
+                <button id="load_weirdo" type="button" class="btn btn-sm btn-primary">Edit</button>
+                <button id="load_weirdo" type="button" class="btn btn-sm btn-danger bs-4">Delete</button>
+            </td>
         </tr>
         
         </tbody>

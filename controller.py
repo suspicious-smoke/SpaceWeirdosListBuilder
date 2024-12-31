@@ -25,13 +25,6 @@ def home_page():
 
         return redirect(url_for("home_page"), warband_id='')
 
-
-# Mock data
-models = [
-    {"id": 1, "name": "Model A", "description": "This is Model A"},
-    {"id": 2, "name": "Model B", "description": "This is Model B"},
-]
-
 def get_weirdo(warband_id,weirdo_id=0):
     weirdo = Weirdo(warband_id,weirdo_id,name="successful test").serialize()
     # model = next((m for m in models if m["id"] == weirdo_id), None)

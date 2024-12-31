@@ -1,9 +1,21 @@
 window.onload = function() {
     // check warband id
     const warband_id = document.getElementById('warband_id').value
-    const warband = localStorage.getItem('warbands');
 
-    // if id doesn't exist, reload to id 0
+    const json_warband = localStorage.getItem('warbands');
+    let warband = null;
+
+    if (json_warband != null) {
+        const warbands = JSON.parse(json_warband)['warbands'];
+        for (const wbnd of warbands) {
+            
+            if (wbnd['warband_id']==warband_id) { // found a saved warband
+                warband = wbnd;
+            }
+
+        }
+    }
+    //if id doesn't exist, reload to id 0
     if (warband==null && warband_id != 0) {
         window.location.href = new_warband_url;
     } else if (warband_id == 0) {

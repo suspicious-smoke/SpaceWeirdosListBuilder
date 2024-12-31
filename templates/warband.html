@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<script src="/static/persistent_data.js"></script>
+<script src="/static/warband.js"></script>
 
 <!-- New Weirdo Button -->
  <script>
@@ -24,7 +24,7 @@
         </div>
         <div class="modal-body">
             <div class="row g-3">
-                <input hidden id="warband_id" value="0">
+                <input hidden id="warband_id" value="{{warband.warband_id}}">
                 <input hidden id="weirdo_id" value="0">
                 <div class="col-12">
                   <label for="weirdo_name" class="form-label">Name</label>

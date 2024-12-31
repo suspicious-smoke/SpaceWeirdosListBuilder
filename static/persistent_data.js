@@ -57,9 +57,17 @@ window.onload = function() {
     // });
 
 
-    // document.getElementById('create_form_entry').addEventListener('click', function() {
-    //     // create new form entry
-    // });
+    document.getElementById('create_weirdo').addEventListener('click', function() {
+        const warband_id = this.dataset.warband_id;
+        const weirdo_id = 0;
+        
+        fetch('/get_weirdo/'+warband_id+'/'+weirdo_id)
+            .then(response => response.json())
+            .then(w_data => { // data is a parsed JSON object
+                x = document.getElementById('weirdo_name').value = w_data.name;
+
+            });
+    });
 
 }
 

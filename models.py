@@ -17,7 +17,8 @@ willpower={"2d6": 2, "2d8": 4, "2d10": 6}
 
 class Weirdo:
     # leader_trait_id, is_leader, ranged_weapon_id,melee_weapon_id,
-    def __init__(self, weirdo_id, name, total_points, speed_id, defense_id, firepower_id, prowess_id, willpower_id, warband_id): 
+    def __init__(self, warband_id, weirdo_id=0, name='', total_points=0, speed_id=speed['1'], defense_id=defense['2d6'], 
+                 firepower_id=firepower['0'], prowess_id=prowess['2d6'], willpower_id=willpower['2d6']): 
         self.warband_id = warband_id
         self.weirdo_id = weirdo_id
         self.name = name
@@ -34,7 +35,19 @@ class Weirdo:
         
         # self.leader_trait_id = leader_trait_id
         # self.is_leader = is_leader    
+    def serialize(self): # for turning dict to json
+        return {
+            'warband_id': self.warband_id,
+            'weirdo_id': self.weirdo_id,
+            'name': self.name,
+            'total_points': self.total_points,
 
+            'willpower_id': self.willpower_id,
+            'prowess_id': self.prowess_id,
+            'firepower_id': self.firepower_id,
+            'defense_id': self.defense_id,
+            'speed_id': self.speed_id
+        }
 
 class Warband:
     def __init__(self, name, trait = 'No Trait'):

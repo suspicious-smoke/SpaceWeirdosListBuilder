@@ -22,10 +22,13 @@
 <br /><br /> -->
 
 <!-- New Weirdo Button -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Weirdo</button>
+ <script>
+    
+ </script>
+<button id="create_weirdo" type="button" class="btn btn-primary" data-warband_id="0" data-bs-toggle="modal" data-bs-target="#weirdo_model">Create Weirdo</button>
   
   <!-- Weirdo Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="weirdo_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -35,16 +38,16 @@
         <div class="modal-body">
             <div class="row g-3">
                 <div class="col-12">
-                  <label for="inputEmail4" class="form-label">Name</label>
+                  <label for="weirdo_name" class="form-label">Name</label>
                   <input type="text" class="form-control" id="weirdo_name">
                 </div>
 
                 <div class="col-md-2">
-                    <label for="inputState" class="form-label">Speed</label>
+                    <label for="speed_select" class="form-label">Speed</label>
                     <select name="speed_select" class="form-select">
                         <!-- name is the dice,  -->
                         {% for die, cost in warband.speed_list.items() %}
-                                <option value="{{cost}}" {{'selected' if die == warband.trait}}>{{die}}</option>
+                                <option value="{{cost}}">{{die}}</option>
                         {% endfor %}
                     </select>
                 </div>

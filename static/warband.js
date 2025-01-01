@@ -39,10 +39,13 @@ function loadWarband() {
     // check warband id
     const warband_id = document.getElementById('warband_id').value;
     warband = getWarband(warband_id);
-    if (warband!= null) {
+    if (warband != null) {
         // load warband info
         document.getElementById('warband_text').innerHTML = "Edit Warband";
         // load warband name and trait
+        document.getElementById('warband_name').value = warband['name'];
+        selectedSelect('warband_trait', warband['trait']);
+
 
         // load weirdos from warband
         let weirdos = warband['weirdos'];
@@ -123,14 +126,12 @@ function saveWeirdo() {
     let speed = s.options[s.selectedIndex].text;
     let d = document.getElementById('defense_select');
     let defense = d.options[d.selectedIndex].text;
-    // put weirdo into object for transport
     const weirdo = {
         weirdo_id:weirdo_id,
         name:weirdo_name,
         speed:speed,
         defense:defense
     }
-    // json_weirdo = JSON.stringify(weirdo); // convert to json
     // first load from local storage
     warband = getWarband(warband_id);
     warband_data = getLocalData();
@@ -156,15 +157,41 @@ function saveWeirdo() {
         warband_data['warbands'].push(new_warband);
         localStorage.setItem('warbands', JSON.stringify(warband_data));
         //redirect to new page
-        window.location.href = url_for('warband_page', warband_id=new_id);
+        window.location.href = '/warband/'+new_id;
     } else {
+        // warband exists:
+        warband['name'] = document.getElementById('warband_name').value;
+        let t = document.getElementById('warband_trait');
+        warband['trait'] = t.options[t.selectedIndex].text;
         // check weirdo id's
-    }
-    
+        
 
-    
-    // localStorage.setItem('warband_'+warband_id,json_weirdo)
-    location.reload(); // reload page
+        let weirdo_exists = false;
+        let next_weirdo_id = 1;
+        for (let i = 0; i < warband['weirdos'].length; i++) {
+            if (warband['weirdos'][i]['weirdo_id']== weirdo_id) {
+                warband['weirdos'][i] = weirdo; // replace old weirdo
+                weirdo_exists = true;
+            }
+            // increase weirdo id
+            if (warband['weirdos'][i]['weirdo_id']>= next_weirdo_id) {
+                next_weirdo_id = warband['weirdos'][i]['weirdo_id'] + 1;
+            }
+        }
+        if (!weirdo_exists) {
+            // add weirdo to warband
+            weirdo['weirdo_id'] = next_weirdo_id;
+            warband['weirdos'].push(weirdo);
+        }
+        // add warband back into warband list.
+        for (let i = 0; i < warband_data['warbands'].length; i++) {
+            if (warband_data['warbands'][i]['warband_id'] = warband_id) {
+                warband_data['warbands'][i] = warband; // swap warband
+            }
+        }
+        localStorage.setItem('warbands', JSON.stringify(warband_data));
+        location.reload(); // reload page
+    }
 }
 
 function selectedSelect(list_name, selected_text) {

@@ -66,8 +66,8 @@ function loadWarband() {
                             <div class="col 2"><b>Willpwr:</b> </div>
                         </div>
                         <div class="float-end">
-                            <button type="button" class="btn btn-sm btn-primary edit_weirdo" data-weirdo_id="${weirdo['weirdo_id']}" data-bs-toggle="modal" data-bs-target="#weirdo_model">Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger bs-4 delete_weirdo" data-weirdo_id="${weirdo['weirdo_id']}" data-bs-toggle="modal" data-bs-target="#weirdo_model">Delete</button>
+                            <button type="button" class="btn btn-sm btn-primary edit_weirdo" data-weirdo_id=${weirdo['weirdo_id']} data-bs-toggle="modal" data-bs-target="#weirdo_model">Edit</button>
+                            <button type="button" class="btn btn-sm btn-danger bs-4 delete_weirdo" data-weirdo_id=${weirdo['weirdo_id']} data-bs-toggle="modal" data-bs-target="#weirdo_model">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@ function wireSaveWeirdo() {
 function getWeirdo(warband_id, weirdo_id) {
     warband = getWarband(warband_id);
     for (weirdo of warband['weirdos']) {
-        if (weirdo['weirdo_id'] = weirdo_id) {
+        if (weirdo['weirdo_id'] == weirdo_id) {
             return weirdo;
         }
     }
@@ -169,13 +169,14 @@ function saveWeirdo() {
         let weirdo_exists = false;
         let next_weirdo_id = 1;
         for (let i = 0; i < warband['weirdos'].length; i++) {
-            if (warband['weirdos'][i]['weirdo_id']== weirdo_id) {
+            let _weirdo = warband['weirdos'][i]
+            if (_weirdo['weirdo_id'] == weirdo_id) {
                 warband['weirdos'][i] = weirdo; // replace old weirdo
                 weirdo_exists = true;
             }
             // increase weirdo id
-            if (warband['weirdos'][i]['weirdo_id']>= next_weirdo_id) {
-                next_weirdo_id = warband['weirdos'][i]['weirdo_id'] + 1;
+            if (_weirdo['weirdo_id'] >= next_weirdo_id) {
+                next_weirdo_id = parseInt(_weirdo['weirdo_id']) + 1;
             }
         }
         if (!weirdo_exists) {

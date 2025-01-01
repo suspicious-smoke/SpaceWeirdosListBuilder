@@ -30,8 +30,8 @@
 
 
 <button id="create_weirdo" type="button" class="btn btn-primary" data-warband_id="{{warband.warband_id}}" data-bs-toggle="modal" data-bs-target="#weirdo_model">Create Weirdo</button>
-<button id="load_weirdo" type="button" class="btn btn-primary" data-warband_id="0" data-bs-toggle="modal" data-bs-target="#weirdo_model">Load Weirdo</button>
-<button id="load_weirdo" type="button" class="btn btn-primary" data-warband_id="0" data-bs-toggle="modal" data-bs-target="#weirdo_model">Save Warband</button>
+<button id="load_weirdo" type="button" class="btn btn-primary" data-warband_id=0 data-bs-toggle="modal" data-bs-target="#weirdo_model">Load Weirdo</button>
+<button id="load_weirdo" type="button" class="btn btn-primary" data-warband_id=0 data-bs-toggle="modal" data-bs-target="#weirdo_model">Save Warband</button>
 <input hidden id="warband_id" value="{{warband.warband_id}}">
 <!-- this will fill with the weirdo cards from warband.js -->
 <div id="weirdo_cards" class="row"></div>
@@ -47,7 +47,7 @@
         <div class="modal-body">
             <div class="row g-3">
                 
-                <input hidden id="weirdo_id" value="0">
+                <input hidden id="weirdo_id" value=0>
                 <div class="col-12">
                     <label for="weirdo_name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="weirdo_name">

@@ -78,7 +78,7 @@ function loadWarband() {
             let new_card = template_card.cloneNode(true);
             new_card.removeAttribute("hidden");
             new_card.removeAttribute("id");
-            new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id'])
+            new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
             new_card.querySelector('.card-title').innerHTML = weirdo['name'];
             new_card.querySelector('.card-spd').innerHTML += weirdo['speed'];
             new_card.querySelector('.card-def').innerHTML += weirdo['defense'];    

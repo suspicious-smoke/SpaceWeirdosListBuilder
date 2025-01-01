@@ -38,13 +38,14 @@ function loadWarbandTable() {
         editbtn.innerText = "edit";
         buttons.appendChild(editbtn);
 
-        // let deletebtn = document.createElement('button');
-        // deletebtn.setAttribute('href',"/warband/"+wbnd['warband_id']);
-        // deletebtn.classList.add('btn', 'btn-sm', 'btn-warning');
-        // deletebtn.innerText = "edit";
-
+        let deletebtn = document.createElement('button');
+        deletebtn.setAttribute('data-warband_id',wbnd['warband_id']);
+        deletebtn.classList.add('btn', 'btn-sm', 'btn-danger', 'ms-1', 'delete_warband');
+        deletebtn.innerText = "delete";
+        buttons.appendChild(deletebtn);
     }
-
-
-
+    // wire event listener for delete
+    const delete_btns = document.querySelectorAll('.delete_warband');
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
 }

@@ -36,8 +36,6 @@ window.onload = function() {
             location.reload(); // reload page
         }
     });
-
-
 }
 
 function getWarband(warband_id) {

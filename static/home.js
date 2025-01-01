@@ -27,15 +27,22 @@ function loadWarbandTable() {
         let w_count = row.insertCell(3);
         w_count.innerHTML = wbnd['weirdos'].length;
 
-        let w_points = row.insertCell(3);
+        let w_points = row.insertCell(4);
         w_points.innerHTML = 100
+        
 
-        // let buttons = row.insertCell(4);
-        // var aTag = document.createElement('a');
-        // aTag.setAttribute('href',"yourlink.htm");
-        // aTag.classList.add("btn btn-sm btn-primary");
-        // aTag.innerText = "link text";
-        // buttons.appendChild();
+        let buttons = row.insertCell(5);
+        let editbtn = document.createElement('a');
+        editbtn.setAttribute('href',"/warband/"+wbnd['warband_id']);
+        editbtn.classList.add('btn', 'btn-sm', 'btn-primary');
+        editbtn.innerText = "edit";
+        buttons.appendChild(editbtn);
+
+        // let deletebtn = document.createElement('button');
+        // deletebtn.setAttribute('href',"/warband/"+wbnd['warband_id']);
+        // deletebtn.classList.add('btn', 'btn-sm', 'btn-warning');
+        // deletebtn.innerText = "edit";
+
     }
 
 

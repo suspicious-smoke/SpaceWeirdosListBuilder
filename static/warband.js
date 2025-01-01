@@ -28,7 +28,7 @@ window.onload = function() {
             // add warband back into warband list.
             warband_data = getLocalData();
             for (let i = 0; i < warband_data['warbands'].length; i++) {
-                if (warband_data['warbands'][i]['warband_id'] = warband_id) {
+                if (warband_data['warbands'][i]['warband_id'] == warband_id) {
                     warband_data['warbands'][i] = warband; // swap warband
                 }
             }
@@ -44,7 +44,7 @@ function getWarband(warband_id) {
     let warband = null;
     const warbands = getLocalData()['warbands'];
     for(const wbnd of warbands) {
-        if (wbnd['warband_id']==warband_id) { // found a saved warband
+        if (wbnd['warband_id'] == warband_id) { // found a saved warband
             warband = wbnd;
         }
     }
@@ -80,6 +80,7 @@ function loadWarband() {
             let new_card = template_card.cloneNode(true);
             new_card.removeAttribute("hidden");
             new_card.removeAttribute("id");
+            new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id'])
             new_card.querySelector('.card-title').innerHTML = weirdo['name'];
             new_card.querySelector('.card-spd').innerHTML += weirdo['speed'];
             new_card.querySelector('.card-def').innerHTML += weirdo['defense'];    
@@ -175,7 +176,7 @@ function saveWeirdo() {
         // add warband back into warband list.
         warband_data = getLocalData();
         for (let i = 0; i < warband_data['warbands'].length; i++) {
-            if (warband_data['warbands'][i]['warband_id'] = warband_id) {
+            if (warband_data['warbands'][i]['warband_id'] == warband_id) {
                 warband_data['warbands'][i] = warband; // swap warband
             }
         }

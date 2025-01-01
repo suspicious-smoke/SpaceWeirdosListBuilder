@@ -2,8 +2,7 @@
 {% block title %}Space Weirdos{% endblock %}
 
 {% block content %}
-
-<!-- <script src="/static/persistent_data.js"></script> -->
+<script src="/static/home.js"></script>
 
 <div class="text-center">
     <h1 class="display-5 fw-bold">Space Weirdos</h1>
@@ -15,10 +14,10 @@
 </div> 
 <h1 class="mt-5 display-10 fw-bold text-center">Warbands</h1>
 <div class="col-lg-6 mx-auto border">
-    <table class="table table-striped">
+    <table id="warband_table" class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Warband Name</th>
             <th scope="col">Trait</th>
             <th scope="col">Model Count</th>
@@ -27,7 +26,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <!-- <tr>
             <th scope="row">1</th>
             <td>Flaming Death</td>
             <td>Tactician</td>
@@ -48,7 +47,7 @@
                 <button id="load_weirdo" type="button" class="btn btn-sm btn-primary">Edit</button>
                 <button id="load_weirdo" type="button" class="btn btn-sm btn-danger bs-4">Delete</button>
             </td>
-        </tr>
+        </tr> -->
         
         </tbody>
     </table>

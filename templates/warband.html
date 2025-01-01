@@ -32,7 +32,7 @@
 
 <button id="save_warband" type="button" class="btn btn-success">Save Warband</button>
 
-<input hidden id="warband_id" value="{{warband.warband_id}}">
+<input hidden id="warband_id" value={{warband.warband_id}}>
 <!-- this will fill with the weirdo cards from warband.js -->
 <div id="weirdo_cards" class="row"></div>
 
@@ -49,8 +49,9 @@
                 <div class="col-2 card-will"><b>Willpwr: </b></div>
             </div>
             <div class="float-end">
-                <button type="button" class="btn btn-sm btn-primary edit_weirdo" data-weirdo_id=${weirdo['weirdo_id']} data-bs-toggle="modal" data-bs-target="#weirdo_model">Edit</button>
-                <button type="button" class="btn btn-sm btn-danger bs-4 delete_weirdo" data-weirdo_id=${weirdo['weirdo_id']} data-bs-toggle="modal" data-bs-target="#weirdo_model">Delete</button>
+                <!-- data-weirdo_id=${weirdo['weirdo_id']} -->
+                <button type="button" class="btn btn-sm btn-primary edit_weirdo" data-bs-toggle="modal" data-bs-target="#weirdo_model">Edit</button>
+                <button type="button" class="btn btn-sm btn-danger bs-4 delete-weirdo" data-bs-toggle="modal" data-bs-target="#weirdo_model">Delete</button>
             </div>
         </div>
     </div>
@@ -58,7 +59,7 @@
 
 
 
-<button id="create_weirdo" type="button" class="btn btn-primary mt-3" data-warband_id="{{warband.warband_id}}" data-bs-toggle="modal" data-bs-target="#weirdo_model">Create Weirdo</button>
+<button id="create_weirdo" type="button" class="btn btn-primary mt-3" data-warband_id={{warband.warband_id}} data-bs-toggle="modal" data-bs-target="#weirdo_model">Create Weirdo</button>
 <!-- Weirdo Modal -->
 <div class="modal fade" id="weirdo_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

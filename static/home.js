@@ -1,94 +1,43 @@
 window.onload = function() {
-    // button to save flask data
-    // document.getElementById('load_data_example').addEventListener('click', function() {
-    //     let token = localStorage.setItem('token','yayayaya token')
-    //     document.getElementById('response').textContent = 'added'
-    //     // fetch('http://127.0.0.1:5000/postdata', {
-    //     //     method: 'POST',  // HTTP method
-    //     //     headers: {
-    //     //         'Content-Type': 'application/json',  // Specify that we are sending JSON
-    //     //     },
-    //     //     body: JSON.stringify(token)  // Convert the data object into a JSON string
-    //     // })
-    //     // .then(response => response.json())  // Parse JSON response from Flask server
-    //     // .then(data => {
-    //     //     console.log('Success:', data);
-    //     //     alert('Server Response: ' + data.message);
-    //     // })
-    //     // .catch((error) => {
-    //     //     console.error('Error:', error);
-    //     //     alert('Failed to send data');
-    //     // });
-    // });
-    // document.getElementById('delete_data_example').addEventListener('click', function() {
-    //     localStorage.removeItem('token')
-    //     document.getElementById('response').textContent = 'deleted'
-    // });
-
-
-    document.getElementById('create_weirdo').addEventListener('click', function() {
-        const warband_id = this.dataset.warband_id;
-        const weirdo_id = 0;
-        // clear form for new weirdo
-
-
-        // fetch('/get_weirdo/'+warband_id+'/'+weirdo_id)
-        //     .then(response => response.json())
-        //     .then(w_data => { // data is a parsed JSON object
-        //         document.getElementById('weirdo_name').value = w_data.name;
-        //     });
-        wireSaveWeirdo();
-    });
-    
-    document.getElementById('load_weirdo').addEventListener('click', function() {
-        const weirdo = JSON.parse(localStorage.getItem("warband_0"));
-        document.getElementById('weirdo_id').value = weirdo.weirdo_id;
-        document.getElementById('weirdo_name').value = weirdo.weirdo_name;
-    });
-
-    
-
+    loadWarbandTable();
 }
 
-
-function wireSaveWeirdo() {
-    document.getElementById('save_weirdo').addEventListener('click', function() {
-        saveWeirdo();
-        // reload page
-        
-    });
-}
-
-function saveWeirdo() {
-    // get weirdo information
-    let weirdo_id = document.getElementById('weirdo_id').value;
-    let warband_id = document.getElementById('warband_id').value;
-    let weirdo_name = document.getElementById('weirdo_name').value;
-
-    let s = document.getElementById('speed_select');
-    let speed = s.options[s.selectedIndex].text;
-    let d = document.getElementById('defense_select');
-    let defense = d.options[d.selectedIndex].text;
-    // put weirdo into object for transport
-    const weirdo = {
-        weirdo_id:weirdo_id,warband_id:warband_id,weirdo_name,weirdo_name,
-        speed:speed,
-        defense:defense,
+function getLocalData() {
+    const json_warband = localStorage.getItem('warbands');
+    if (json_warband != null) {
+        return JSON.parse(json_warband);
     }
-    json_weirdo = JSON.stringify(weirdo); // convert to json
-    // save to local storage
-    localStorage.setItem('warband_'+warband_id,json_weirdo)
-    
-    
-    location.reload(); // reload page
-    // fetch('/get_weirdo/'+warband_id+'/'+weirdo_id)
-        //     .then(response => response.json())
-        //     .then(w_data => { // data is a parsed JSON object
-        //         document.getElementById('weirdo_name').value = w_data.name;
-        //     });
+    return {warbands:[]};
+}
 
-    // first load from local storage
-    // check warband id
-    // check weirdo id's
+function loadWarbandTable() {
+    let warbands = getLocalData()['warbands'];
+    let w_table = document.getElementById('warband_table');
+    for(const wbnd of warbands) {
+        let row = w_table.insertRow();
+        let w_id = row.insertCell(0);
+        w_id.innerHTML = wbnd['warband_id'];
+
+        let w_name = row.insertCell(1);
+        w_name.innerHTML = wbnd['name'];
+        
+        let w_trait = row.insertCell(2);
+        w_trait.innerHTML = wbnd['trait'];
+        
+        let w_count = row.insertCell(3);
+        w_count.innerHTML = wbnd['weirdos'].length;
+
+        let w_points = row.insertCell(3);
+        w_points.innerHTML = 100
+
+        // let buttons = row.insertCell(4);
+        // var aTag = document.createElement('a');
+        // aTag.setAttribute('href',"yourlink.htm");
+        // aTag.classList.add("btn btn-sm btn-primary");
+        // aTag.innerText = "link text";
+        // buttons.appendChild();
+    }
+
+
 
 }

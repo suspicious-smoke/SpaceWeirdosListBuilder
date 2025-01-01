@@ -13,6 +13,31 @@ window.onload = function() {
         wireSaveWeirdo();
     });
 
+    // wire save warband button
+    document.getElementById('save_warband').addEventListener('click', function() {
+        let warband_id = document.getElementById('warband_id').value;
+        // try to get warband
+        let warband = getWarband(warband_id);
+        if (warband == null) {
+            saveNewWarband();
+        } else {
+            // just update name and trait and save
+            warband['name'] = document.getElementById('warband_name').value;
+            let t = document.getElementById('warband_trait');
+            warband['trait'] = t.options[t.selectedIndex].text;
+            // add warband back into warband list.
+            warband_data = getLocalData();
+            for (let i = 0; i < warband_data['warbands'].length; i++) {
+                if (warband_data['warbands'][i]['warband_id'] = warband_id) {
+                    warband_data['warbands'][i] = warband; // swap warband
+                }
+            }
+            localStorage.setItem('warbands', JSON.stringify(warband_data));
+            location.reload(); // reload page
+        }
+    });
+
+
 }
 
 function getWarband(warband_id) {
@@ -134,38 +159,16 @@ function saveWeirdo() {
     }
     // first load from local storage
     warband = getWarband(warband_id);
-    warband_data = getLocalData();
+    
     // new warband
     if (warband == null) {
-        // get new warband id
-        let new_id = 1;
-        for (let i=0; i < warband_data['warbands'].length; i++) {
-            if (warband_data['warbands'][i]['warband_id'] >= new_id ) {
-                new_id = warband_data['warbands'][i]['warband_id']+1;
-            }
-        }
-        // add warband into local data
-        let t = document.getElementById('warband_trait');
-        let trait = t.options[t.selectedIndex].text;
-        weirdo['weirdo_id'] = 1
-        const new_warband = {
-            warband_id: new_id,
-            name: document.getElementById('warband_name').value,
-            trait: trait,
-            weirdos: [weirdo]
-        }
-        warband_data['warbands'].push(new_warband);
-        localStorage.setItem('warbands', JSON.stringify(warband_data));
-        //redirect to new page
-        window.location.href = '/warband/'+new_id;
+        saveNewWarband(weirdo);
     } else {
         // warband exists:
         warband['name'] = document.getElementById('warband_name').value;
         let t = document.getElementById('warband_trait');
         warband['trait'] = t.options[t.selectedIndex].text;
         // check weirdo id's
-        
-
         let weirdo_exists = false;
         let next_weirdo_id = 1;
         for (let i = 0; i < warband['weirdos'].length; i++) {
@@ -185,6 +188,7 @@ function saveWeirdo() {
             warband['weirdos'].push(weirdo);
         }
         // add warband back into warband list.
+        warband_data = getLocalData();
         for (let i = 0; i < warband_data['warbands'].length; i++) {
             if (warband_data['warbands'][i]['warband_id'] = warband_id) {
                 warband_data['warbands'][i] = warband; // swap warband
@@ -194,6 +198,37 @@ function saveWeirdo() {
         location.reload(); // reload page
     }
 }
+
+function saveNewWarband(weirdo=null) {
+    // get new warband id
+    let new_id = 1;
+    warband_data = getLocalData();
+    for (let i=0; i < warband_data['warbands'].length; i++) {
+        if (warband_data['warbands'][i]['warband_id'] >= new_id ) {
+            new_id = warband_data['warbands'][i]['warband_id']+1;
+        }
+    }
+    // add warband into local data
+    let t = document.getElementById('warband_trait');
+    let trait = t.options[t.selectedIndex].text;
+    const new_warband = {
+        warband_id: new_id,
+        name: document.getElementById('warband_name').value,
+        trait: trait,
+        weirdos: []
+    }
+
+    if (weirdo != null) {
+        weirdo['weirdo_id'] = 1;
+        new_warband['weirdos'].push(weirdo);
+    }
+
+    warband_data['warbands'].push(new_warband);
+    localStorage.setItem('warbands', JSON.stringify(warband_data));
+    //redirect to new page
+    window.location.href = '/warband/'+new_id;
+}
+
 
 function selectedSelect(list_name, selected_text) {
     resetSelect(list_name);

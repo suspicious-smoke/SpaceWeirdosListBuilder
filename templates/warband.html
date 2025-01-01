@@ -35,6 +35,29 @@
 <input hidden id="warband_id" value="{{warband.warband_id}}">
 <!-- this will fill with the weirdo cards from warband.js -->
 <div id="weirdo_cards" class="row"></div>
+
+<div id="card_template" class="mt-3 col-sm-6 weirdo_card" hidden>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"></h5>
+            <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+            <div class="row mb-3">
+                <div class="col-2 card-spd"><b>Spd: </b></div>
+                <div class="col-2 card-def"><b>Def: </b></div>
+                <div class="col-2 card-firepwr"><b>Firepwr: </b></div>
+                <div class="col-2 card-prw"><b>Prowess: </b></div>
+                <div class="col-2 card-will"><b>Willpwr: </b></div>
+            </div>
+            <div class="float-end">
+                <button type="button" class="btn btn-sm btn-primary edit_weirdo" data-weirdo_id=${weirdo['weirdo_id']} data-bs-toggle="modal" data-bs-target="#weirdo_model">Edit</button>
+                <button type="button" class="btn btn-sm btn-danger bs-4 delete_weirdo" data-weirdo_id=${weirdo['weirdo_id']} data-bs-toggle="modal" data-bs-target="#weirdo_model">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <button id="create_weirdo" type="button" class="btn btn-primary mt-3" data-warband_id="{{warband.warband_id}}" data-bs-toggle="modal" data-bs-target="#weirdo_model">Create Weirdo</button>
 <!-- Weirdo Modal -->
 <div class="modal fade" id="weirdo_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

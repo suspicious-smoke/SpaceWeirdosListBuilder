@@ -71,34 +71,19 @@ function loadWarband() {
         document.getElementById('warband_name').value = warband['name'];
         selectedSelect('warband_trait', warband['trait']);
 
-
         // load weirdos from warband
         let weirdos = warband['weirdos'];
         card_container = document.getElementById('weirdo_cards');
+        // create new card for each weirdo
         for (const weirdo of weirdos) {
-            const content = 
-            `
-            <div class="mt-3 col-sm-6 weirdo_card">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">${weirdo['name']}</h5>
-                        <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
-                        <div class="row mb-3">
-                            <div class="col 2"><b>Spd:</b> ${weirdo['speed']}</div>
-                            <div class="col 2"><b>Def:</b> ${weirdo['defense']}</div>
-                            <div class="col 2"><b>Firepwr:</b> </div>
-                            <div class="col 2"><b>Prowess:</b> </div>
-                            <div class="col 2"><b>Willpwr:</b> </div>
-                        </div>
-                        <div class="float-end">
-                            <button type="button" class="btn btn-sm btn-primary edit_weirdo" data-weirdo_id=${weirdo['weirdo_id']} data-bs-toggle="modal" data-bs-target="#weirdo_model">Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger bs-4 delete_weirdo" data-weirdo_id=${weirdo['weirdo_id']} data-bs-toggle="modal" data-bs-target="#weirdo_model">Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            `;
-            card_container.innerHTML += content;
+            let template_card = document.getElementById('card_template');
+            let new_card = template_card.cloneNode(true);
+            new_card.removeAttribute("hidden");
+            new_card.removeAttribute("id");
+            new_card.querySelector('.card-title').innerHTML = weirdo['name'];
+            new_card.querySelector('.card-spd').innerHTML += weirdo['speed'];
+            new_card.querySelector('.card-def').innerHTML += weirdo['defense'];    
+            card_container.appendChild(new_card);
         }
     } else if (warband_id != 0) { //if id doesn't exist, reload to id 0
         window.location.href = new_warband_url;

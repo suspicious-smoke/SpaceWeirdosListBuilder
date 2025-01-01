@@ -13,6 +13,22 @@
  </script>
 
  <h1 id="warband_text" class="display-10 fw-bold text-center"></h1>
+<div class="row justify-content-center mb-2">
+    <div class="col-4">
+        <label for="warband_name" class="form-label">Warband Name</label>
+        <input type="text" class="form-control" id="warband_name">
+    </div>
+    <div class="col-2">
+        <label for="warband_trait" class="form-label">Trait</label>
+        <select id="warband_trait" class="form-select">
+            {% for name, value in warband.trait_dropdown.items() %}
+                    <option value="{{name}}">{{name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+
 <button id="create_weirdo" type="button" class="btn btn-primary" data-warband_id="{{warband.warband_id}}" data-bs-toggle="modal" data-bs-target="#weirdo_model">Create Weirdo</button>
 <button id="load_weirdo" type="button" class="btn btn-primary" data-warband_id="0" data-bs-toggle="modal" data-bs-target="#weirdo_model">Load Weirdo</button>
 <button id="load_weirdo" type="button" class="btn btn-primary" data-warband_id="0" data-bs-toggle="modal" data-bs-target="#weirdo_model">Save Warband</button>
@@ -90,53 +106,6 @@
     </div>
 </div>
   
-
-
-
-
-<!-- <button id="create_form_entry" class="btn btn-primary">Create Weirdo</button> -->
-
-
-
-<!-- 
-<form action="" method="post" name="warband_edit" class="text-center">
-
-    <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      </div>
-
-    <div class="form-group">
-        <label for="warband_name" class="label">Name</label>
-        <div class="control">
-            <input type="text" name="warband_name" class="input" required="required" value="{{ warband.name }}" />
-        </div>
-    </div>
-
-    <div class="field pt-4">
-        <label for="warband_trait" class="label">Trait</label>
-        <div class="control">
-            <select name="warband_trait">
-                {% for name, value in warband.trait_dropdown.items() %}
-                    {% set trait_name=name %}
-                    {% if value != '' %}
-                        {% set trait_name=name+": "+value %}
-                    {% endif %}
-                        <option value="{{name}}" {{'selected' if name == warband.trait}}>{{trait_name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </div>
-
-    <div class="field is-grouped pt-4">
-        <div class="control">
-            <button class="button is-primary is-small">Save</button>
-        </div>
-    </div>
-</form> -->
-
-
 <hr />
 
 {% endblock %}

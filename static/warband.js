@@ -16,19 +16,22 @@ window.onload = function() {
 }
 
 function getWarband(warband_id) {
-    const json_warband = localStorage.getItem('warbands');
     let warband = null;
-
-    // try to load the specific warband
-    if (json_warband != null) {
-        const warbands = JSON.parse(json_warband)['warbands'];
-        for(const wbnd of warbands) {
-            if (wbnd['warband_id']==warband_id) { // found a saved warband
-                warband = wbnd;
-            }
+    const warbands = getLocalData()['warbands'];
+    for(const wbnd of warbands) {
+        if (wbnd['warband_id']==warband_id) { // found a saved warband
+            warband = wbnd;
         }
     }
     return warband;
+}
+
+function getLocalData() {
+    const json_warband = localStorage.getItem('warbands');
+    if (json_warband != null) {
+        return JSON.parse(json_warband);
+    }
+    return {warbands:[]};
 }
 
 
@@ -53,11 +56,11 @@ function loadWarband() {
                         <h5 class="card-title">${weirdo['name']}</h5>
                         <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                         <div class="row mb-3">
-                            <div class="col 2"><b>Speed:</b> ${weirdo['speed']}</div>
-                            <div class="col 2"><b>Defense:</b> ${weirdo['defense']}</div>
-                            <div class="col 2"><b>Firepower:</b> </div>
+                            <div class="col 2"><b>Spd:</b> ${weirdo['speed']}</div>
+                            <div class="col 2"><b>Def:</b> ${weirdo['defense']}</div>
+                            <div class="col 2"><b>Firepwr:</b> </div>
                             <div class="col 2"><b>Prowess:</b> </div>
-                            <div class="col 2"><b>Willpower:</b> </div>
+                            <div class="col 2"><b>Willpwr:</b> </div>
                         </div>
                         <div class="float-end">
                             <button type="button" class="btn btn-sm btn-primary edit_weirdo" data-weirdo_id="${weirdo['weirdo_id']}" data-bs-toggle="modal" data-bs-target="#weirdo_model">Edit</button>
@@ -122,18 +125,45 @@ function saveWeirdo() {
     let defense = d.options[d.selectedIndex].text;
     // put weirdo into object for transport
     const weirdo = {
-        weirdo_id:weirdo_id,weirdo_name,weirdo_name,
+        weirdo_id:weirdo_id,
+        name:weirdo_name,
         speed:speed,
-        defense:defense,
+        defense:defense
     }
+    // json_weirdo = JSON.stringify(weirdo); // convert to json
     // first load from local storage
+    warband = getWarband(warband_id);
+    warband_data = getLocalData();
+    // new warband
+    if (warband == null) {
+        // get new warband id
+        let new_id = 1;
+        for (let i=0; i < warband_data['warbands'].length; i++) {
+            if (warband_data['warbands'][i]['warband_id'] >= new_id ) {
+                new_id = warband_data['warbands'][i]['warband_id']+1;
+            }
+        }
+        // add warband into local data
+        let t = document.getElementById('warband_trait');
+        let trait = t.options[t.selectedIndex].text;
+        weirdo['weirdo_id'] = 1
+        const new_warband = {
+            warband_id: new_id,
+            name: document.getElementById('warband_name').value,
+            trait: trait,
+            weirdos: [weirdo]
+        }
+        warband_data['warbands'].push(new_warband);
+        localStorage.setItem('warbands', JSON.stringify(warband_data));
+        //redirect to new page
+        window.location.href = url_for('warband_page', warband_id=new_id);
+    } else {
+        // check weirdo id's
+    }
     
-    // check warband id
-    // check weirdo id's
 
-    json_weirdo = JSON.stringify(weirdo); // convert to json
-    // save to local storage
-    localStorage.setItem('warband_'+warband_id,json_weirdo)
+    
+    // localStorage.setItem('warband_'+warband_id,json_weirdo)
     location.reload(); // reload page
 }
 

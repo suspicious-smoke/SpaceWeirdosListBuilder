@@ -12,12 +12,10 @@ window.onload = function() {
         resetSelect('defense_select');
         wireSaveWeirdo();
     });
+
 }
 
-
-function loadWarband() {
-    // check warband id
-    const warband_id = document.getElementById('warband_id').value
+function getWarband(warband_id) {
     const json_warband = localStorage.getItem('warbands');
     let warband = null;
 
@@ -30,6 +28,14 @@ function loadWarband() {
             }
         }
     }
+    return warband;
+}
+
+
+function loadWarband() {
+    // check warband id
+    const warband_id = document.getElementById('warband_id').value;
+    warband = getWarband(warband_id);
     if (warband!= null) {
         // load warband info
         document.getElementById('warband_text').innerHTML = "Edit Warband";
@@ -44,7 +50,7 @@ function loadWarband() {
             <div class="mt-3 col-sm-6 weirdo_card">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">${weirdo['weirdo_name']}</h5>
+                        <h5 class="card-title">${weirdo['name']}</h5>
                         <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                         <div class="row mb-3">
                             <div class="col 2"><b>Speed:</b> ${weirdo['speed']}</div>
@@ -54,8 +60,8 @@ function loadWarband() {
                             <div class="col 2"><b>Willpower:</b> </div>
                         </div>
                         <div class="float-end">
-                            <button type="button" class="btn btn-sm btn-primary load_weirdo">Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger bs-4 delete_weirdo">Delete</button>
+                            <button type="button" class="btn btn-sm btn-primary edit_weirdo" data-weirdo_id="${weirdo['weirdo_id']}" data-bs-toggle="modal" data-bs-target="#weirdo_model">Edit</button>
+                            <button type="button" class="btn btn-sm btn-danger bs-4 delete_weirdo" data-weirdo_id="${weirdo['weirdo_id']}" data-bs-toggle="modal" data-bs-target="#weirdo_model">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -63,13 +69,28 @@ function loadWarband() {
             `;
             card_container.innerHTML += content;
         }
-        
-
     } else if (warband_id != 0) { //if id doesn't exist, reload to id 0
         window.location.href = new_warband_url;
     } else {
         document.getElementById('warband_text').innerHTML = "Create Warband";
     }
+
+    // wire edit/delete buttons
+    const weirdo_edits = document.querySelectorAll('.edit_weirdo');
+
+    // Add a click event listener to each element
+    weirdo_edits.forEach(weirdo => {
+        weirdo.addEventListener('click', (wrdo) => {
+            let weirdo_id = wrdo.target.dataset.weirdo_id;
+            document.getElementById('warband_id').value = warband_id;
+            document.getElementById('weirdo_id').value = weirdo_id;
+            let weirdo = getWeirdo(warband_id, weirdo_id);
+            document.getElementById('weirdo_name').value = weirdo['name'];
+            selectedSelect('speed_select', weirdo['speed']);
+            selectedSelect('defense_select', weirdo['defense']);
+            wireSaveWeirdo();
+        });
+    });
 }
 
 
@@ -77,6 +98,16 @@ function wireSaveWeirdo() {
     document.getElementById('save_weirdo').addEventListener('click', function() {
         saveWeirdo();
     });
+}
+
+function getWeirdo(warband_id, weirdo_id) {
+    warband = getWarband(warband_id);
+    for (weirdo of warband['weirdos']) {
+        if (weirdo['weirdo_id'] = weirdo_id) {
+            return weirdo;
+        }
+    }
+    return null;
 }
 
 function saveWeirdo() {
@@ -104,6 +135,16 @@ function saveWeirdo() {
     // save to local storage
     localStorage.setItem('warband_'+warband_id,json_weirdo)
     location.reload(); // reload page
+}
+
+function selectedSelect(list_name, selected_text) {
+    resetSelect(list_name);
+    let select_list = document.getElementById(list_name);
+    for(let i=0; i < select_list.options.length; i++) {
+        if (select_list.options[i].text == selected_text) {
+            select_list.options[i].selected = true;
+        }
+    }
 }
 
 function resetSelect(list_name) {

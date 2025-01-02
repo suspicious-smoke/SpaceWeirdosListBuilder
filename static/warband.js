@@ -34,7 +34,6 @@ window.onload = function() {
             }
             localStorage.setItem('warbands', JSON.stringify(warband_data));
             loadWeirdoCards(warband); // reload weirdos
-            fadeInOut('save_alert');
         }
     });
 }
@@ -68,7 +67,7 @@ function loadWarband() {
         // load warband name and trait
         document.getElementById('warband_name').value = warband['name'];
         selectedSelect('warband_trait', warband['trait']);
-        loadWeirdoCards(warband);
+        loadWeirdoCards(warband, saved=false);
     } else if (warband_id != 0) { //if id doesn't exist, reload to id 0
         window.location.href = new_warband_url;
     } else {
@@ -76,7 +75,7 @@ function loadWarband() {
     }
 }
 
-function loadWeirdoCards(warband) {
+function loadWeirdoCards(warband, saved=true) {
     let weirdos = warband['weirdos'];
     card_container = document.getElementById('weirdo_cards');
     // clear old events
@@ -100,7 +99,7 @@ function loadWeirdoCards(warband) {
     const edit_btns = document.querySelectorAll('.edit_weirdo');
     edit_btns
     edit_btns.forEach(weirdo => {
-        const edit_listenerfn = (wrdo) => {
+        weirdo.addEventListener('click', (wrdo) => {
             let weirdo_id = wrdo.target.dataset.weirdo_id;
             let warband_id = warband['warband_id']
             document.getElementById('warband_id').value = warband_id;
@@ -110,13 +109,12 @@ function loadWeirdoCards(warband) {
             selectedSelect('speed_select', weirdo['speed']);
             selectedSelect('defense_select', weirdo['defense']);
             wireSaveWeirdo();
-        };
-        weirdo.addEventListener('click', edit_listenerfn);
+        });
     });
     // wire delete buttons
     const delete_btns = document.querySelectorAll('.delete_weirdo');
     delete_btns.forEach(weirdo => {
-        const delete_listenerfn = (btn_elem) => {
+        weirdo.addEventListener('click', (btn_elem) => {
             let weirdo_id = btn_elem.target.dataset.weirdo_id;
             let warband_id = document.getElementById('warband_id').value;
             let local_data = getLocalData();
@@ -129,14 +127,15 @@ function loadWeirdoCards(warband) {
                             local_data['warbands'][i]['weirdos'].splice(j,1);
                             localStorage.setItem('warbands', JSON.stringify(local_data));
                             loadWeirdoCards(warband); // reload weirdos
-                            fadeInOut('save_alert');
                         }
                     }
                 }
             }
-        }
-        weirdo.addEventListener('click', delete_listenerfn);
+        });
     });
+    if (saved) {
+        fadeInOut('save_alert');  
+    }
 }
 
 function deleteEventListeners(id) {
@@ -215,10 +214,7 @@ function saveWeirdo() {
             }
         }
         localStorage.setItem('warbands', JSON.stringify(warband_data));
-        loadWeirdoCards(warband); // reload weirdos
-        fadeInOut('save_alert');
-
-        
+        loadWeirdoCards(warband); // reload weirdos   
     }
 }
 

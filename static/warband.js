@@ -33,7 +33,8 @@ window.onload = function() {
                 }
             }
             localStorage.setItem('warbands', JSON.stringify(warband_data));
-            location.reload(); // reload page
+            loadWeirdoCards(warband); // reload weirdos
+            fadeInOut('save_alert');
         }
     });
 }
@@ -67,34 +68,41 @@ function loadWarband() {
         // load warband name and trait
         document.getElementById('warband_name').value = warband['name'];
         selectedSelect('warband_trait', warband['trait']);
-
-        // load weirdos from warband
-        let weirdos = warband['weirdos'];
-        card_container = document.getElementById('weirdo_cards');
-        // create new card for each weirdo
-        for (const weirdo of weirdos) {
-            let template_card = document.getElementById('card_template');
-            let new_card = template_card.cloneNode(true);
-            new_card.removeAttribute("hidden");
-            new_card.removeAttribute("id");
-            new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
-            new_card.querySelector('.delete_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
-            new_card.querySelector('.card-title').innerHTML = weirdo['name'];
-            new_card.querySelector('.card-spd').innerHTML += weirdo['speed'];
-            new_card.querySelector('.card-def').innerHTML += weirdo['defense'];    
-            card_container.appendChild(new_card);
-        }
+        loadWeirdoCards(warband);
     } else if (warband_id != 0) { //if id doesn't exist, reload to id 0
         window.location.href = new_warband_url;
     } else {
         document.getElementById('warband_text').innerHTML = "Create Warband";
     }
+}
 
+function loadWeirdoCards(warband) {
+    let weirdos = warband['weirdos'];
+    card_container = document.getElementById('weirdo_cards');
+    // clear old events
+    deleteEventListeners('.edit_weirdo');
+    deleteEventListeners('.delete_weirdo');
+    card_container.innerHTML = '';
+    // create new card for each weirdo
+    for (const weirdo of weirdos) {
+        let template_card = document.getElementById('card_template');
+        let new_card = template_card.cloneNode(true);
+        new_card.removeAttribute("hidden");
+        new_card.removeAttribute("id");
+        new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
+        new_card.querySelector('.delete_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
+        new_card.querySelector('.card-title').innerHTML = weirdo['name'];
+        new_card.querySelector('.card-spd').innerHTML += weirdo['speed'];
+        new_card.querySelector('.card-def').innerHTML += weirdo['defense'];    
+        card_container.appendChild(new_card);
+    }
     // wire Edit buttons
     const edit_btns = document.querySelectorAll('.edit_weirdo');
+    edit_btns
     edit_btns.forEach(weirdo => {
-        weirdo.addEventListener('click', (wrdo) => {
+        const edit_listenerfn = (wrdo) => {
             let weirdo_id = wrdo.target.dataset.weirdo_id;
+            let warband_id = warband['warband_id']
             document.getElementById('warband_id').value = warband_id;
             document.getElementById('weirdo_id').value = weirdo_id;
             let weirdo = getWeirdo(warband_id, weirdo_id);
@@ -102,12 +110,13 @@ function loadWarband() {
             selectedSelect('speed_select', weirdo['speed']);
             selectedSelect('defense_select', weirdo['defense']);
             wireSaveWeirdo();
-        });
+        };
+        weirdo.addEventListener('click', edit_listenerfn);
     });
     // wire delete buttons
     const delete_btns = document.querySelectorAll('.delete_weirdo');
     delete_btns.forEach(weirdo => {
-        weirdo.addEventListener('click', (btn_elem) => {
+        const delete_listenerfn = (btn_elem) => {
             let weirdo_id = btn_elem.target.dataset.weirdo_id;
             let warband_id = document.getElementById('warband_id').value;
             let local_data = getLocalData();
@@ -119,20 +128,27 @@ function loadWarband() {
                         if (warband['weirdos'][j]['weirdo_id'] == weirdo_id) {
                             local_data['warbands'][i]['weirdos'].splice(j,1);
                             localStorage.setItem('warbands', JSON.stringify(local_data));
-                            location.reload(); // reload page
+                            loadWeirdoCards(warband); // reload weirdos
+                            fadeInOut('save_alert');
                         }
                     }
                 }
             }
-        });
+        }
+        weirdo.addEventListener('click', delete_listenerfn);
     });
 }
 
+function deleteEventListeners(id) {
+    const items = document.querySelectorAll(id);
+    items.forEach(item => {
+        item.replaceWith(item.cloneNode(true));
+    });
+}
 
 function wireSaveWeirdo() {
-    document.getElementById('save_weirdo').addEventListener('click', function() {
-        saveWeirdo();
-    });
+    document.getElementById('save_weirdo').removeEventListener('click', saveWeirdo);
+    document.getElementById('save_weirdo').addEventListener('click', saveWeirdo);
 }
 
 function getWeirdo(warband_id, weirdo_id) {
@@ -199,7 +215,10 @@ function saveWeirdo() {
             }
         }
         localStorage.setItem('warbands', JSON.stringify(warband_data));
-        location.reload(); // reload page
+        loadWeirdoCards(warband); // reload weirdos
+        fadeInOut('save_alert');
+
+        
     }
 }
 
@@ -251,3 +270,35 @@ function resetSelect(list_name) {
     }
     select_list.options[0].selected = true;
 }
+
+function fadeInOut(id) {
+    const alert = document.getElementById(id);
+    let opacity = 0; // Initial opacity
+  
+    alert.style.display = 'block'; // Make sure the element is visible
+  
+    // Fade in
+    const fadeInEffect = setInterval(() => {
+      if (opacity >= 1) {
+        clearInterval(fadeInEffect); // Stop fade-in
+        setTimeout(() => fadeOut(), 500); // Wait 1 second before starting fade-out
+      } else {
+        opacity += 0.1; // Increase opacity
+        alert.style.opacity = opacity;
+      }
+    }, 50); // Interval of 50ms
+  
+    function fadeOut() {
+      // Fade out
+      const fadeOutEffect = setInterval(() => {
+        if (opacity <= 0) {
+          clearInterval(fadeOutEffect); // Stop fade-out
+          alert.style.display = 'none'; // Hide the element
+        } else {
+          opacity -= 0.1; // Decrease opacity
+          alert.style.opacity = opacity;
+        }
+      }, 50); // Interval of 50ms
+    }
+  }
+  

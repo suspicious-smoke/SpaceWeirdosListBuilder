@@ -26,29 +26,6 @@ class Warband:
         self.prowess_list = prowess
         self.willpower_list = willpower
 
-        # self.weirdos = []  # list.append(geeks(22, 33))
-        # self._last_weirdo_key = 0
-
-    # def add_weirdo(self, weirdo):
-    #     self._last_weirdo_key += 1
-    #     self.weirdos[self._last_weirdo_key] = weirdo
-    #
-    # def delete_weirdo(self, weirdo_key):
-    #     if weirdo_key in self.weirdos:
-    #         del self.weirdos[weirdo_key]
-    #
-    # def get_weirdo(self, weirdo_key):
-    #     weirdo = self.weirdos.get(weirdo_key)
-    #     if weirdo is None:
-    #         return None
-    #     return weirdo
-    #
-    # def get_weirdos(self):
-    #     weirdos = []
-    #     for weirdo_key, weirdo in self.weirdos.items():
-    #         weirdos.append(weirdo)
-    #     return weirdos
-
 
 # class Equipment:
 #     def __init__(self, name, e_type, notes, points):

@@ -46,6 +46,18 @@ function loadWarbandTable() {
     }
     // wire event listener for delete
     const delete_btns = document.querySelectorAll('.delete_warband');
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
+    delete_btns.forEach(btn => {
+        btn.addEventListener('click', (btn_elem) => {
+            let warband_id = btn_elem.target.dataset.warband_id;
+            let local_data = getLocalData();
+            for(let i=0; i < warbands.length; i++) {
+                if (local_data['warbands'][i]['warband_id'] == warband_id) { // found a saved warband
+                    // remove entry from warband
+                    local_data['warbands'].splice(i,1);
+                    localStorage.setItem('warbands', JSON.stringify(local_data));
+                    location.reload(); // reload page
+                }
+            }
+        });
+    });
 }

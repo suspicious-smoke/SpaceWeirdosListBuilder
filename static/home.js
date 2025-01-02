@@ -50,7 +50,7 @@ function loadWarbandTable() {
         btn.addEventListener('click', (btn_elem) => {
             let warband_id = btn_elem.target.dataset.warband_id;
             let local_data = getLocalData();
-            for(let i=0; i < warbands.length; i++) {
+            for(let i=0; i < local_data['warbands'].length; i++) {
                 if (local_data['warbands'][i]['warband_id'] == warband_id) { // found a saved warband
                     // remove entry from warband
                     local_data['warbands'].splice(i,1);

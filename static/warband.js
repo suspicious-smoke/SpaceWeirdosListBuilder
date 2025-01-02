@@ -57,7 +57,6 @@ function getLocalData() {
     return {warbands:[]};
 }
 
-
 function loadWarband() {
     // check warband id
     const warband_id = document.getElementById('warband_id').value;
@@ -79,6 +78,7 @@ function loadWarband() {
             new_card.removeAttribute("hidden");
             new_card.removeAttribute("id");
             new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
+            new_card.querySelector('.delete_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
             new_card.querySelector('.card-title').innerHTML = weirdo['name'];
             new_card.querySelector('.card-spd').innerHTML += weirdo['speed'];
             new_card.querySelector('.card-def').innerHTML += weirdo['defense'];    
@@ -90,11 +90,9 @@ function loadWarband() {
         document.getElementById('warband_text').innerHTML = "Create Warband";
     }
 
-    // wire edit/delete buttons
-    const weirdo_edits = document.querySelectorAll('.edit_weirdo');
-
-    // Add a click event listener to each element
-    weirdo_edits.forEach(weirdo => {
+    // wire Edit buttons
+    const edit_btns = document.querySelectorAll('.edit_weirdo');
+    edit_btns.forEach(weirdo => {
         weirdo.addEventListener('click', (wrdo) => {
             let weirdo_id = wrdo.target.dataset.weirdo_id;
             document.getElementById('warband_id').value = warband_id;
@@ -104,6 +102,28 @@ function loadWarband() {
             selectedSelect('speed_select', weirdo['speed']);
             selectedSelect('defense_select', weirdo['defense']);
             wireSaveWeirdo();
+        });
+    });
+    // wire delete buttons
+    const delete_btns = document.querySelectorAll('.delete_weirdo');
+    delete_btns.forEach(weirdo => {
+        weirdo.addEventListener('click', (btn_elem) => {
+            let weirdo_id = btn_elem.target.dataset.weirdo_id;
+            let warband_id = document.getElementById('warband_id').value;
+            let local_data = getLocalData();
+
+            for(let i=0; i < local_data['warbands'].length; i++) {
+                let warband = local_data['warbands'][i];
+                if (warband['warband_id'] == warband_id) {
+                    for(let j=0; j < warband['weirdos'].length; j++) {
+                        if (warband['weirdos'][j]['weirdo_id'] == weirdo_id) {
+                            local_data['warbands'][i]['weirdos'].splice(j,1);
+                            localStorage.setItem('warbands', JSON.stringify(local_data));
+                            location.reload(); // reload page
+                        }
+                    }
+                }
+            }
         });
     });
 }

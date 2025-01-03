@@ -10,13 +10,26 @@ function getLocalData() {
     return {warbands:[]};
 }
 
+function getWarband(warband_id) {
+    let warband = null;
+    const warbands = getLocalData()['warbands'];
+    for(const wbnd of warbands) {
+        if (wbnd['warband_id'] == warband_id) { // found a saved warband
+            warband = wbnd;
+        }
+    }
+    return warband;
+}
+
 function loadWarbandTable() {
     let warbands = getLocalData()['warbands'];
     let w_table = document.getElementById('warband_table');
     for(const wbnd of warbands) {
+        // build table rows
+        let warband_id = wbnd['warband_id']
         let row = w_table.insertRow();
         let w_id = row.insertCell(0);
-        w_id.innerHTML = wbnd['warband_id'];
+        w_id.innerHTML = warband_id;
 
         let w_name = row.insertCell(1);
         w_name.innerHTML = wbnd['name'];
@@ -28,18 +41,20 @@ function loadWarbandTable() {
         w_count.innerHTML = wbnd['weirdos'].length;
 
         let w_points = row.insertCell(4);
-        w_points.innerHTML = 100
+        getWarbandPoints(warband_id).then((pts) => {
+            w_points.innerHTML =  pts;
+          });
         
 
         let buttons = row.insertCell(5);
         let editbtn = document.createElement('a');
-        editbtn.setAttribute('href',"/warband/"+wbnd['warband_id']);
+        editbtn.setAttribute('href',"/warband/"+warband_id);
         editbtn.classList.add('btn', 'btn-sm', 'btn-primary');
         editbtn.innerText = "edit";
         buttons.appendChild(editbtn);
 
         let deletebtn = document.createElement('button');
-        deletebtn.setAttribute('data-warband_id',wbnd['warband_id']);
+        deletebtn.setAttribute('data-warband_id',warband_id);
         deletebtn.classList.add('btn', 'btn-sm', 'btn-danger', 'ms-1', 'delete_warband');
         deletebtn.innerText = "delete";
         buttons.appendChild(deletebtn);
@@ -48,10 +63,10 @@ function loadWarbandTable() {
     const delete_btns = document.querySelectorAll('.delete_warband');
     delete_btns.forEach(btn => {
         btn.addEventListener('click', (btn_elem) => {
-            let warband_id = btn_elem.target.dataset.warband_id;
+            let _warband_id = btn_elem.target.dataset.warband_id;
             let local_data = getLocalData();
             for(let i=0; i < local_data['warbands'].length; i++) {
-                if (local_data['warbands'][i]['warband_id'] == warband_id) { // found a saved warband
+                if (local_data['warbands'][i]['warband_id'] == _warband_id) { // found a saved warband
                     // remove entry from warband
                     local_data['warbands'].splice(i,1);
                     localStorage.setItem('warbands', JSON.stringify(local_data));
@@ -60,4 +75,31 @@ function loadWarbandTable() {
             }
         });
     });
+}
+function getWarbandPoints(warband_id) {
+    let warband = getWarband(warband_id);
+
+    // call controller
+    const url = points_url;
+    let points = fetch(url, 
+        {
+            method: "POST", // Specify the HTTP method
+            headers: {
+            "Content-Type": "application/json", // Specify JSON format
+            },
+            body: JSON.stringify(warband), // Convert the model object to a JSON string
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok " + response.statusText);
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then((data) => {
+            return data.points;
+        })
+        .catch((error) => {
+            console.error("Fetch error:", error); // Handle errors
+        });
+        return points;
 }

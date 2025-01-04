@@ -63,6 +63,10 @@ function loadWarbandTable() {
     const delete_btns = document.querySelectorAll('.delete_warband');
     delete_btns.forEach(btn => {
         btn.addEventListener('click', (btn_elem) => {
+            const confirmed = confirm("Are you sure you want to delete this warband?");
+            if (!confirmed) {
+                return; // Prevent the default action (e.g., form submission)
+              }
             let _warband_id = btn_elem.target.dataset.warband_id;
             let local_data = getLocalData();
             for(let i=0; i < local_data['warbands'].length; i++) {

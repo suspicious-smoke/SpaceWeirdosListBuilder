@@ -71,68 +71,71 @@
 <div class="modal fade" id="weirdo_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Weirdo</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="row g-3">
-                
-                <input hidden id="weirdo_id" value=0>
-                <div class="col-12">
-                    <label for="weirdo_name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="weirdo_name">
+            <div class="modal-header container pb-1">
+                <div class="container">
+                    <h4 class="float-end me-5 weirdo_cost">Cost:</h4>
+                    <h4>Weirdo</h4>
                 </div>
-
-                <div class="col-md-2">
-                    <label for="speed_select" class="form-label">Speed</label>
-                    <select id="speed_select" class="form-select">
-                        <!-- name is the dice,  -->
-                        {% for num, cost in warband.speed_list.items() %}
-                                <option value="{{cost}}">{{num}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="defense_select" class="form-label">Defense</label>
-                    <select id="defense_select" class="form-select">
-                        <!-- name is the dice,  -->
-                        {% for die, cost in warband.defense_list.items() %}
-                                <option value="{{cost}}">{{die}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <!--
-                <div class="col-md-2">
-                    <label for="inputState" class="form-label">Firepower</label>
-                    <select id="inputState" class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="inputState" class="form-label">Prowess</label>
-                    <select id="inputState" class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="inputState" class="form-label">Willpower</label>
-                    <select id="inputState" class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
-                </div> -->
-
-
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button id="save_weirdo" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save Weirdo</button>
-        </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    
+                    <input hidden id="weirdo_id" value=0>
+                    <div class="col-12">
+                        <label for="weirdo_name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="weirdo_name">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="speed_select" class="form-label">Speed</label>
+                        <select id="speed_select" class="form-select">
+                            <!-- name is the dice,  -->
+                            {% for num, cost in warband.speed_list.items() %}
+                                    <option value="{{cost}}">{{num}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="defense_select" class="form-label">Defense</label>
+                        <select id="defense_select" class="form-select">
+                            <!-- name is the dice,  -->
+                            {% for die, cost in warband.defense_list.items() %}
+                                    <option value="{{cost}}">{{die}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!--
+                    <div class="col-md-2">
+                        <label for="inputState" class="form-label">Firepower</label>
+                        <select id="inputState" class="form-select">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="inputState" class="form-label">Prowess</label>
+                        <select id="inputState" class="form-select">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="inputState" class="form-label">Willpower</label>
+                        <select id="inputState" class="form-select">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                    </div> -->
+
+
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="save_weirdo" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save Weirdo</button>
+            </div>
         </div>
     </div>
 </div>

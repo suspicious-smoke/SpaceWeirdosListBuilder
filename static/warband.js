@@ -36,6 +36,8 @@ window.onload = function() {
             loadWeirdoCards(warband); // reload weirdos
         }
     });
+
+    document.getElementById('weirdo_model').addEventListener('change', updateWeirdoPoints);
 }
 
 function getWarband(warband_id) {
@@ -93,7 +95,7 @@ function loadWeirdoCards(warband, saved=true) {
                 }
             }
             let template_card = document.getElementById('card_template');
-            let new_card = template_card.cloneNode(true);
+            let new_card = template_card.cloneNode(true); // clear out events
             
             new_card.removeAttribute("hidden");
             new_card.removeAttribute("id");
@@ -118,7 +120,8 @@ function loadWeirdoCards(warband, saved=true) {
                 let weirdo = getWeirdo(warband_id, weirdo_id);
                 document.getElementById('weirdo_name').value = weirdo['name'];
                 selectedSelect('speed_select', weirdo['speed']);
-                selectedSelect('defense_select', weirdo['defense']);
+                selectedSelect('defense_select', weirdo['defense']);     
+                updateWeirdoPoints();         
                 wireSaveWeirdo();
             });
         });
@@ -148,9 +151,9 @@ function loadWeirdoCards(warband, saved=true) {
             fadeInOut('save_alert');  
         }
     });
-    
-    
 }
+
+// get cost of each weirdo stat and post it in relevant places
 
 function deleteEventListeners(id) {
     const items = document.querySelectorAll(id);
@@ -162,6 +165,21 @@ function deleteEventListeners(id) {
 function wireSaveWeirdo() {
     document.getElementById('save_weirdo').removeEventListener('click', saveWeirdo);
     document.getElementById('save_weirdo').addEventListener('click', saveWeirdo);
+}
+
+function updateWeirdoPoints() {
+    let total_points = 0;
+    total_points += updateWeirdoSelectPoint('Speed', 'speed_select');
+    total_points += updateWeirdoSelectPoint('Defense', 'defense_select');
+    document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;
+    
+}
+
+function updateWeirdoSelectPoint(text, selector) {
+    let s = document.getElementById(selector);
+    let cost = s.options[s.selectedIndex].value;
+    document.querySelector(`label[for="${selector}"]`).innerHTML = `${text} (${cost})`
+    return parseInt(cost);
 }
 
 function getWeirdo(warband_id, weirdo_id) {

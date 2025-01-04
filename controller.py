@@ -28,13 +28,11 @@ def warband_points():
     # get warband id and selects
     warband = request.get_json()
     points = 0
+    weirdo_points_list = []
     for weirdo in warband['weirdos']:
-        points += speed[weirdo['speed']]
-        points += defense[weirdo['defense']]
-    # if not warband or 'data' not in warband or not isinstance(warband['data'], list):
-    #         return jsonify({"error": "Invalid model"}), 400
-    
-    # Process the model (example: sum up the 'data' array)
-
+        weirdo_pts = speed[weirdo['speed']] + defense[weirdo['defense']]
+        points += weirdo_pts
+        weirdo_info = {'id': weirdo['weirdo_id'], 'points':weirdo_pts }
+        weirdo_points_list.append(weirdo_info)
     # Return the result as JSON
-    return jsonify({"points": points})
+    return jsonify({"points": points, "weirdos": weirdo_points_list})

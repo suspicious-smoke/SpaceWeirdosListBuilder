@@ -82,60 +82,74 @@ function loadWeirdoCards(warband, saved=true) {
     deleteEventListeners('.edit_weirdo');
     deleteEventListeners('.delete_weirdo');
     card_container.innerHTML = '';
-    // create new card for each weirdo
-    for (const weirdo of weirdos) {
-        let template_card = document.getElementById('card_template');
-        let new_card = template_card.cloneNode(true);
-        new_card.removeAttribute("hidden");
-        new_card.removeAttribute("id");
-        new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
-        new_card.querySelector('.delete_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
-        new_card.querySelector('.card-title').innerHTML = weirdo['name'];
-        new_card.querySelector('.card-spd').innerHTML += weirdo['speed'];
-        new_card.querySelector('.card-def').innerHTML += weirdo['defense'];    
-        card_container.appendChild(new_card);
-    }
-    // wire Edit buttons
-    const edit_btns = document.querySelectorAll('.edit_weirdo');
-    edit_btns
-    edit_btns.forEach(weirdo => {
-        weirdo.addEventListener('click', (wrdo) => {
-            let weirdo_id = wrdo.target.dataset.weirdo_id;
-            let warband_id = warband['warband_id']
-            document.getElementById('warband_id').value = warband_id;
-            document.getElementById('weirdo_id').value = weirdo_id;
-            let weirdo = getWeirdo(warband_id, weirdo_id);
-            document.getElementById('weirdo_name').value = weirdo['name'];
-            selectedSelect('speed_select', weirdo['speed']);
-            selectedSelect('defense_select', weirdo['defense']);
-            wireSaveWeirdo();
-        });
-    });
-    // wire delete buttons
-    const delete_btns = document.querySelectorAll('.delete_weirdo');
-    delete_btns.forEach(weirdo => {
-        weirdo.addEventListener('click', (btn_elem) => {
-            let weirdo_id = btn_elem.target.dataset.weirdo_id;
-            let warband_id = document.getElementById('warband_id').value;
-            let local_data = getLocalData();
+    getWarbandPoints(warband['warband_id']).then((data) => {
+        // create new card for each weirdo
+        for (const weirdo of weirdos) {
+            let weirdo_cost = 0
+            // get weirdo points
+            for (const w_pts of data.weirdos) {
+                if (weirdo['weirdo_id'] == w_pts.id) {
+                    weirdo_cost = w_pts.points
+                }
+            }
+            let template_card = document.getElementById('card_template');
+            let new_card = template_card.cloneNode(true);
+            
+            new_card.removeAttribute("hidden");
+            new_card.removeAttribute("id");
+            new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
+            new_card.querySelector('.delete_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
 
-            for(let i=0; i < local_data['warbands'].length; i++) {
-                let warband = local_data['warbands'][i];
-                if (warband['warband_id'] == warband_id) {
-                    for(let j=0; j < warband['weirdos'].length; j++) {
-                        if (warband['weirdos'][j]['weirdo_id'] == weirdo_id) {
-                            local_data['warbands'][i]['weirdos'].splice(j,1);
-                            localStorage.setItem('warbands', JSON.stringify(local_data));
-                            loadWeirdoCards(warband); // reload weirdos
+            new_card.querySelector('.card-title').innerHTML = weirdo['name'];
+            new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
+            new_card.querySelector('.card-spd').innerHTML += weirdo['speed'];
+            new_card.querySelector('.card-def').innerHTML += weirdo['defense'];    
+            card_container.appendChild(new_card);
+        }
+        // wire Edit buttons
+        const edit_btns = document.querySelectorAll('.edit_weirdo');
+        edit_btns
+        edit_btns.forEach(weirdo => {
+            weirdo.addEventListener('click', (wrdo) => {
+                let weirdo_id = wrdo.target.dataset.weirdo_id;
+                let warband_id = warband['warband_id']
+                document.getElementById('warband_id').value = warband_id;
+                document.getElementById('weirdo_id').value = weirdo_id;
+                let weirdo = getWeirdo(warband_id, weirdo_id);
+                document.getElementById('weirdo_name').value = weirdo['name'];
+                selectedSelect('speed_select', weirdo['speed']);
+                selectedSelect('defense_select', weirdo['defense']);
+                wireSaveWeirdo();
+            });
+        });
+        // wire delete buttons
+        const delete_btns = document.querySelectorAll('.delete_weirdo');
+        delete_btns.forEach(weirdo => {
+            weirdo.addEventListener('click', (btn_elem) => {
+                let weirdo_id = btn_elem.target.dataset.weirdo_id;
+                let warband_id = document.getElementById('warband_id').value;
+                let local_data = getLocalData();
+
+                for(let i=0; i < local_data['warbands'].length; i++) {
+                    let warband = local_data['warbands'][i];
+                    if (warband['warband_id'] == warband_id) {
+                        for(let j=0; j < warband['weirdos'].length; j++) {
+                            if (warband['weirdos'][j]['weirdo_id'] == weirdo_id) {
+                                local_data['warbands'][i]['weirdos'].splice(j,1);
+                                localStorage.setItem('warbands', JSON.stringify(local_data));
+                                loadWeirdoCards(warband); // reload weirdos
+                            }
                         }
                     }
                 }
-            }
+            });
         });
+        if (saved) {
+            fadeInOut('save_alert');  
+        }
     });
-    if (saved) {
-        fadeInOut('save_alert');  
-    }
+    
+    
 }
 
 function deleteEventListeners(id) {
@@ -298,3 +312,29 @@ function fadeInOut(id) {
     }
   }
   
+  
+function getWarbandPoints(warband_id) {
+    let warband = getWarband(warband_id);
+    const url = points_url;
+    // call controller
+    return fetch(url, 
+        {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json", // Specify JSON format is being sent in body
+            },
+            body: JSON.stringify(warband), // Convert the model object to a JSON string
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok " + response.statusText);
+            }
+            return response.json(); // Parse the JSON response
+        })
+        // .then((data) => {
+        //     return data; // this returns data.points to the fetch.
+        // })
+        .catch((error) => {
+            console.error("Fetch error:", error); // Handle errors
+        });
+}

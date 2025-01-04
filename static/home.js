@@ -42,7 +42,7 @@ function loadWarbandTable() {
 
         let w_points = row.insertCell(4);
         getWarbandPoints(warband_id).then((pts) => {
-            w_points.innerHTML =  pts;
+            w_points.innerHTML =  pts.points;
           });
         
 
@@ -76,16 +76,16 @@ function loadWarbandTable() {
         });
     });
 }
+
 function getWarbandPoints(warband_id) {
     let warband = getWarband(warband_id);
-
-    // call controller
     const url = points_url;
-    let points = fetch(url, 
+    // call controller
+    return fetch(url, 
         {
-            method: "POST", // Specify the HTTP method
+            method: "POST",
             headers: {
-            "Content-Type": "application/json", // Specify JSON format
+            "Content-Type": "application/json", // Specify JSON format is being sent in body
             },
             body: JSON.stringify(warband), // Convert the model object to a JSON string
         })
@@ -95,11 +95,10 @@ function getWarbandPoints(warband_id) {
             }
             return response.json(); // Parse the JSON response
         })
-        .then((data) => {
-            return data.points;
-        })
+        // .then((data) => {
+        //     return data; // this returns data.points to the fetch.
+        // })
         .catch((error) => {
             console.error("Fetch error:", error); // Handle errors
         });
-        return points;
 }

@@ -171,8 +171,7 @@ function updateWeirdoPoints() {
     let total_points = 0;
     total_points += updateWeirdoSelectPoint('Speed', 'speed_select');
     total_points += updateWeirdoSelectPoint('Defense', 'defense_select');
-    document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;
-    
+    document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
 }
 
 function updateWeirdoSelectPoint(text, selector) {

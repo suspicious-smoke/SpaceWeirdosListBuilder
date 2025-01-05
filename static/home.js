@@ -130,10 +130,8 @@ function loadWarbandJson(saved_list) {
     // check that the values seem valid
     if (warbands_json['warbands']) {
         localStorage.setItem('warbands', JSON.stringify(warbands_json));
-        alert("Loaded warbands from JSON");
         location.reload();  // reload page (should configure reload warband list instead)
     } else {
         alert("json is missing warbands. Double check it is formated correctly.");
     }
-    location.reload();  // reload page (should configure reload warband list instead)
 }

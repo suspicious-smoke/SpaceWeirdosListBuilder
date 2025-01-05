@@ -86,6 +86,7 @@ function loadWeirdoCards(warband, saved=true) {
     // clear old events
     deleteEventListeners('.edit_weirdo');
     deleteEventListeners('.delete_weirdo');
+    deleteEventListeners('.duplicate_weirdo');
     card_container.innerHTML = '';
     getWarbandPoints(warband['warband_id']).then((data) => {
         // create new card for each weirdo
@@ -104,6 +105,7 @@ function loadWeirdoCards(warband, saved=true) {
             new_card.removeAttribute("id");
             new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
             new_card.querySelector('.delete_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
+            new_card.querySelector('.duplicate_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
             new_card.querySelector('.card-title').innerHTML = weirdo['name'];
             new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
             // load attributes
@@ -153,6 +155,34 @@ function loadWeirdoCards(warband, saved=true) {
                 }
             });
         });
+
+        const duplicate_btns = document.querySelectorAll('.duplicate_weirdo');
+        duplicate_btns.forEach(weirdo => {
+            weirdo.addEventListener('click', (btn_elem) => {
+                let weirdo_id = btn_elem.target.dataset.weirdo_id;
+                let warband_id = document.getElementById('warband_id').value;
+                let local_data = getLocalData();
+
+                for(let i=0; i < local_data['warbands'].length; i++) {
+                    let warband = local_data['warbands'][i];
+                    if (warband['warband_id'] == warband_id) {
+                        for(let j=0; j < warband['weirdos'].length; j++) {
+                            if (warband['weirdos'][j]['weirdo_id'] == weirdo_id) {
+                                let new_weirdo = structuredClone(warband['weirdos'][j]);
+                                new_weirdo['weirdo_id'] = getNextWeirdoID(warband);
+                                new_weirdo['name'] += ' (c)'
+                                warband['weirdos'].push(new_weirdo);
+                                localStorage.setItem('warbands', JSON.stringify(local_data));
+                                loadWeirdoCards(warband); // reload weirdos
+                                return;
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+
         if (saved) {
             fadeInOut('save_alert');  
         }
@@ -202,6 +232,18 @@ function getWeirdo(warband_id, weirdo_id) {
         }
     }
     return null;
+}
+
+function getNextWeirdoID(warband) {
+        let next_weirdo_id = 1;
+        for (let i = 0; i < warband['weirdos'].length; i++) {
+            let _weirdo = warband['weirdos'][i]
+            // increase weirdo id
+            if (_weirdo['weirdo_id'] >= next_weirdo_id) {
+                next_weirdo_id = parseInt(_weirdo['weirdo_id']) + 1;
+            }
+        }
+        return next_weirdo_id;
 }
 
 function saveWeirdo() {

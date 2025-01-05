@@ -190,7 +190,7 @@ function updateWeirdoSelectPoint(attribute) {
     let selector = `${attribute}_select`;
     let s = document.getElementById(selector);
     let cost = s.options[s.selectedIndex].value;
-    document.querySelector(`label[for="${selector}"]`).innerHTML = `${text} (${cost})`
+    document.querySelector(`label[for="${selector}"]`).innerHTML = `${text} [${cost}]`
     return parseInt(cost);
 }
 

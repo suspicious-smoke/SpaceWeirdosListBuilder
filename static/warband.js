@@ -355,6 +355,13 @@ function resetSelect(list_name) {
 
 function fadeInOut(id) {
     const alert = document.getElementById(id);
+    // prevent running multiple times
+    if (alert.style.opacity < 0) {
+        alert.style.opacity = 0;
+    }
+    if (alert.style.opacity != 0) {
+        return;
+    }
     let opacity = 0; // Initial opacity
     alert.style.display = 'block'; // Make sure the element is visible
     // Fade in

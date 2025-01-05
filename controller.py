@@ -30,7 +30,7 @@ def warband_points():
     points = 0
     weirdo_points_list = []
     for weirdo in warband['weirdos']:
-        weirdo_pts = speed[weirdo['speed']] + defense[weirdo['defense']]
+        weirdo_pts = speed[weirdo['speed']] + defense[weirdo['defense']] + firepower[weirdo['firepower']] + prowess[weirdo['prowess']] + willpower[weirdo['willpower']]
         points += weirdo_pts
         weirdo_info = {'id': weirdo['weirdo_id'], 'points':weirdo_pts }
         weirdo_points_list.append(weirdo_info)

@@ -1,3 +1,4 @@
+
 // on warband page load
 window.onload = function() {
     loadWarband();
@@ -8,9 +9,11 @@ window.onload = function() {
         document.getElementById('warband_id').value = warband_id;
         document.getElementById('weirdo_id').value = 0;
         document.getElementById('weirdo_name').value = '';
-        resetSelect('speed_select');
-        resetSelect('defense_select');
+        for (const att of weirdo_attribute) {
+            resetSelect(`${att}_select`);
+        } 
         wireSaveWeirdo();
+        updateWeirdoPoints();
     });
 
     // wire save warband button
@@ -69,7 +72,7 @@ function loadWarband() {
         // load warband name and trait
         document.getElementById('warband_name').value = warband['name'];
         selectedSelect('warband_trait', warband['trait']);
-        loadWeirdoCards(warband, saved=false);
+        loadWeirdoCards(warband, saved=false); // load weirdos
     } else if (warband_id != 0) { //if id doesn't exist, reload to id 0
         window.location.href = new_warband_url;
     } else {
@@ -101,11 +104,12 @@ function loadWeirdoCards(warband, saved=true) {
             new_card.removeAttribute("id");
             new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
             new_card.querySelector('.delete_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
-
             new_card.querySelector('.card-title').innerHTML = weirdo['name'];
             new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
-            new_card.querySelector('.card-spd').innerHTML += weirdo['speed'];
-            new_card.querySelector('.card-def').innerHTML += weirdo['defense'];    
+            // load attributes
+            for (const att of weirdo_attribute) {
+                new_card.querySelector(`.card-${att}`).innerHTML = weirdo[att];
+            } 
             card_container.appendChild(new_card);
         }
         // wire Edit buttons
@@ -119,8 +123,10 @@ function loadWeirdoCards(warband, saved=true) {
                 document.getElementById('weirdo_id').value = weirdo_id;
                 let weirdo = getWeirdo(warband_id, weirdo_id);
                 document.getElementById('weirdo_name').value = weirdo['name'];
-                selectedSelect('speed_select', weirdo['speed']);
-                selectedSelect('defense_select', weirdo['defense']);     
+
+                for (const att of weirdo_attribute) {
+                    selectedSelect(`${att}_select`, weirdo[att]);
+                };     
                 updateWeirdoPoints();         
                 wireSaveWeirdo();
             });
@@ -169,12 +175,19 @@ function wireSaveWeirdo() {
 
 function updateWeirdoPoints() {
     let total_points = 0;
-    total_points += updateWeirdoSelectPoint('Speed', 'speed_select');
-    total_points += updateWeirdoSelectPoint('Defense', 'defense_select');
+    for (const att of weirdo_attribute) {
+        total_points += updateWeirdoSelectPoint(att);
+    } 
     document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
 }
+// turn first character to upper case
+function fUpper(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+}
 
-function updateWeirdoSelectPoint(text, selector) {
+function updateWeirdoSelectPoint(attribute) {
+    let text = fUpper(attribute);
+    let selector = `${attribute}_select`;
     let s = document.getElementById(selector);
     let cost = s.options[s.selectedIndex].value;
     document.querySelector(`label[for="${selector}"]`).innerHTML = `${text} (${cost})`
@@ -196,17 +209,17 @@ function saveWeirdo() {
     let warband_id = document.getElementById('warband_id').value;
     let weirdo_id = document.getElementById('weirdo_id').value;
     let weirdo_name = document.getElementById('weirdo_name').value;
-
-    let s = document.getElementById('speed_select');
-    let speed = s.options[s.selectedIndex].text;
-    let d = document.getElementById('defense_select');
-    let defense = d.options[d.selectedIndex].text;
     const weirdo = {
         weirdo_id:weirdo_id,
-        name:weirdo_name,
-        speed:speed,
-        defense:defense
+        name:weirdo_name
     }
+    // load attributes into weirdo
+    for (const att of weirdo_attribute) {
+        let s = document.getElementById(`${att}_select`);
+        let item = s.options[s.selectedIndex].text;
+        weirdo[att] = item;
+    } 
+    
     // first load from local storage
     warband = getWarband(warband_id);
     
@@ -301,33 +314,30 @@ function resetSelect(list_name) {
 function fadeInOut(id) {
     const alert = document.getElementById(id);
     let opacity = 0; // Initial opacity
-  
     alert.style.display = 'block'; // Make sure the element is visible
-  
     // Fade in
     const fadeInEffect = setInterval(() => {
-      if (opacity >= 1) {
+        if (opacity >= 1) {
         clearInterval(fadeInEffect); // Stop fade-in
         setTimeout(() => fadeOut(), 500); // Wait 1 second before starting fade-out
-      } else {
+        } else {
         opacity += 0.1; // Increase opacity
         alert.style.opacity = opacity;
-      }
-    }, 50); // Interval of 50ms
-  
-    function fadeOut() {
-      // Fade out
-      const fadeOutEffect = setInterval(() => {
-        if (opacity <= 0) {
-          clearInterval(fadeOutEffect); // Stop fade-out
-          alert.style.display = 'none'; // Hide the element
-        } else {
-          opacity -= 0.1; // Decrease opacity
-          alert.style.opacity = opacity;
         }
-      }, 50); // Interval of 50ms
+    }, 50); // Interval of 50ms
+    function fadeOut() {
+        // Fade out
+        const fadeOutEffect = setInterval(() => {
+        if (opacity <= 0) {
+            clearInterval(fadeOutEffect); // Stop fade-out
+            alert.style.display = 'none'; // Hide the element
+        } else {
+            opacity -= 0.1; // Decrease opacity
+            alert.style.opacity = opacity;
+        }
+        }, 50); // Interval of 50ms
     }
-  }
+}
   
   
 function getWarbandPoints(warband_id) {

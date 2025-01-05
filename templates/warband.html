@@ -1,17 +1,17 @@
 {% extends "layout.html" %}
 {% block title %}Space Weirdos{% endblock %}
 
-
-
 {% block content %}
   
-
 <script src="/static/warband.js"></script>
 
 <!-- New Weirdo Button -->
  <script>
     const new_warband_url = "{{url_for('warband_page', warband_id=0)}}";
     const points_url = "{{url_for('warband_points')}}";
+    const weirdo_attribute = [
+        'speed','defense','firepower','prowess','willpower'
+    ];
  </script>
  <h1 id="warband_text" class="display-10 fw-bold text-center"></h1>
 <div class="row justify-content-center mb-2">
@@ -29,13 +29,10 @@
     </div>
 </div>
 
-
 <div class="d-flex align-items-end">
     <button id="save_warband" type="button" class="mt-3 btn btn-success">Save Warband</button>
-<!--   -->
     <div id="save_alert" class="p-1 float alert alert-success d-flex mb-0 ms-3" style="opacity: 0; width: fit-content" role="alert">saved warband</div>
 </div>
-
 
 <input hidden id="warband_id" value={{warband.warband_id}}>
 <!-- this will fill with the weirdo cards from warband.js -->
@@ -46,14 +43,28 @@
         <div class="card-body">
             <h5 class="card-cost float-end">no value</h5>
             <h5 class="card-title"></h5>
-            
-            <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
-            <div class="row mb-3">
-                <div class="col-2 card-spd"><b>Spd: </b></div>
-                <div class="col-2 card-def"><b>Def: </b></div>
-                <div class="col-2 card-firepwr"><b>Firepwr: </b></div>
-                <div class="col-2 card-prw"><b>Prowess: </b></div>
-                <div class="col-2 card-will"><b>Willpwr: </b></div>
+            <div class="row mb-3 card-attributes">
+                <div class="col-2 border">
+                    <label for="card-speed" class="form-label fw-bold">Speed</label>
+                    </br>
+                    <span class="card-speed"></span>
+                </div>
+                <div class="col-2 border">
+                    <label for="card-defense" class="form-label fw-bold">Defense</label>
+                    <span class="card-defense"></span>
+                </div>
+                <div class="col-2 border">
+                    <label for="card-firepower" class="form-label fw-bold">Firepower</label>
+                    <span class="card-firepower"></span>
+                </div>
+                <div class="col-2 border">
+                    <label for="card-prowess" class="form-label fw-bold">Prowess</label>
+                    <span class="card-prowess"></span>
+                </div>
+                <div class="col-2 border">
+                    <label for="card-willpower" class="form-label fw-bold">Willpower</label>
+                    <span class="card-willpower"></span>
+                </div>
             </div>
             <div class="float-end">
                 <!-- data-weirdo_id=${weirdo['weirdo_id']} -->
@@ -63,10 +74,8 @@
         </div>
     </div>
 </div>
-
-
-
 <button id="create_weirdo" type="button" class="btn btn-primary mt-3" data-warband_id={{warband.warband_id}} data-bs-toggle="modal" data-bs-target="#weirdo_model">Create Weirdo</button>
+
 <!-- Weirdo Modal -->
 <div class="modal fade" id="weirdo_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -105,30 +114,33 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <!--
                     <div class="col-md-2">
-                        <label for="inputState" class="form-label">Firepower</label>
-                        <select id="inputState" class="form-select">
-                            <option selected>Choose...</option>
-                            <option>...</option>
+                        <label for="firepower_select" class="form-label">Firepower</label>
+                        <select id="firepower_select" class="form-select">
+                            <!-- name is the dice,  -->
+                            {% for die, cost in warband.firepower_list.items() %}
+                                    <option value="{{cost}}">{{die}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <label for="inputState" class="form-label">Prowess</label>
-                        <select id="inputState" class="form-select">
-                            <option selected>Choose...</option>
-                            <option>...</option>
+                        <label for="prowess_select" class="form-label">Prowess</label>
+                        <select id="prowess_select" class="form-select">
+                            <!-- name is the dice,  -->
+                            {% for die, cost in warband.prowess_list.items() %}
+                                    <option value="{{cost}}">{{die}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <label for="inputState" class="form-label">Willpower</label>
-                        <select id="inputState" class="form-select">
-                            <option selected>Choose...</option>
-                            <option>...</option>
+                        <label for="willpower_select" class="form-label">Willpower</label>
+                        <select id="willpower_select" class="form-select">
+                            <!-- name is the dice,  -->
+                            {% for die, cost in warband.willpower_list.items() %}
+                                    <option value="{{cost}}">{{die}}</option>
+                            {% endfor %}
                         </select>
-                    </div> -->
-
-
+                    </div>
                 </div>
                 
             </div>

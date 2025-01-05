@@ -15,8 +15,9 @@
     <div class="b-example-divider"></div>
 </div> 
 <h1 class="mt-5 display-10 fw-bold text-center">Warbands</h1>
-<div class="text-center">
-    <a href="{{ url_for('warband_page', warband_id=0) }}" class="btn btn-primary mb-3">Create New Warband</a>
+<div class="text-center mb-3">
+    <a href="{{ url_for('warband_page', warband_id=0) }}" class="btn btn-primary">Create New Warband</a>
+    <button id="save_json_warband" type="button" class="ms-1 btn btn-success">Save Warbands to clipboard</button>
 </div>
 <div class="col-lg-6 mx-auto border">
     <table id="warband_table" class="table table-striped">
@@ -33,6 +34,25 @@
         <tbody>
         </tbody>
     </table>
+</div>
+<div id="accordion" class="mt-3">
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-center">
+            <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#collapseOne">Load Warbands From Text</a>
+        </div>
+        <div id="collapseOne" class="collapse" data-bs-parent="#accordion">
+            <div class="card-body d-flex justify-content-center">
+
+                <div class="mb-3">
+                    <label for="warband_json_text" class="form-label">Warband Text</label>
+                    <textarea class="form-control" id="warband_json_text" rows="3"></textarea>
+                    <button id="load_warband_text" type="button" class="mt-3 btn btn-success">Upload Warbands</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <hr />

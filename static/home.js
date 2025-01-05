@@ -1,5 +1,11 @@
 window.onload = function() {
     loadWarbandTable();
+    document.getElementById('save_json_warband').addEventListener('click', sendSavedWarbandsToClipboard);
+    document.getElementById('load_warband_text').addEventListener('click', function() {
+        let saved_list = document.getElementById('warband_json_text').value;
+        loadWarbandJson(saved_list);
+    });
+
 }
 
 function getLocalData() {
@@ -79,6 +85,8 @@ function loadWarbandTable() {
             }
         });
     });
+    document.getElementById('warband_json_text').value = JSON.stringify(getLocalData());
+    
 }
 
 function getWarbandPoints(warband_id) {
@@ -105,4 +113,27 @@ function getWarbandPoints(warband_id) {
         .catch((error) => {
             console.error("Fetch error:", error); // Handle errors
         });
+}
+
+function sendSavedWarbandsToClipboard() {
+    const json_warband = getLocalData();
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(JSON.stringify(json_warband));
+    // Alert the copied text
+    alert("Copied the text to clipboard:\n\n" + JSON.stringify(json_warband));
+}
+
+function loadWarbandJson(saved_list) {
+    // get value from textbox
+    let warbands_json = JSON.parse(document.getElementById('warband_json_text').value);
+
+    // check that the values seem valid
+    if (warbands_json['warbands']) {
+        localStorage.setItem('warbands', JSON.stringify(warbands_json));
+        alert("Loaded warbands from JSON");
+        location.reload();  // reload page (should configure reload warband list instead)
+    } else {
+        alert("json is missing warbands. Double check it is formated correctly.");
+    }
+    location.reload();  // reload page (should configure reload warband list instead)
 }

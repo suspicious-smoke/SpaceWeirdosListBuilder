@@ -15,6 +15,27 @@ firepower={"0": 0, "2d8": 2, "2d10": 4}
 prowess={"2d6": 2, "2d8": 4, "2d10": 6}
 willpower={"2d6": 2, "2d8": 4, "2d10": 6}
 
+weapons = [
+    {'type':'Ranged', 'name':'Auto Pistol', 'actions':'3', 'notes':'-1DT range > 1 stick', 'points':0},
+    {'type':'Ranged', 'name':'Heavy Pistol', 'actions':'2', 'notes':'+1 to Under Fire rolls, -1DT past 1 stick', 'points':1},
+    {'type':'Ranged', 'name':'Energy Pistol', 'actions':'3', 'notes':'Reroll FP rolls of 1, -1DT range > 1 stick', 'points':2},
+    {'type':'Ranged', 'name':'Auto Rifle', 'actions':'3', 'notes':'Aim1', 'points':1},
+    {'type':'Ranged', 'name':'Heavy Rifle', 'actions':'2', 'notes':'Aim1,+1 to Under Fire rolls', 'points':2},
+    {'type':'Ranged', 'name':'Sniper Rifle', 'actions':'1', 'notes':'Aim2, cannot target enemies < 1 stick away, reroll FP rolls of 1, +1 to Under Fire rolls', 'points':3},
+    {'type':'Ranged', 'name':'Shotgun', 'actions':'2', 'notes':'Range ≤ 1 stick: +1 to Under Fire rolls Range > 1 stick: -1DT, reroll FP rolls of 1', 'points':2},
+    {'type':'Ranged', 'name':'Energy Rifle', 'actions':'2', 'notes':'Aim1, reroll FP rolls of 1', 'points':2},
+    {'type':'Ranged', 'name':'Flamer', 'actions':'1', 'notes':'Cone AoE', 'points':2},
+    {'type':'Ranged', 'name':'Rocket Launcher', 'actions':'1', 'notes':'Aim2, Cannot target enemies < 1 stick away, Blast AoE', 'points':3},
+    {'type':'Ranged', 'name':'Auto-Cannon', 'actions':'3', 'notes':'Reroll FP rolls of 1 or 2', 'points':3},
+    {'type':'Melee', 'name':'Unarmed', 'actions':'3', 'notes':'-1DT to Prw rolls', 'points':0},
+    {'type':'Melee', 'name':'Claws & Teeth', 'actions':'3', 'notes':'-', 'points':2},
+    {'type':'Melee', 'name':'Horrible Claws & Teeth', 'actions':'3', 'notes':'+1 to Under Attack rolls', 'points':3},
+    {'type':'Melee', 'name':'Melee Weapon', 'actions':'2', 'notes':'-', 'points':1},
+    {'type':'Melee', 'name':'Powered Weapon', 'actions':'2', 'notes':'Reroll Prw rolls of 1', 'points':2},
+    {'type':'Melee', 'name':'Large Melee Weapon', 'actions':'1', 'notes':'+1 to Under Attack rolls', 'points':1},
+    {'type':'Melee', 'name':'Large Powered Weapon', 'actions':'1', 'notes':'Reroll Prw rolls of 1, +1 to Under Attack rolls', 'points':3},
+    {'type':'Melee', 'name':'Whip/Tail', 'actions':'2', 'notes':'Can target enemies up to 1 stick away', 'points':2}
+    ]
 class Warband:
     def __init__(self, warband_id):
         self.warband_id = warband_id

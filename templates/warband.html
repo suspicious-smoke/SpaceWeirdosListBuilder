@@ -80,7 +80,7 @@
 </div>
 
 
-<!-- Weirdo Modal -->
+<!-- --------------Weirdo Modal-------------- -->
 <div class="modal fade" id="weirdo_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -92,8 +92,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <!-- attributes -->
                 <div class="row g-3">
-                    
                     <input hidden id="weirdo_id" value=0>
                     <div class="col-12">
                         <label for="weirdo_name" class="form-label">Name</label>
@@ -146,7 +146,59 @@
                         </select>
                     </div>
                 </div>
-                
+                <!-- Weapons -->
+                <div class="row pt-3 g-3">
+                    <!-- selected weapons -->
+
+
+                    
+                    <div class="accordion" id="additionalItemAccordion">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="weapon-heading">
+                            <!-- weapons list -->
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne">
+                              Weapons
+                            </button>
+                          </h2>
+                          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#additionalItemAccordion">
+                            <div class="accordion-body">
+
+                                <!-- don't use table, make a list of radio buttons -->
+                                <div class=" mx-auto border">
+                                    <table id="weapon_table" class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Actions</th>
+                                            <th scope="col">Notes</th>
+                                            <th scope="col">points</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              Equipment
+                            </button>
+                          </h2>
+                          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#additionalItemAccordion">
+                            <div class="accordion-body">
+                              <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

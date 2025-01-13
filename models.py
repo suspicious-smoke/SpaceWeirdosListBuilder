@@ -35,7 +35,7 @@ weapons = [
     {'type':'Melee', 'name':'Large Melee Weapon', 'actions':'1', 'notes':'+1 to Under Attack rolls', 'points':1},
     {'type':'Melee', 'name':'Large Powered Weapon', 'actions':'1', 'notes':'Reroll Prw rolls of 1, +1 to Under Attack rolls', 'points':3},
     {'type':'Melee', 'name':'Whip/Tail', 'actions':'2', 'notes':'Can target enemies up to 1 stick away', 'points':2}
-    ]
+]
 class Warband:
     def __init__(self, warband_id):
         self.warband_id = warband_id

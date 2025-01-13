@@ -69,6 +69,7 @@
                     <span class="card-willpower"></span>
                 </div>
             </div>
+            
             <div class="float-end">
                 <!-- data-weirdo_id=${weirdo['weirdo_id']} -->
                 <button type="button" class="btn btn-sm btn-outline-secondary edit_weirdo" data-bs-toggle="modal" data-bs-target="#weirdo_model"><i style="color:darkgreen;" class="bi bi-pencil-square"></i></button>
@@ -146,50 +147,82 @@
                         </select>
                     </div>
                 </div>
-                <!-- Weapons -->
+
                 <div class="row pt-3 g-3">
-                    <!-- selected weapons -->
+                    <!-- Selected Items -->
 
-
-                    
+                    <!-- Weapons -->
                     <div class="accordion" id="additionalItemAccordion">
                         <div class="accordion-item">
-                          <h2 class="accordion-header" id="weapon-heading">
+                          <h2 class="accordion-header" id="melee-heading">
                             <!-- weapons list -->
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne">
-                              Weapons
+                              Melee Weapons
                             </button>
                           </h2>
                           <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#additionalItemAccordion">
                             <div class="accordion-body">
-
-                                <!-- don't use table, make a list of radio buttons -->
-                                <div class=" mx-auto border">
-                                    <table id="weapon_table" class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Actions</th>
-                                            <th scope="col">Notes</th>
-                                            <th scope="col">points</th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                {% for item in warband.melee_weapons %}
+                                    <div class="row py-1 border">
+                                        <div class="col-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="meleeRadios">
+                                                <label class="form-check-label">{{ item.name }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            Actions: {{item.actions}}
+                                        </div>
+                                        <div class="col-2">
+                                            pts: {{item.points}}
+                                        </div>
+                                        <div class="col-4">
+                                            {{item.notes}}
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             </div>
                           </div>
                         </div>
+                        
+                        <div class="accordion-item" id="ranged-weapons-list"> <!-- add hidden here to hide ranged weapons -->
+                            <h2 class="accordion-header" id="ranged-heading">
+                              <!-- weapons list -->
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-controls="collapseTwo">
+                                Ranged Weapons
+                              </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#additionalItemAccordion">
+                                <div class="accordion-body">
+                                    {% for item in warband.ranged_weapons %}
+                                        <div class="row py-1 border">
+                                            <div class="col-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="meleeRadios">
+                                                    <label class="form-check-label">{{ item.name }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                Actions: {{item.actions}}
+                                            </div>
+                                            <div class="col-2">
+                                                pts: {{item.points}}
+                                            </div>
+                                            <div class="col-5">
+                                                {{item.notes}}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                          </div>
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                               Equipment
                             </button>
                           </h2>
-                          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#additionalItemAccordion">
+                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#additionalItemAccordion">
                             <div class="accordion-body">
                               <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
                             </div>

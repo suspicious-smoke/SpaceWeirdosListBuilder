@@ -83,7 +83,7 @@
 
 <!-- --------------Weirdo Modal-------------- -->
 <div class="modal fade" id="weirdo_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header container pb-1">
                 <div class="container">
@@ -164,7 +164,7 @@
                             <div class="accordion-body">
                                 {% for item in warband.melee_weapons %}
                                     <div class="row py-1 border">
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="meleeRadios">
                                                 <label class="form-check-label">{{ item.name }}</label>
@@ -173,8 +173,8 @@
                                         <div class="col-2">
                                             Actions: {{item.actions}}
                                         </div>
-                                        <div class="col-2">
-                                            pts: {{item.points}}
+                                        <div class="col-1">
+                                            Pts: {{item.points}}
                                         </div>
                                         <div class="col-4">
                                             {{item.notes}}
@@ -205,10 +205,10 @@
                                             <div class="col-2">
                                                 Actions: {{item.actions}}
                                             </div>
-                                            <div class="col-2">
-                                                pts: {{item.points}}
+                                            <div class="col-1">
+                                                Pts: {{item.points}}
                                             </div>
-                                            <div class="col-5">
+                                            <div class="col-6">
                                                 {{item.notes}}
                                             </div>
                                         </div>

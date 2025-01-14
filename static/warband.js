@@ -279,7 +279,7 @@ function saveWeirdo() {
     
     // get selected radio
     weirdo['melee_weapon'] = document.querySelector('input[name="melee_radios"]:checked').value;
-
+    weirdo['ranged_weapon'] = document.querySelector('input[name="ranged_radios"]:checked').value;
     // first load from local storage
     warband = getWarband(warband_id);
     

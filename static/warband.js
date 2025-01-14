@@ -119,16 +119,30 @@ function loadWeirdoCards(warband, saved=true) {
         edit_btns
         edit_btns.forEach(weirdo => {
             weirdo.addEventListener('click', (wrdo) => {
+                // load weirdo into modal
                 let weirdo_id = wrdo.target.dataset.weirdo_id;
                 let warband_id = warband['warband_id']
                 document.getElementById('warband_id').value = warband_id;
                 document.getElementById('weirdo_id').value = weirdo_id;
                 let weirdo = getWeirdo(warband_id, weirdo_id);
                 document.getElementById('weirdo_name').value = weirdo['name'];
-
+                // attributes
                 for (const att of weirdo_attribute) {
                     selectedSelect(`${att}_select`, weirdo[att]);
                 };     
+                // melee weapons
+                if (weirdo['melee_weapon'] != null) {
+                    document.querySelector(`input[value="${weirdo['melee_weapon']}"][name="melee_radios"]`).checked = true;
+                } else { // default value
+                    document.querySelector('input[value="Unarmed"][name="melee_radios"]').checked = true;
+                }
+                // ranged melee weapons
+                if (weirdo['ranged_weapon'] != null) {
+                    document.querySelector(`input[value="${weirdo['ranged_weapon']}"][name="ranged_radios"]`).checked = true;
+                } else { // default value
+                    document.querySelector('input[value="Auto Pistol"][name="ranged_radios"]').checked = true;
+                }
+
                 updateWeirdoPoints();         
                 wireSaveWeirdo();
             });
@@ -261,7 +275,11 @@ function saveWeirdo() {
         let item = s.options[s.selectedIndex].text;
         weirdo[att] = item;
     } 
+    // get weapons and items
     
+    // get selected radio
+    weirdo['melee_weapon'] = document.querySelector('input[name="melee_radios"]:checked').value;
+
     // first load from local storage
     warband = getWarband(warband_id);
     

@@ -152,7 +152,7 @@
                     <!-- Selected Items -->
 
                     <!-- Weapons -->
-                    <div class="accordion" id="additionalItemAccordion">
+                    <div class="accordion" id="melee-weapon-list">
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="melee-heading">
                             <!-- weapons list -->
@@ -160,13 +160,13 @@
                               Melee Weapons
                             </button>
                           </h2>
-                          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#additionalItemAccordion">
+                          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
                             <div class="accordion-body">
                                 {% for item in warband.melee_weapons %}
                                     <div class="row py-1 border">
                                         <div class="col-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="meleeRadios">
+                                                <input class="form-check-input" type="radio" name="melee_radios" value="{{item.name}}">
                                                 <label class="form-check-label">{{ item.name }}</label>
                                             </div>
                                         </div>
@@ -192,13 +192,13 @@
                                 Ranged Weapons
                               </button>
                             </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#additionalItemAccordion">
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
                                 <div class="accordion-body">
                                     {% for item in warband.ranged_weapons %}
                                         <div class="row py-1 border">
                                             <div class="col-3">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="meleeRadios">
+                                                    <input class="form-check-input" type="radio" name="ranged_radios" value="{{item.name}}">
                                                     <label class="form-check-label">{{ item.name }}</label>
                                                 </div>
                                             </div>
@@ -222,7 +222,7 @@
                               Equipment
                             </button>
                           </h2>
-                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#additionalItemAccordion">
+                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#melee-weapon-list">
                             <div class="accordion-body">
                               <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
                             </div>

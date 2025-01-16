@@ -222,7 +222,7 @@ function updateWeirdoPoints() {
     for (const att of weirdo_attribute) {
         total_points += updateWeirdoSelectPoint(att);
     } 
-    updateWeirdoWeaponsArea();
+    total_points += updateWeirdoWeaponsArea();
     document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
 }
 // turn first character to upper case
@@ -240,6 +240,7 @@ function updateWeirdoSelectPoint(attribute) {
 }
 
 function updateWeirdoWeaponsArea() {
+    weapon_points = 0
     // if firepower is 0, hide ranged weapons and set ranged weapon to auto pistol
     ranged_list = document.getElementById('ranged-weapons-list');
     if (document.getElementById('firepower_select').selectedIndex == 0) {
@@ -254,17 +255,20 @@ function updateWeirdoWeaponsArea() {
     let _name = melee_selected.querySelector('.form-check-label').innerHTML;
     document.getElementById('e-melee-name').innerHTML = `(Melee) ${_name}`;
     document.getElementById('e-melee-actions').innerHTML = melee_selected.querySelector('.col-2').innerHTML;
-    document.getElementById('e-melee-points').innerHTML = melee_selected.querySelector('.col-1').innerHTML;
+    let melee_pts_area = melee_selected.querySelector('.col-1')
+    weapon_points += parseInt(melee_pts_area.getAttribute('value'));
+    document.getElementById('e-melee-points').innerHTML = melee_pts_area.innerHTML;
     document.getElementById('e-melee-notes').innerHTML = melee_selected.querySelector('.col-4').innerHTML;
 
     let ranged_selected = document.querySelector('input[name="ranged_radios"]:checked').closest('.row');
     let _rname = ranged_selected.querySelector('.form-check-label').innerHTML;
     document.getElementById('e-ranged-name').innerHTML = `(Ranged) ${_rname}`;
     document.getElementById('e-ranged-actions').innerHTML = ranged_selected.querySelector('.col-2').innerHTML;
-    document.getElementById('e-ranged-points').innerHTML = ranged_selected.querySelector('.col-1').innerHTML;
+    let ranged_pts_area = ranged_selected.querySelector('.col-1')
+    weapon_points += parseInt(ranged_pts_area.getAttribute('value'));
+    document.getElementById('e-ranged-points').innerHTML = ranged_pts_area.innerHTML;
     document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.col-4').innerHTML;
-
-
+    return weapon_points
 }
 
 function getWeirdo(warband_id, weirdo_id) {

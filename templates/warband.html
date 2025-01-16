@@ -85,21 +85,27 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header container pb-1">
-                <div class="container">
+                <div class="container mb-1">
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     <h4 class="float-end me-5 weirdo_cost">Cost:</h4>
-                    <h4>Weirdo</h4>
+                    
+                    <!-- <h4>Weirdo</h4> -->
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                    <button id="save_weirdo" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save Weirdo</button>
+                    
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                
             </div>
             <div class="modal-body">
                 <!-- attributes -->
                 <div class="row g-3">
                     <input hidden id="weirdo_id" value=0>
-                    <div class="col-12">
+                    <div class="col-6 my-2">
                         <label for="weirdo_name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="weirdo_name">
                     </div>
-
+                </div>
+                <div class="row g-3">
                     <div class="col-md-2">
                         <label for="speed_select" class="form-label">Speed</label>
                         <select id="speed_select" class="form-select">
@@ -251,10 +257,9 @@
                     
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="save_weirdo" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save Weirdo</button>
-            </div>
+            <!-- <div class="modal-footer">
+                
+            </div> -->
         </div>
     </div>
 </div>

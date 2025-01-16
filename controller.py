@@ -23,6 +23,14 @@ def warband_page(warband_id):
     return make_response(render_template('warband.html', warband = _warband))
 
 
+# gets point value for given item equiped to weirdo
+def item_points(item_list, weirdo_item):
+    for item in item_list:
+            if item['name'] == weirdo_item:
+                return item['points']
+    return 0
+
+
 # load warband page
 def warband_points():
     # get warband id and selects
@@ -31,8 +39,15 @@ def warband_points():
     weirdo_points_list = []
     for weirdo in warband['weirdos']:
         weirdo_pts = speed[weirdo['speed']] + defense[weirdo['defense']] + firepower[weirdo['firepower']] + prowess[weirdo['prowess']] + willpower[weirdo['willpower']]
+        
+        if 'ranged_weapon' in weirdo:
+            weirdo_pts += item_points(ranged_weapons, weirdo['ranged_weapon'])
+        if 'melee_weapon' in weirdo:
+            weirdo_pts += item_points(melee_weapons, weirdo['melee_weapon'])
+            
         points += weirdo_pts
         weirdo_info = {'id': weirdo['weirdo_id'], 'points':weirdo_pts }
         weirdo_points_list.append(weirdo_info)
     # Return the result as JSON
     return jsonify({"points": points, "weirdos": weirdo_points_list})
+

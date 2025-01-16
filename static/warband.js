@@ -222,6 +222,14 @@ function updateWeirdoPoints() {
     for (const att of weirdo_attribute) {
         total_points += updateWeirdoSelectPoint(att);
     } 
+    // if firepower is 0, hide ranged weapons and set ranged weapon to auto pistol
+    ranged_list = document.getElementById('ranged-weapons-list');
+    if (document.getElementById('firepower_select').selectedIndex == 0) {
+        ranged_list.setAttribute("hidden", true);
+        document.querySelector('input[value="Auto Pistol"][name="ranged_radios"]').checked = true;
+    } else {
+        ranged_list.removeAttribute("hidden");
+    }
     document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
 }
 // turn first character to upper case

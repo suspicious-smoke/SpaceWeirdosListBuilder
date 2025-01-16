@@ -71,7 +71,6 @@
             </div>
             
             <div class="float-end">
-                <!-- data-weirdo_id=${weirdo['weirdo_id']} -->
                 <button type="button" class="btn btn-sm btn-outline-secondary edit_weirdo" data-bs-toggle="modal" data-bs-target="#weirdo_model"><i style="color:darkgreen;" class="bi bi-pencil-square"></i></button>
                 <button type="button" class="btn btn-sm btn-outline-secondary ms-2 duplicate_weirdo"><i style="color:darkgoldenrod;" class="bi bi-copy"></i></button>
                 <button type="button" class="btn btn-sm btn-outline-secondary ms-2 delete_weirdo"><i style="color:darkred;" class="bi bi-trash"></i></button>
@@ -147,20 +146,32 @@
                         </select>
                     </div>
                 </div>
-
+      
                 <div class="row pt-3 g-3">
-                    <!-- Selected Items -->
-
-                    <!-- Weapons -->
+                    <label class="form-label mt-3 mb-0">Weapons</label>
                     <div class="accordion" id="melee-weapon-list">
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="melee-heading">
                             <!-- weapons list -->
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne">
-                              Melee Weapons
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#melee-collapse" aria-controls="melee-collapse">
+                            <div class="col-2" >
+                                Melee
+                            </div>
+                            <div class="col-3" id="e-melee-name">
+                                Name:
+                            </div>
+                            <div class="col-2" id="e-melee-actions">
+                                Actions: 
+                            </div>
+                            <div class="col-1" id="e-melee-points">
+                                Pts: 
+                            </div>
+                            <div class="col-3" id="e-melee-notes">
+                                Notes:
+                            </div>
                             </button>
                           </h2>
-                          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
+                          <div id="melee-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
                             <div class="accordion-body">
                                 {% for item in warband.melee_weapons %}
                                     <div class="row py-1 border">
@@ -188,11 +199,25 @@
                         <div class="accordion-item" id="ranged-weapons-list"> <!-- add hidden here to hide ranged weapons -->
                             <h2 class="accordion-header" id="ranged-heading">
                               <!-- weapons list -->
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-controls="collapseTwo">
-                                Ranged Weapons
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ranged-collapse" aria-controls="ranged-collapse">
+                                <div class="col-2" >
+                                    Ranged
+                                </div>
+                                <div class="col-3" id="e-ranged-name">
+                                    Name: 
+                                </div>
+                                <div class="col-2" id="e-ranged-actions">
+                                    Actions: 
+                                </div>
+                                <div class="col-1" id="e-ranged-points">
+                                    Pts: 
+                                </div>
+                                <div class="col-3" id="e-ranged-notes">
+                                    Notes:
+                                </div>
                               </button>
                             </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
+                            <div id="ranged-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
                                 <div class="accordion-body">
                                     {% for item in warband.ranged_weapons %}
                                         <div class="row py-1 border">

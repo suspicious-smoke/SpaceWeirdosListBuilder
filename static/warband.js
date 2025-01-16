@@ -222,14 +222,7 @@ function updateWeirdoPoints() {
     for (const att of weirdo_attribute) {
         total_points += updateWeirdoSelectPoint(att);
     } 
-    // if firepower is 0, hide ranged weapons and set ranged weapon to auto pistol
-    ranged_list = document.getElementById('ranged-weapons-list');
-    if (document.getElementById('firepower_select').selectedIndex == 0) {
-        ranged_list.setAttribute("hidden", true);
-        document.querySelector('input[value="Auto Pistol"][name="ranged_radios"]').checked = true;
-    } else {
-        ranged_list.removeAttribute("hidden");
-    }
+    updateWeirdoWeaponsArea();
     document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
 }
 // turn first character to upper case
@@ -244,6 +237,34 @@ function updateWeirdoSelectPoint(attribute) {
     let cost = s.options[s.selectedIndex].value;
     document.querySelector(`label[for="${selector}"]`).innerHTML = `${text} [${cost}]`
     return parseInt(cost);
+}
+
+function updateWeirdoWeaponsArea() {
+    // if firepower is 0, hide ranged weapons and set ranged weapon to auto pistol
+    ranged_list = document.getElementById('ranged-weapons-list');
+    if (document.getElementById('firepower_select').selectedIndex == 0) {
+        ranged_list.setAttribute("hidden", true);
+        document.querySelector('input[value="Auto Pistol"][name="ranged_radios"]').checked = true;
+    } else {
+        ranged_list.removeAttribute("hidden");
+    }
+
+    // get weapon selected. Copy over points and other values
+    let melee_selected = document.querySelector('input[name="melee_radios"]:checked').closest('.row');
+    let _name = melee_selected.querySelector('.form-check-label').innerHTML;
+    document.getElementById('e-melee-name').innerHTML = `(Melee) ${_name}`;
+    document.getElementById('e-melee-actions').innerHTML = melee_selected.querySelector('.col-2').innerHTML;
+    document.getElementById('e-melee-points').innerHTML = melee_selected.querySelector('.col-1').innerHTML;
+    document.getElementById('e-melee-notes').innerHTML = melee_selected.querySelector('.col-4').innerHTML;
+
+    let ranged_selected = document.querySelector('input[name="ranged_radios"]:checked').closest('.row');
+    let _rname = ranged_selected.querySelector('.form-check-label').innerHTML;
+    document.getElementById('e-ranged-name').innerHTML = `(Ranged) ${_rname}`;
+    document.getElementById('e-ranged-actions').innerHTML = ranged_selected.querySelector('.col-2').innerHTML;
+    document.getElementById('e-ranged-points').innerHTML = ranged_selected.querySelector('.col-1').innerHTML;
+    document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.col-4').innerHTML;
+
+
 }
 
 function getWeirdo(warband_id, weirdo_id) {

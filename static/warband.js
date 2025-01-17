@@ -268,6 +268,14 @@ function updateWeirdoWeaponsArea() {
     weapon_points += parseInt(ranged_pts_area.getAttribute('value'));
     document.getElementById('e-ranged-points').innerHTML = ranged_pts_area.innerHTML;
     document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.col-4').innerHTML;
+
+    // close accordions
+    document.querySelectorAll('.accordion .collapse').forEach(function(collapseElement) {
+        const bsCollapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+        bsCollapse.hide(); // Close all accordion items
+    });
+
+
     return weapon_points
 }
 

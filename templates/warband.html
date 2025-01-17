@@ -15,7 +15,7 @@
  </script>
  <h1 id="warband_text" class="display-10 fw-bold text-center"></h1>
 <div class="row justify-content-center mb-2">
-    <div class="col-4">
+    <div class="col-3">
         <label for="warband_name" class="form-label">Warband Name</label>
         <input type="text" class="form-control" id="warband_name">
     </div>
@@ -87,28 +87,27 @@
             <div class="modal-header container pb-1">
                 <div class="container mb-1">
                     <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <h4 class="float-end me-5 weirdo_cost">Cost:</h4>
+                    <span class="float-end me-5 weirdo_cost">Cost:</span>
                     
                     <!-- <h4>Weirdo</h4> -->
                     <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                    <button id="save_weirdo" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save Weirdo</button>
+                    <button id="save_weirdo" type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Save Weirdo</button>
                     
                 </div>
                 
             </div>
             <div class="modal-body">
                 <!-- attributes -->
-                <div class="row g-3">
+                <div class="row g-3 justify-content-center">
                     <input hidden id="weirdo_id" value=0>
-                    <div class="col-6 my-2">
-                        <label for="weirdo_name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="weirdo_name">
+                    <div class="col-3 my-2">
+                        <input type="text" class="form-control form-select-sm" placeholder="weirdo's name" id="weirdo_name">
                     </div>
                 </div>
                 <div class="row g-3">
                     <div class="col-md-2">
                         <label for="speed_select" class="form-label">Speed</label>
-                        <select id="speed_select" class="form-select">
+                        <select id="speed_select" class="form-select form-select-sm">
                             <!-- name is the dice,  -->
                             {% for num, cost in warband.speed_list.items() %}
                                     <option value="{{cost}}">{{num}}</option>
@@ -117,7 +116,7 @@
                     </div>
                     <div class="col-md-2">
                         <label for="defense_select" class="form-label">Defense</label>
-                        <select id="defense_select" class="form-select">
+                        <select id="defense_select" class="form-select form-select-sm">
                             <!-- name is the dice,  -->
                             {% for die, cost in warband.defense_list.items() %}
                                     <option value="{{cost}}">{{die}}</option>
@@ -126,7 +125,7 @@
                     </div>
                     <div class="col-md-2">
                         <label for="firepower_select" class="form-label">Firepower</label>
-                        <select id="firepower_select" class="form-select">
+                        <select id="firepower_select" class="form-select form-select-sm">
                             <!-- name is the dice,  -->
                             {% for die, cost in warband.firepower_list.items() %}
                                     <option value="{{cost}}">{{die}}</option>
@@ -135,7 +134,7 @@
                     </div>
                     <div class="col-md-2">
                         <label for="prowess_select" class="form-label">Prowess</label>
-                        <select id="prowess_select" class="form-select">
+                        <select id="prowess_select" class="form-select form-select-sm">
                             <!-- name is the dice,  -->
                             {% for die, cost in warband.prowess_list.items() %}
                                     <option value="{{cost}}">{{die}}</option>
@@ -144,7 +143,7 @@
                     </div>
                     <div class="col-md-2">
                         <label for="willpower_select" class="form-label">Willpower</label>
-                        <select id="willpower_select" class="form-select">
+                        <select id="willpower_select" class="form-select form-select-sm">
                             <!-- name is the dice,  -->
                             {% for die, cost in warband.willpower_list.items() %}
                                     <option value="{{cost}}">{{die}}</option>
@@ -154,7 +153,7 @@
                 </div>
       
                 <div class="row pt-3 g-3">
-                    <label class="form-label mt-3 mb-0">Weapons</label>
+                    <!-- <label class="form-label mt-3 mb-0">Weapons</label> -->
                     <div class="accordion" id="melee-weapon-list">
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="melee-heading">
@@ -195,10 +194,7 @@
                             <h2 class="accordion-header" id="ranged-heading">
                               <!-- weapons list -->
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ranged-collapse" aria-controls="ranged-collapse">
-                                    <div class="col-3" id="e-ranged-name"></div>
-                                    <div class="col-2" id="e-ranged-actions"></div>
-                                    <div class="col-1" id="e-ranged-points"></div>
-                                    <div class="col-4" id="e-ranged-notes"></div>
+                                    <div class="col-3" id="e-ranged-name"></div><div class="col-2" id="e-ranged-actions"></div><div class="col-1" id="e-ranged-points"></div><div class="col-4" id="e-ranged-notes"></div>
                               </button>
                             </h2>
                             <div id="ranged-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
@@ -226,18 +222,65 @@
                             </div>
                           </div>
                         <div class="accordion-item">
-                          <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          <h2 class="accordion-header" id="equipment-heading">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#equipment-collapse" aria-expanded="false" aria-controls="equipment-collapse">
                               Equipment
                             </button>
                           </h2>
-                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#melee-weapon-list">
+                          <div id="equipment-collapse" class="accordion-collapse collapse" aria-labelledby="equipment-heading" data-bs-parent="#melee-weapon-list">
                             <div class="accordion-body">
-                              <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                {% for item in warband.equipment %}
+                                    <div class="row py-1 border">
+                                        <div class="col-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="equipment_checkbox" value="{{item.name}}">
+                                                <label class="form-check-label">{{ item.name }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                            {{item.type}}
+                                        </div>
+                                        <div class="col-1" value = {{item.points}}>
+                                            Pts: {{item.points}}
+                                        </div>
+                                        <div class="col-8">
+                                            {{item.notes}}
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             </div>
                           </div>
                         </div>
-
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="powers-heading">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#powers-collapse" aria-expanded="false" aria-controls="powers-collapse">
+                                Powers
+                              </button>
+                            </h2>
+                            <div id="powers-collapse" class="accordion-collapse collapse" aria-labelledby="powers-heading" data-bs-parent="#melee-weapon-list">
+                              <div class="accordion-body">
+                                  {% for item in warband.powers %}
+                                      <div class="row py-1 border">
+                                          <div class="col-2">
+                                              <div class="form-check">
+                                                  <input class="form-check-input" type="checkbox" name="powers_checkbox" value="{{item.name}}">
+                                                  <label class="form-check-label">{{ item.name }}</label>
+                                              </div>
+                                          </div>
+                                          <div class="col-1">
+                                              {{item.type}}
+                                          </div>
+                                          <div class="col-1" value = {{item.points}}>
+                                              Pts: {{item.points}}
+                                          </div>
+                                          <div class="col-7">
+                                            {{item.effect}}
+                                        </div>
+                                      </div>
+                                  {% endfor %}
+                              </div>
+                            </div>
+                          </div>
                       </div>
                     
                 </div>

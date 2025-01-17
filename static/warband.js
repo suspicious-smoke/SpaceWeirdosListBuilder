@@ -270,10 +270,10 @@ function updateWeirdoWeaponsArea() {
     document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.col-4').innerHTML;
 
     // close accordions
-    document.querySelectorAll('.accordion .collapse').forEach(function(collapseElement) {
-        const bsCollapse = new bootstrap.Collapse(collapseElement, { toggle: false });
-        bsCollapse.hide(); // Close all accordion items
-    });
+    // document.querySelectorAll('.accordion .collapse').forEach(function(collapseElement) {
+    //     const bsCollapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+    //     bsCollapse.hide(); // Close all accordion items
+    // });
 
 
     return weapon_points

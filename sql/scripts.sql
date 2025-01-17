@@ -91,15 +91,15 @@ VALUES
 ("Commander", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 
--- INSERT INTO LEADER_TRAIT (leader_trait, leader_effect)
--- VALUES
--- ("Bounty Hunter", "Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action."),
--- ("Healer", "During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT."),
--- ("Majestic", "Any time one of your warband has to make a Willpower roll, that model may use the Leader’s Willpower instead."),
--- ("Monstrous", "Non-Leader models must win a Willpower roll vs. your leader to move into contact."),
--- ("Political Officer", "During the Initiative Phase, before rolling, take one of your Warband within LOS of your leader out of action to make all other models in the Warband ready, remove the broken condition from your warband, and gain +1DT to this Initiative roll."),
--- ("Sorcerer", "Psychic Powers actions cost 1 action instead of 2, but may still only use 1 per turn."),
--- ("Tactician", "+1DT to Initiative rolls.");
+INSERT INTO LEADER_TRAIT (leader_trait, leader_effect)
+VALUES
+("Bounty Hunter", "Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action."),
+("Healer", "During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT."),
+("Majestic", "Any time one of your warband has to make a Willpower roll, that model may use the Leader’s Willpower instead."),
+("Monstrous", "Non-Leader models must win a Willpower roll vs. your leader to move into contact."),
+("Political Officer", "During the Initiative Phase, before rolling, take one of your Warband within LOS of your leader out of action to make all other models in the Warband ready, remove the broken condition from your warband, and gain +1DT to this Initiative roll."),
+("Sorcerer", "Psychic Powers actions cost 1 action instead of 2, but may still only use 1 per turn."),
+("Tactician", "+1DT to Initiative rolls.");
 
 
 INSERT INTO WARBAND_TRAIT (name, power)
@@ -123,28 +123,28 @@ VALUES
 ("willpower", "2d6", 2), ("willpower", "2d8", 4), ("willpower", "2d10", 6);
 
 
--- INSERT INTO EQUIPMENT (name, e_type, effect, points)
--- VALUES
--- ("Cybernetics", "P","+1 to Prw rolls", 1),
--- ("Psychic Focus", "P","+1 to Will rolls", 1),
--- ("Targeting Reticule", "P","+1 to FP rolls", 1),
--- ("Heavy Armor", "P","+1 to Def rolls", 1),
--- ("Grenade*", "A","Targets point up to 1 stick from attacker, Blast AOE, 2d10 FP , +1 to Under Fire rolls", 1),
--- ("Jump Pack", "P","The model can ignore terrain and other models when taking Move actions", 1),
--- ("Medkit*", "A","1 model touching this model becomes ready", 1),
--- ("Stealth Suit", "P","If this model’s base touches a piece of terrain, enemy models do not have LoS unless they are within 1 stick of the stealthy model", 1);
+INSERT INTO EQUIPMENT (name, e_type, effect, points)
+VALUES
+("Cybernetics", "P","+1 to Prw rolls", 1),
+("Psychic Focus", "P","+1 to Will rolls", 1),
+("Targeting Reticule", "P","+1 to FP rolls", 1),
+("Heavy Armor", "P","+1 to Def rolls", 1),
+("Grenade*", "A","Targets point up to 1 stick from attacker, Blast AOE, 2d10 FP , +1 to Under Fire rolls", 1),
+("Jump Pack", "P","The model can ignore terrain and other models when taking Move actions", 1),
+("Medkit*", "A","1 model touching this model becomes ready", 1),
+("Stealth Suit", "P","If this model’s base touches a piece of terrain, enemy models do not have LoS unless they are within 1 stick of the stealthy model", 1);
 
 
 -- INSERT INTO PSYCHIC_POWER (name, p_type, effect, points)
 -- VALUES
--- ("Fear", "Attack", "Each enemy model within 1 stick who loses its opposed Will roll must move 1 stick away from the psychic.", 1),
--- ("Healing", "Effect", "1 model within 1 stick of this model and in LoS becomes ready.", 1),
--- ("Meat Puppet", "Effect", "Return 1 OoA model to the table and place within 1 stick of the psychic. The returned model’s Spd is reduced by 1 (min 1), and rolls with -1DT for all rolls. A model can only be returned to the table once.", 2),
--- ("Mind Control", "Attack", "Targeted enemy takes one action of the psychic’s choice.", 2),
--- ("Mind Stab", "Attack", "Target 1 enemy model within 1 stick. Roll on Under Fire table +3.", 3),
--- ("Prescience", "Effect", "Choose any model on the table to either gain +1DT or -1DT for all their actions this round.", 1),
--- ("Telekinesis", "Either", "Effect: move 1 obstacle or ally up to 1 stick. Attack: move an enemy 1 stick.", 1),
--- ("Teleport", "Effect", "Place the psychic anywhere on the board.", 1);
+("Fear", "Attack", "Each enemy model within 1 stick who loses its opposed Will roll must move 1 stick away from the psychic.", 1),
+("Healing", "Effect", "1 model within 1 stick of this model and in LoS becomes ready.", 1),
+("Meat Puppet", "Effect", "Return 1 OoA model to the table and place within 1 stick of the psychic. The returned model’s Spd is reduced by 1 (min 1), and rolls with -1DT for all rolls. A model can only be returned to the table once.", 2),
+("Mind Control", "Attack", "Targeted enemy takes one action of the psychic’s choice.", 2),
+("Mind Stab", "Attack", "Target 1 enemy model within 1 stick. Roll on Under Fire table +3.", 3),
+("Prescience", "Effect", "Choose any model on the table to either gain +1DT or -1DT for all their actions this round.", 1),
+("Telekinesis", "Either", "Effect: move 1 obstacle or ally up to 1 stick. Attack: move an enemy 1 stick.", 1),
+("Teleport", "Effect", "Place the psychic anywhere on the board.", 1);
 
 
 -- INSERT INTO WEAPON (w_type, name, actions, notes, points)

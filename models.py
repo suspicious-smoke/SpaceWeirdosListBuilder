@@ -27,7 +27,6 @@ ranged_weapons = [
     {'name':'Flamer', 'actions':'1', 'notes':'Cone AoE', 'points':2},
     {'name':'Rocket Launcher', 'actions':'1', 'notes':'Aim2, Cannot target enemies < 1 stick away, Blast AoE', 'points':3},
     {'name':'Auto-Cannon', 'actions':'3', 'notes':'Reroll FP rolls of 1 or 2', 'points':3},
-
 ]
 
 melee_weapons = [
@@ -39,7 +38,38 @@ melee_weapons = [
     {'name':'Large Melee Weapon', 'actions':'1', 'notes':'+1 to Under Attack rolls', 'points':1},
     {'name':'Large Powered Weapon', 'actions':'1', 'notes':'Reroll Prw rolls of 1, +1 to Under Attack rolls', 'points':3},
     {'name':'Whip/Tail', 'actions':'2', 'notes':'Can target enemies up to 1 stick away', 'points':2}
+]
 
+leader_traits = [
+  {'name': 'Bounty Hunter','note': 'Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action.'},
+  {'name': 'Healer', 'note': 'During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT.' },
+  {'name': 'Majestic', 'note': 'Any time one of your warband has to make a Willpower roll, that model may use the Leader’s Willpower instead.'},
+  {'name': 'Monstrous', 'note': 'Non-Leader models must win a Willpower roll vs. your leader to move into contact.'},
+  {'name': 'Political Officer','note': 'During the Initiative Phase, before rolling, take one of your Warband within LOS of your leader out of action to make all other models in the Warband ready, remove the broken condition from your warband, and gain +1DT to this Initiative roll.'},
+  {'name': 'Sorcerer', 'note': 'Psychic Powers actions cost 1 action instead of 2, but may still only use 1 per turn.'},
+  {'name': 'Tactician','note': '+1DT to Initiative rolls.'}
+]
+
+equipment = [
+  {'name': 'Cybernetics', 'type': 'Passive', 'notes': '+1 to Prw rolls', 'points': 1},
+  {'name': 'Psychic Focus', 'type': 'Passive', 'notes': '+1 to Will rolls', 'points': 1},
+  {'name': 'Targeting Reticule', 'type': 'Passive', 'notes': '+1 to FP rolls', 'points': 1},
+  {'name': 'Heavy Armor', 'type': 'Passive', 'notes': '+1 to Def rolls', 'points': 1},
+  {'name': 'Grenade*', 'type': 'Action', 'notes': 'Targets point up to 1 stick from attacker, Blast AOE, 2d10 FP , +1 to Under Fire rolls', 'points': 1},
+  {'name': 'Jump Pack', 'type': 'Passive', 'notes': 'The model can ignore terrain and other models when taking Move actions', 'points': 1},
+  {'name': 'Medkit*', 'type': 'Action', 'notes': '1 model touching this model becomes ready', 'points': 1},
+  {'name': 'Stealth Suit', 'type': 'Passive', 'notes': 'If this model’s base touches a piece of terrain, enemy models do not have LoS unless they are within 1 stick of the stealthy model', 'points': 1}
+]
+
+powers = [
+  {"name": "Fear", "type": "Attack", "effect": "Each enemy model within 1 stick who loses its opposed Will roll must move 1 stick away from the psychic.", "points": 1},
+  {"name": "Healing", "type": "Effect", "effect": "1 model within 1 stick of this model and in LoS becomes ready.", "points": 1},
+  {"name": "Meat Puppet", "type": "Effect", "effect": "Return 1 OoA model to the table and place within 1 stick of the psychic. The returned model’s Spd is reduced by 1 (min 1), and rolls with -1DT for all rolls. A model can only be returned to the table once.", "points": 2},
+  {"name": "Mind Control", "type": "Attack", "effect": "Targeted enemy takes one action of the psychic’s choice.", "points": 2},
+  {"name": "Mind Stab", "type": "Attack", "effect": "Target 1 enemy model within 1 stick. Roll on Under Fire table +3.", "points": 3},
+  {"name": "Prescience", "type": "Effect", "effect": "Choose any model on the table to either gain +1DT or -1DT for all their actions this round.", "points": 1},
+  {"name": "Telekinesis", "type": "Either", "effect": "Effect: move 1 obstacle or ally up to 1 stick. Attack: move an enemy 1 stick.", "points": 1},
+  {"name": "Teleport", "type": "Effect", "effect": "Place the psychic anywhere on the board.", "points": 1}
 ]
 
 
@@ -57,68 +87,6 @@ class Warband:
         # weapons
         self.ranged_weapons = ranged_weapons
         self.melee_weapons = melee_weapons
-
-# class Equipment:
-#     def __init__(self, name, e_type, notes, points):
-#         self.name = name
-#         self.e_type = e_type  # P=passive stat increase or A=item action
-#         self.notes = notes
-#         self.points = points
-
-
-# class PsychicPower:
-#     def __init__(self, name, p_type, effect, points):
-#         self.name = name
-#         self.p_type = p_type  # P=passive stat increase or A=item action
-#         self.effect = effect
-#         self.points = points
-
-
-# class Weapon:
-#     def __init__(self, name, weapon_type, actions, notes, points):
-#         self.name = name
-#         self.weapon_type = weapon_type
-#         self.actions = actions
-#         self.notes = notes
-#         self.points = points
-
-
-# class Attribute:
-#     def __init__(self, name, level, points):
-#         self.name = name
-#         self.level = level  # either dice or number for speed
-#         self.points = points
-
-# class Weirdo:
-#     # leader_trait_id, is_leader, ranged_weapon_id,melee_weapon_id,
-#     def __init__(self, warband_id, weirdo_id=0, name='', total_points=0, speed_id=speed['1'], defense_id=defense['2d6'], 
-#                  firepower_id=firepower['0'], prowess_id=prowess['2d6'], willpower_id=willpower['2d6']): 
-#         self.warband_id = warband_id
-#         self.weirdo_id = weirdo_id
-#         self.name = name
-#         self.total_points = total_points
-    
-#         self.willpower_id = willpower_id
-#         self.prowess_id = prowess_id
-#         self.firepower_id = firepower_id
-#         self.defense_id = defense_id
-#         self.speed_id = speed_id
-
-#         # self.melee_weapon_id = melee_weapon_id
-#         # self.ranged_weapon_id = ranged_weapon_id
-        
-#         # self.leader_trait_id = leader_trait_id
-#         # self.is_leader = is_leader    
-#     def serialize(self): # for turning dict to json
-#         return {
-#             'warband_id': self.warband_id,
-#             'weirdo_id': self.weirdo_id,
-#             'name': self.name,
-#             'total_points': self.total_points,
-
-#             'willpower_id': self.willpower_id,
-#             'prowess_id': self.prowess_id,
-#             'firepower_id': self.firepower_id,
-#             'defense_id': self.defense_id,
-#             'speed_id': self.speed_id
-#         }
+        self.equipment = equipment
+        self.powers = powers
+        self.leader_traits = leader_traits

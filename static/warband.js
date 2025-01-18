@@ -121,32 +121,7 @@ function loadWeirdoCards(warband, saved=true) {
         edit_btns
         edit_btns.forEach(weirdo => {
             weirdo.addEventListener('click', (wrdo) => {
-                // load weirdo into modal
-                let weirdo_id = wrdo.target.dataset.weirdo_id;
-                let warband_id = warband['warband_id']
-                document.getElementById('warband_id').value = warband_id;
-                document.getElementById('weirdo_id').value = weirdo_id;
-                let weirdo = getWeirdo(warband_id, weirdo_id);
-                document.getElementById('weirdo_name').value = weirdo['name'];
-                // attributes
-                for (const att of weirdo_attribute) {
-                    selectedSelect(`${att}_select`, weirdo[att]);
-                };     
-                // melee weapons
-                if (weirdo['melee_weapon'] != null) {
-                    document.querySelector(`input[value="${weirdo['melee_weapon']}"][name="melee_radios"]`).checked = true;
-                } else { // default value
-                    document.querySelector('input[value="Unarmed"][name="melee_radios"]').checked = true;
-                }
-                // ranged melee weapons
-                if (weirdo['ranged_weapon'] != null) {
-                    document.querySelector(`input[value="${weirdo['ranged_weapon']}"][name="ranged_radios"]`).checked = true;
-                } else { // default value
-                    document.querySelector('input[value="Auto Pistol"][name="ranged_radios"]').checked = true;
-                }
-
-                updateWeirdoPoints();         
-                wireSaveWeirdo();
+                load_weirdo_modal(wrdo);
             });
         });
         // wire delete buttons
@@ -196,11 +171,55 @@ function loadWeirdoCards(warband, saved=true) {
                 }
             });
         });
-
         if (saved) {
             fadeInOut('save_alert');  
         }
     });
+}
+
+function load_weirdo_modal(wrdo) {
+    // load weirdo into modal
+    close_accordions();
+    let weirdo_id = wrdo.target.dataset.weirdo_id;
+    let warband_id = warband['warband_id']
+    document.getElementById('warband_id').value = warband_id;
+    document.getElementById('weirdo_id').value = weirdo_id;
+    let weirdo = getWeirdo(warband_id, weirdo_id);
+    document.getElementById('weirdo_name').value = weirdo['name'];
+    // attributes
+    for (const att of weirdo_attribute) {
+        selectedSelect(`${att}_select`, weirdo[att]);
+    };     
+    // melee weapons
+    if (weirdo['melee_weapon'] != null) {
+        document.querySelector(`input[value="${weirdo['melee_weapon']}"][name="melee_radios"]`).checked = true;
+    } else { // default value
+        document.querySelector('input[value="Unarmed"][name="melee_radios"]').checked = true;
+    }
+    // ranged melee weapons
+    if (weirdo['ranged_weapon'] != null) {
+        document.querySelector(`input[value="${weirdo['ranged_weapon']}"][name="ranged_radios"]`).checked = true;
+    } else { // default value
+        document.querySelector('input[value="Auto Pistol"][name="ranged_radios"]').checked = true;
+    }
+    // clear all checkboxes
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+      });
+    // equipment/powers
+    if (weirdo['equipment'] != null) {
+        for (const equip of weirdo['equipment']) {
+            document.querySelector(`input[value="${equip}"][name="equipment_checkbox"]`).checked = true;
+        }
+    }
+    if (weirdo['powers'] != null) {
+        for (const power of weirdo['powers']) {
+            document.querySelector(`input[value="${power}"][name="powers_checkbox"]`).checked = true;
+        }
+    }
+
+    updateWeirdoPoints();         
+    wireSaveWeirdo();
 }
 
 
@@ -276,13 +295,16 @@ function updateWeirdoWeaponsArea() {
     document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.notes').innerHTML;
 
     // close accordions
-    // document.querySelectorAll('.accordion .collapse').forEach(function(collapseElement) {
-    //     const bsCollapse = new bootstrap.Collapse(collapseElement, { toggle: false });
-    //     bsCollapse.hide(); // Close all accordion items
-    // });
+    // close_accordions();
     return weapon_points
 }
 
+function close_accordions() {
+    document.querySelectorAll('.accordion .collapse').forEach(function(collapseElement) {
+        const bsCollapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+        bsCollapse.hide(); // Close all accordion items
+    });
+}
 
 function getWeirdo(warband_id, weirdo_id) {
     warband = getWarband(warband_id);

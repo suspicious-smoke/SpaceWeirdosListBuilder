@@ -158,7 +158,7 @@
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="melee-heading">
                             <!-- weapons list -->
-                            <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#melee-collapse" aria-controls="melee-collapse">
+                            <button class="accordion-button collapsed py-3" type="button" data-bs-toggle="collapse" data-bs-target="#melee-collapse" aria-controls="melee-collapse">
                                 <div class="col-3" id="e-melee-name"></div>
                                 <div class="col-2" id="e-melee-actions"></div>
                                 <div class="col-1" id="e-melee-points"></div>
@@ -193,7 +193,7 @@
                         <div class="accordion-item" id="ranged-weapons-list"> <!-- add hidden here to hide ranged weapons -->
                             <h2 class="accordion-header" id="ranged-heading">
                               <!-- weapons list -->
-                              <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#ranged-collapse" aria-controls="ranged-collapse">
+                              <button class="accordion-button collapsed py-3" type="button" data-bs-toggle="collapse" data-bs-target="#ranged-collapse" aria-controls="ranged-collapse">
                                     <div class="col-3" id="e-ranged-name"></div><div class="col-2" id="e-ranged-actions"></div><div class="col-1" id="e-ranged-points"></div><div class="col-4" id="e-ranged-notes"></div>
                               </button>
                             </h2>
@@ -201,7 +201,7 @@
                                 <div class="accordion-body">
                                     {% for item in warband.ranged_weapons %}
                                         <div class="row py-1 border">
-                                            <div class="col-3">
+                                            <div class="col-2">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="ranged_radios" value="{{item.name}}">
                                                     <label class="form-check-label">{{ item.name }}</label>
@@ -213,7 +213,7 @@
                                             <div class="col-1 pts" value = {{item.points}}>
                                                 Pts: {{item.points}}
                                             </div>
-                                            <div class="col-4 notes">
+                                            <div class="col-7 notes">
                                                 {{item.notes}}
                                             </div>
                                         </div>
@@ -223,9 +223,8 @@
                           </div>
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="equipment-heading">
-                            <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#equipment-collapse" aria-expanded="false" aria-controls="equipment-collapse">
-                              
-                              <div class="col-2">Equipment</div><div class="col-2" id="equipments-area"></div
+                            <button class="accordion-button collapsed py-3" type="button" data-bs-toggle="collapse" data-bs-target="#equipment-collapse" aria-expanded="false" aria-controls="equipment-collapse">
+                              <div class="col-3">Equipment</div><div class="col-10" id="equipments-area"></div>
                             </button>
                           </h2>
                           <div id="equipment-collapse" class="accordion-collapse collapse" aria-labelledby="equipment-heading" data-bs-parent="#melee-weapon-list">
@@ -241,7 +240,7 @@
                                         <div class="col-1">
                                             {{item.type}}
                                         </div>
-                                        <div class="col-1" value = {{item.points}}>
+                                        <div class="col-1 pts" value = {{item.points}}>
                                             Pts: {{item.points}}
                                         </div>
                                         <div class="col-8">
@@ -254,8 +253,8 @@
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="powers-heading">
-                              <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#powers-collapse" aria-expanded="false" aria-controls="powers-collapse">
-                                Powers
+                              <button class="accordion-button collapsed py-3" type="button" data-bs-toggle="collapse" data-bs-target="#powers-collapse" aria-expanded="false" aria-controls="powers-collapse">
+                                <div class="col-3">Powers</div><div class="col-10" id="powers-area"></div>
                               </button>
                             </h2>
                             <div id="powers-collapse" class="accordion-collapse collapse" aria-labelledby="powers-heading" data-bs-parent="#melee-weapon-list">
@@ -271,7 +270,7 @@
                                           <div class="col-1">
                                               {{item.type}}
                                           </div>
-                                          <div class="col-1" value = {{item.points}}>
+                                          <div class="col-1 pts" value = {{item.points}}>
                                               Pts: {{item.points}}
                                           </div>
                                           <div class="col-7">

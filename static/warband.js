@@ -294,8 +294,26 @@ function updateWeirdoWeaponsArea() {
     document.getElementById('e-ranged-points').innerHTML = ranged_pts_area.innerHTML;
     document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.notes').innerHTML;
 
-    // close accordions
-    // close_accordions();
+    // get selected equipment
+    let eq_area = document.getElementById('equipments-area');
+    eq_area.innerHTML = '';
+    let equipment_boxes = document.querySelectorAll('input[name="equipment_checkbox"]:checked');
+    equipment_boxes.forEach((checkbox) => {
+        let row = checkbox.closest('.row');
+        let points = row.querySelector('.pts').getAttribute('value');
+        eq_area.innerHTML += row.querySelector('.form-check-label').innerHTML + ` [${points}]&emsp;`;
+    });
+
+    // powers area
+    let pwr_area = document.getElementById('powers-area');
+    pwr_area.innerHTML = '';
+    let pwr_boxes = document.querySelectorAll('input[name="powers_checkbox"]:checked');
+    pwr_boxes.forEach((checkbox) => {
+        let row = checkbox.closest('.row');
+        let points = row.querySelector('.pts').getAttribute('value');
+        pwr_area.innerHTML += row.querySelector('.form-check-label').innerHTML + ` [${points}]&emsp;`;
+    });
+
     return weapon_points
 }
 

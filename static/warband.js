@@ -243,7 +243,7 @@ function updateWeirdoPoints() {
     for (const att of weirdo_attribute) {
         total_points += updateWeirdoSelectPoint(att);
     } 
-    total_points += updateWeirdoWeaponsArea();
+    total_points += updateWeirdoEquipArea();
     document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
 }
 
@@ -264,8 +264,8 @@ function updateWeirdoSelectPoint(attribute) {
 }
 
 
-function updateWeirdoWeaponsArea() {
-    weapon_points = 0
+function updateWeirdoEquipArea() {
+    equip_points = 0
     // if firepower is 0, hide ranged weapons and set ranged weapon to auto pistol
     ranged_list = document.getElementById('ranged-weapons-list');
     if (document.getElementById('firepower_select').selectedIndex == 0) {
@@ -281,7 +281,7 @@ function updateWeirdoWeaponsArea() {
     document.getElementById('e-melee-name').innerHTML = `(Melee) ${_name}`;
     document.getElementById('e-melee-actions').innerHTML = melee_selected.querySelector('.act').innerHTML;
     let melee_pts_area = melee_selected.querySelector('.pts')
-    weapon_points += parseInt(melee_pts_area.getAttribute('value'));
+    equip_points += parseInt(melee_pts_area.getAttribute('value'));
     document.getElementById('e-melee-points').innerHTML = melee_pts_area.innerHTML;
     document.getElementById('e-melee-notes').innerHTML = melee_selected.querySelector('.notes').innerHTML;
 
@@ -290,7 +290,7 @@ function updateWeirdoWeaponsArea() {
     document.getElementById('e-ranged-name').innerHTML = `(Ranged) ${_rname}`;
     document.getElementById('e-ranged-actions').innerHTML = ranged_selected.querySelector('.act').innerHTML;
     let ranged_pts_area = ranged_selected.querySelector('.pts')
-    weapon_points += parseInt(ranged_pts_area.getAttribute('value'));
+    equip_points += parseInt(ranged_pts_area.getAttribute('value'));
     document.getElementById('e-ranged-points').innerHTML = ranged_pts_area.innerHTML;
     document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.notes').innerHTML;
 
@@ -301,6 +301,7 @@ function updateWeirdoWeaponsArea() {
     equipment_boxes.forEach((checkbox) => {
         let row = checkbox.closest('.row');
         let points = row.querySelector('.pts').getAttribute('value');
+        equip_points += parseInt(points);
         eq_area.innerHTML += row.querySelector('.form-check-label').innerHTML + ` [${points}]&emsp;`;
     });
 
@@ -311,10 +312,11 @@ function updateWeirdoWeaponsArea() {
     pwr_boxes.forEach((checkbox) => {
         let row = checkbox.closest('.row');
         let points = row.querySelector('.pts').getAttribute('value');
+        equip_points += parseInt(points);
         pwr_area.innerHTML += row.querySelector('.form-check-label').innerHTML + ` [${points}]&emsp;`;
     });
 
-    return weapon_points
+    return equip_points
 }
 
 function close_accordions() {

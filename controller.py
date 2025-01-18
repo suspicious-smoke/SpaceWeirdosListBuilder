@@ -44,7 +44,15 @@ def warband_points():
             weirdo_pts += item_points(ranged_weapons, weirdo['ranged_weapon'])
         if 'melee_weapon' in weirdo:
             weirdo_pts += item_points(melee_weapons, weirdo['melee_weapon'])
-            
+        
+        if 'equipment' in weirdo:
+            for equip in weirdo['equipment']:
+                weirdo_pts += item_points(equipment, equip)
+        
+        if 'powers' in weirdo:
+            for power in weirdo['powers']:
+                weirdo_pts += item_points(powers, power)
+
         points += weirdo_pts
         weirdo_info = {'id': weirdo['weirdo_id'], 'points':weirdo_pts }
         weirdo_points_list.append(weirdo_info)

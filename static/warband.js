@@ -254,20 +254,20 @@ function updateWeirdoWeaponsArea() {
     let melee_selected = document.querySelector('input[name="melee_radios"]:checked').closest('.row');
     let _name = melee_selected.querySelector('.form-check-label').innerHTML;
     document.getElementById('e-melee-name').innerHTML = `(Melee) ${_name}`;
-    document.getElementById('e-melee-actions').innerHTML = melee_selected.querySelector('.col-2').innerHTML;
-    let melee_pts_area = melee_selected.querySelector('.col-1')
+    document.getElementById('e-melee-actions').innerHTML = melee_selected.querySelector('.act').innerHTML;
+    let melee_pts_area = melee_selected.querySelector('.pts')
     weapon_points += parseInt(melee_pts_area.getAttribute('value'));
     document.getElementById('e-melee-points').innerHTML = melee_pts_area.innerHTML;
-    document.getElementById('e-melee-notes').innerHTML = melee_selected.querySelector('.col-4').innerHTML;
+    document.getElementById('e-melee-notes').innerHTML = melee_selected.querySelector('.notes').innerHTML;
 
     let ranged_selected = document.querySelector('input[name="ranged_radios"]:checked').closest('.row');
     let _rname = ranged_selected.querySelector('.form-check-label').innerHTML;
     document.getElementById('e-ranged-name').innerHTML = `(Ranged) ${_rname}`;
-    document.getElementById('e-ranged-actions').innerHTML = ranged_selected.querySelector('.col-2').innerHTML;
-    let ranged_pts_area = ranged_selected.querySelector('.col-1')
+    document.getElementById('e-ranged-actions').innerHTML = ranged_selected.querySelector('.act').innerHTML;
+    let ranged_pts_area = ranged_selected.querySelector('.pts')
     weapon_points += parseInt(ranged_pts_area.getAttribute('value'));
     document.getElementById('e-ranged-points').innerHTML = ranged_pts_area.innerHTML;
-    document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.col-4').innerHTML;
+    document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.notes').innerHTML;
 
     // close accordions
     // document.querySelectorAll('.accordion .collapse').forEach(function(collapseElement) {

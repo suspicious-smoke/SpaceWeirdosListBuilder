@@ -175,13 +175,13 @@
                                                 <label class="form-check-label">{{ item.name }}</label>
                                             </div>
                                         </div>
-                                        <div class="col-2">
+                                        <div class="col-2 act">
                                             Actions: {{item.actions}}
                                         </div>
-                                        <div class="col-1" value = {{item.points}}>
+                                        <div class="col-1 pts" value = {{item.points}}>
                                             Pts: {{item.points}}
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-4 notes">
                                             {{item.notes}}
                                         </div>
                                     </div>
@@ -207,13 +207,13 @@
                                                     <label class="form-check-label">{{ item.name }}</label>
                                                 </div>
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-2 act">
                                                 Actions: {{item.actions}}
                                             </div>
-                                            <div class="col-1" value = {{item.points}}>
+                                            <div class="col-1 pts" value = {{item.points}}>
                                                 Pts: {{item.points}}
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-4 notes">
                                                 {{item.notes}}
                                             </div>
                                         </div>
@@ -224,7 +224,8 @@
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="equipment-heading">
                             <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#equipment-collapse" aria-expanded="false" aria-controls="equipment-collapse">
-                              Equipment
+                              
+                              <div class="col-2">Equipment</div><div class="col-2" id="equipments-area"></div
                             </button>
                           </h2>
                           <div id="equipment-collapse" class="accordion-collapse collapse" aria-labelledby="equipment-heading" data-bs-parent="#melee-weapon-list">

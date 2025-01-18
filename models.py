@@ -41,13 +41,13 @@ melee_weapons = [
 ]
 
 leader_traits = [
-  {'name': 'Bounty Hunter','note': 'Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action.'},
-  {'name': 'Healer', 'note': 'During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT.' },
-  {'name': 'Majestic', 'note': 'Any time one of your warband has to make a Willpower roll, that model may use the Leader’s Willpower instead.'},
-  {'name': 'Monstrous', 'note': 'Non-Leader models must win a Willpower roll vs. your leader to move into contact.'},
-  {'name': 'Political Officer','note': 'During the Initiative Phase, before rolling, take one of your Warband within LOS of your leader out of action to make all other models in the Warband ready, remove the broken condition from your warband, and gain +1DT to this Initiative roll.'},
-  {'name': 'Sorcerer', 'note': 'Psychic Powers actions cost 1 action instead of 2, but may still only use 1 per turn.'},
-  {'name': 'Tactician','note': '+1DT to Initiative rolls.'}
+  {'Bounty Hunter': 'Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action.'},
+  {'Healer': 'During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT.' },
+  {'Majestic': 'Any time one of your warband has to make a Willpower roll, that model may use the Leader’s Willpower instead.'},
+  {'Monstrous': 'Non-Leader models must win a Willpower roll vs. your leader to move into contact.'},
+  {'Political Officer': 'During the Initiative Phase, before rolling, take one of your Warband within LOS of your leader out of action to make all other models in the Warband ready, remove the broken condition from your warband, and gain +1DT to this Initiative roll.'},
+  {'Sorcerer': 'Psychic Powers actions cost 1 action instead of 2, but may still only use 1 per turn.'},
+  {'Tactician': '+1DT to Initiative rolls.'}
 ]
 
 equipment = [

@@ -1,4 +1,3 @@
-
 // on warband page load
 window.onload = function() {
     loadWarband();
@@ -15,7 +14,6 @@ window.onload = function() {
         wireSaveWeirdo();
         updateWeirdoPoints();
     });
-
     // wire save warband button
     document.getElementById('save_warband').addEventListener('click', function() {
         let warband_id = document.getElementById('warband_id').value;
@@ -43,6 +41,7 @@ window.onload = function() {
     document.getElementById('weirdo_model').addEventListener('change', updateWeirdoPoints);
 }
 
+
 function getWarband(warband_id) {
     let warband = null;
     const warbands = getLocalData()['warbands'];
@@ -54,6 +53,7 @@ function getWarband(warband_id) {
     return warband;
 }
 
+
 function getLocalData() {
     const json_warband = localStorage.getItem('warbands');
     if (json_warband != null) {
@@ -61,6 +61,7 @@ function getLocalData() {
     }
     return {warbands:[]};
 }
+
 
 function loadWarband() {
     // check warband id
@@ -79,6 +80,7 @@ function loadWarband() {
         document.getElementById('warband_text').innerHTML = "Create Warband";
     }
 }
+
 
 function loadWeirdoCards(warband, saved=true) {
     let weirdos = warband['weirdos'];
@@ -169,7 +171,6 @@ function loadWeirdoCards(warband, saved=true) {
                 }
             });
         });
-
         const duplicate_btns = document.querySelectorAll('.duplicate_weirdo');
         duplicate_btns.forEach(weirdo => {
             weirdo.addEventListener('click', (btn_elem) => {
@@ -196,15 +197,14 @@ function loadWeirdoCards(warband, saved=true) {
             });
         });
 
-
         if (saved) {
             fadeInOut('save_alert');  
         }
     });
 }
 
-// get cost of each weirdo stat and post it in relevant places
 
+// get cost of each weirdo stat and post it in relevant places
 function deleteEventListeners(id) {
     const items = document.querySelectorAll(id);
     items.forEach(item => {
@@ -212,10 +212,12 @@ function deleteEventListeners(id) {
     });
 }
 
+
 function wireSaveWeirdo() {
     document.getElementById('save_weirdo').removeEventListener('click', saveWeirdo);
     document.getElementById('save_weirdo').addEventListener('click', saveWeirdo);
 }
+
 
 function updateWeirdoPoints() {
     let total_points = 0;
@@ -225,10 +227,13 @@ function updateWeirdoPoints() {
     total_points += updateWeirdoWeaponsArea();
     document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
 }
+
+
 // turn first character to upper case
 function fUpper(word) {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }
+
 
 function updateWeirdoSelectPoint(attribute) {
     let text = fUpper(attribute);
@@ -238,6 +243,7 @@ function updateWeirdoSelectPoint(attribute) {
     document.querySelector(`label[for="${selector}"]`).innerHTML = `${text} [${cost}]`
     return parseInt(cost);
 }
+
 
 function updateWeirdoWeaponsArea() {
     weapon_points = 0
@@ -274,10 +280,9 @@ function updateWeirdoWeaponsArea() {
     //     const bsCollapse = new bootstrap.Collapse(collapseElement, { toggle: false });
     //     bsCollapse.hide(); // Close all accordion items
     // });
-
-
     return weapon_points
 }
+
 
 function getWeirdo(warband_id, weirdo_id) {
     warband = getWarband(warband_id);
@@ -288,6 +293,7 @@ function getWeirdo(warband_id, weirdo_id) {
     }
     return null;
 }
+
 
 function getNextWeirdoID(warband) {
         let next_weirdo_id = 1;
@@ -300,6 +306,7 @@ function getNextWeirdoID(warband) {
         }
         return next_weirdo_id;
 }
+
 
 function saveWeirdo() {
     // get weirdo information from modal
@@ -316,14 +323,31 @@ function saveWeirdo() {
         let item = s.options[s.selectedIndex].text;
         weirdo[att] = item;
     } 
-    // get weapons and items
-    
     // get selected radio
     weirdo['melee_weapon'] = document.querySelector('input[name="melee_radios"]:checked').value;
     weirdo['ranged_weapon'] = document.querySelector('input[name="ranged_radios"]:checked').value;
+    //equipment
+    equipment = []
+    const equipment_boxes = document.querySelectorAll('input[name="equipment_checkbox"]');
+    equipment_boxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            equipment.push(checkbox.value);
+        }
+    });
+    weirdo['equipment'] = equipment;
+
+    //equipment
+    powers = []
+    const powers_checkbox = document.querySelectorAll('input[name="powers_checkbox"]');
+    powers_checkbox.forEach((checkbox) => {
+        if (checkbox.checked) {
+            powers.push(checkbox.value);
+        }
+    });
+    weirdo['powers'] = powers;
+
     // first load from local storage
-    warband = getWarband(warband_id);
-    
+    warband = getWarband(warband_id);   
     // new warband
     if (warband == null) {
         saveNewWarband(weirdo);
@@ -381,16 +405,13 @@ function saveNewWarband(weirdo=null) {
         trait: trait,
         weirdos: []
     }
-
     if (weirdo != null) {
         weirdo['weirdo_id'] = 1;
         new_warband['weirdos'].push(weirdo);
     }
-
     warband_data['warbands'].push(new_warband);
     localStorage.setItem('warbands', JSON.stringify(warband_data));
-    //redirect to new page
-    window.location.href = '/warband/'+new_id;
+    window.location.href = '/warband/'+new_id; //redirect to new page
 }
 
 

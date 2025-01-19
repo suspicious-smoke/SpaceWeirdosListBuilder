@@ -98,6 +98,7 @@ function loadWeirdoCards(warband, saved=true) {
     card_container.innerHTML = '';
     getWarbandPoints(warband['warband_id']).then((data) => {
         // create new card for each weirdo
+        let first = true;
         for (const weirdo of weirdos) {
             let weirdo_cost = 0
             // get weirdo points
@@ -115,6 +116,11 @@ function loadWeirdoCards(warband, saved=true) {
             new_card.querySelector('.delete_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
             new_card.querySelector('.duplicate_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
             new_card.querySelector('.card-title').innerHTML = weirdo['name'];
+            if (first) {
+                new_card.querySelector('.card-title').innerHTML += '&emsp;[leader]';
+                first = false;
+            }
+            
             new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
             // card attributes
             for (const att of weirdo_attribute) {

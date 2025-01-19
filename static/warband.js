@@ -110,10 +110,34 @@ function loadWeirdoCards(warband, saved=true) {
             new_card.querySelector('.duplicate_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
             new_card.querySelector('.card-title').innerHTML = weirdo['name'];
             new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
-            // load attributes
+            // card attributes
             for (const att of weirdo_attribute) {
                 new_card.querySelector(`.card-${att}`).innerHTML = weirdo[att];
             } 
+            // card weapons
+            let weapon_card = new_card.querySelector('.card-weapons');
+            if (weirdo['ranged_weapon'] != null) {
+                weapon_card.querySelector('.ranged').innerHTML = weirdo['ranged_weapon']
+            }
+            if (weirdo['melee_weapon'] != null) {
+                weapon_card.querySelector('.melee').innerHTML = weirdo['melee_weapon']
+            }
+            // equipment
+            let equip_card = new_card.querySelector('.card-equipment');
+            if (weirdo['equipment'] != null) {
+                for (const equip of weirdo['equipment']) {
+                    equip_card.querySelector('.equipment').innerHTML += ` ${equip}&emsp;`;
+                }
+            }
+            if (weirdo['powers'] != null) {
+                for (const power of weirdo['powers']) {
+                    equip_card.querySelector('.powers').innerHTML += ` ${power}&emsp;`;
+                }
+            }
+            
+
+
+
             card_container.appendChild(new_card);
         }
         // wire Edit buttons

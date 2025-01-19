@@ -46,30 +46,55 @@
         <div class="card-body">
             <h5 class="card-cost float-end">no value</h5>
             <h5 class="card-title"></h5>
-            <div class="row mb-3 card-attributes">
-                <div class="col-2 border">
-                    <label for="card-speed" class="form-label fw-bold">Speed</label>
-                    </br>
+            <div class="row mb-2 card-attributes border">
+                <div class="col px-1">
+                    <span>spd: </span>
                     <span class="card-speed"></span>
                 </div>
-                <div class="col-2 border">
-                    <label for="card-defense" class="form-label fw-bold">Defense</label>
+                <div class="col px-1">
+                    <span>def: </span>
                     <span class="card-defense"></span>
                 </div>
-                <div class="col-2 border">
-                    <label for="card-firepower" class="form-label fw-bold">Firepower</label>
+                <div class="col px-1">
+                    <span>fire: </span>
                     <span class="card-firepower"></span>
                 </div>
-                <div class="col-2 border">
-                    <label for="card-prowess" class="form-label fw-bold">Prowess</label>
+                <div class="col px-1">
+                    <span>prws: </span>
                     <span class="card-prowess"></span>
                 </div>
-                <div class="col-2 border">
-                    <label for="card-willpower" class="form-label fw-bold">Willpower</label>
+                <div class="col px-1">
+                    <span>will: </span>
                     <span class="card-willpower"></span>
                 </div>
             </div>
-            
+            <!-- <span>Weapons:</span> -->
+            <div class="row fw-bold">
+                <div class="col-6">Melee Weapon</div>
+                <div class="col-6">Ranged Weapon</div>
+            </div>
+            <div class="row mb-2 card-weapons border">
+                <div class="col-6">
+                    <span class="melee"></span>
+                </div>
+                <div class="col-6">
+                    <span class="ranged"></span>
+                </div>
+            </div>
+            <!-- <span>Equipment/Powers:</span> -->
+            <div class="row  fw-bold">
+                <div class="col-6">Equipment</div>
+                <div class="col-6">Powers</div>
+            </div>
+            <div class="row mb-2 card-equipment border">
+                <div class="col-6">
+                    <span class="equipment"></span>
+                </div>
+                <div class="col-6">
+                    <span class="powers"></span>
+                </div>
+            </div>
+
             <div class="float-end">
                 <button type="button" class="btn btn-sm btn-outline-secondary edit_weirdo" data-bs-toggle="modal" data-bs-target="#weirdo_model"><i style="color:darkgreen;" class="bi bi-pencil-square"></i></button>
                 <button type="button" class="btn btn-sm btn-outline-secondary ms-2 duplicate_weirdo"><i style="color:darkgoldenrod;" class="bi bi-copy"></i></button>

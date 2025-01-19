@@ -1,5 +1,5 @@
 # uses python 3.11.2
-WarbandTraits = {
+warband_traits = {
 'No Trait': '',
  'Cyborgs': 'All members of the Warband can purchase 1 additional piece of equipment.',
  'Fanatics': 'Roll Willpower with +1DT for all rolls except Psychic Powers.',
@@ -8,6 +8,17 @@ WarbandTraits = {
  'Mutants': 'Speed, Claws & Teeth, Horrible Claws & Teeth, and Whip/Tail cost 1 less point.',
  'Soldiers': 'Grenades, Heavy Armor, and Medkits may be purchased for free. They still use a model’s equipment slots.',
  'Undead': 'A second staggered condition does not take models in thisWarband out of action.'
+}
+
+leader_traits = {
+  'No Trait': '',
+  'Bounty Hunter': 'Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action.',
+  'Healer': 'During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT.' ,
+  'Majestic': 'Any time one of your warband has to make a Willpower roll, that model may use the Leader’s Willpower instead.',
+  'Monstrous': 'Non-Leader models must win a Willpower roll vs. your leader to move into contact.',
+  'Political Officer': 'During the Initiative Phase, before rolling, take one of your Warband within LOS of your leader out of action to make all other models in the Warband ready, remove the broken condition from your warband, and gain +1DT to this Initiative roll.',
+  'Sorcerer': 'Psychic Powers actions cost 1 action instead of 2, but may still only use 1 per turn.',
+  'Tactician': '+1DT to Initiative rolls.'
 }
 
 speed={"1": 0, "2": 1, "3": 3 }
@@ -41,15 +52,16 @@ melee_weapons = [
     {'name':'Whip/Tail', 'actions':'2', 'notes':'Can target enemies up to 1 stick away', 'points':2}
 ]
 
-leader_traits = [
-  {'Bounty Hunter': 'Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action.'},
-  {'Healer': 'During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT.' },
-  {'Majestic': 'Any time one of your warband has to make a Willpower roll, that model may use the Leader’s Willpower instead.'},
-  {'Monstrous': 'Non-Leader models must win a Willpower roll vs. your leader to move into contact.'},
-  {'Political Officer': 'During the Initiative Phase, before rolling, take one of your Warband within LOS of your leader out of action to make all other models in the Warband ready, remove the broken condition from your warband, and gain +1DT to this Initiative roll.'},
-  {'Sorcerer': 'Psychic Powers actions cost 1 action instead of 2, but may still only use 1 per turn.'},
-  {'Tactician': '+1DT to Initiative rolls.'}
-]
+leader_traits = {
+  'No Trait': '',
+  'Bounty Hunter': 'Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action.',
+  'Healer': 'During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT.' ,
+  'Majestic': 'Any time one of your warband has to make a Willpower roll, that model may use the Leader’s Willpower instead.',
+  'Monstrous': 'Non-Leader models must win a Willpower roll vs. your leader to move into contact.',
+  'Political Officer': 'During the Initiative Phase, before rolling, take one of your Warband within LOS of your leader out of action to make all other models in the Warband ready, remove the broken condition from your warband, and gain +1DT to this Initiative roll.',
+  'Sorcerer': 'Psychic Powers actions cost 1 action instead of 2, but may still only use 1 per turn.',
+  'Tactician': '+1DT to Initiative rolls.'
+}
 
 equipment = [
   {'name': 'Cybernetics', 'type': 'Passive', 'notes': '+1 to Prw rolls', 'points': 1},
@@ -77,7 +89,8 @@ powers = [
 class Warband:
     def __init__(self, warband_id):
         self.warband_id = warband_id
-        self.trait_dropdown=WarbandTraits # fill the warband traits
+        self.warband_traits=warband_traits # fill the warband traits
+        self.leader_traits = leader_traits
         # lists for weirdo selections
         self.speed_list = speed
         self.defense_list = defense
@@ -90,4 +103,4 @@ class Warband:
         self.melee_weapons = melee_weapons
         self.equipment = equipment
         self.powers = powers
-        self.leader_traits = leader_traits
+        

@@ -28,7 +28,9 @@ window.onload = function() {
             // just update name and trait and save
             warband['name'] = document.getElementById('warband_name').value;
             let t = document.getElementById('warband_trait');
-            warband['trait'] = t.options[t.selectedIndex].text;
+            warband['warband_trait'] = t.options[t.selectedIndex].text;
+            let lt = document.getElementById('leader_trait');
+            warband['leader_trait'] = lt.options[lt.selectedIndex].text;
             // add warband back into warband list.
             warband_data = getLocalData();
             for (let i = 0; i < warband_data['warbands'].length; i++) {
@@ -75,7 +77,8 @@ function loadWarband() {
         document.getElementById('warband_text').innerHTML = "Edit Warband";
         // load warband name and trait
         document.getElementById('warband_name').value = warband['name'];
-        selectedSelect('warband_trait', warband['trait']);
+        selectedSelect('warband_trait', warband['warband_trait']);
+        selectedSelect('leader_trait', warband['leader_trait']);
         loadWeirdoCards(warband, saved=false); // load weirdos
     } else if (warband_id != 0) { //if id doesn't exist, reload to id 0
         window.location.href = new_warband_url;
@@ -424,7 +427,9 @@ function saveWeirdo() {
         // warband exists:
         warband['name'] = document.getElementById('warband_name').value;
         let t = document.getElementById('warband_trait');
-        warband['trait'] = t.options[t.selectedIndex].text;
+        warband['warband_trait'] = t.options[t.selectedIndex].text;
+        let lt = document.getElementById('leader_trait');
+        warband['leader_trait'] = lt.options[lt.selectedIndex].text;
         // check weirdo id's
         let weirdo_exists = false;
         let next_weirdo_id = 1;
@@ -467,11 +472,14 @@ function saveNewWarband(weirdo=null) {
     }
     // add warband into local data
     let t = document.getElementById('warband_trait');
-    let trait = t.options[t.selectedIndex].text;
+    let warband_trait = t.options[t.selectedIndex].text;
+    let lt = document.getElementById('leader_trait');
+    let leader_trait = lt.options[lt.selectedIndex].text;
     const new_warband = {
         warband_id: new_id,
         name: document.getElementById('warband_name').value,
-        trait: trait,
+        warband_trait: warband_trait,
+        leader_trait: leader_trait,
         weirdos: []
     }
     if (weirdo != null) {

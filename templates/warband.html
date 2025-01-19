@@ -15,14 +15,22 @@
  </script>
  <h1 id="warband_text" class="display-10 fw-bold text-center"></h1>
 <div class="row justify-content-center mb-2">
-    <div class="col-3">
+    <div class="col-2">
         <label for="warband_name" class="form-label">Warband Name</label>
         <input type="text" class="form-control" id="warband_name">
     </div>
     <div class="col-2">
-        <label for="warband_trait" class="form-label">Trait</label>
+        <label for="warband_trait" class="form-label">Warband Trait</label>
         <select id="warband_trait" class="form-select">
-            {% for name, value in warband.trait_dropdown.items() %}
+            {% for name, value in warband.warband_traits.items() %}
+                    <option value="{{name}}">{{name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-2">
+        <label for="leader_trait" class="form-label">Leader Trait</label>
+        <select id="leader_trait" class="form-select">
+            {% for name, value in warband.leader_traits.items() %}
                     <option value="{{name}}">{{name}}</option>
             {% endfor %}
         </select>

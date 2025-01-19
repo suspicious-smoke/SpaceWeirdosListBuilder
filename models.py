@@ -1,3 +1,4 @@
+# uses python 3.11.2
 WarbandTraits = {
 'No Trait': '',
  'Cyborgs': 'All members of the Warband can purchase 1 additional piece of equipment.',

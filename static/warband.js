@@ -11,6 +11,9 @@ window.onload = function() {
         for (const att of weirdo_attribute) {
             resetSelect(`${att}_select`);
         } 
+        // default weapons
+        document.querySelector('input[value="Unarmed"][name="melee_radios"]').checked = true;
+        document.querySelector('input[value="Auto Pistol"][name="ranged_radios"]').checked = true;
         wireSaveWeirdo();
         updateWeirdoPoints();
     });

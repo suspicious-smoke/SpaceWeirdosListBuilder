@@ -136,15 +136,19 @@ function loadWeirdoCards(warband, saved=true) {
             }
             // equipment
             let equip_card = new_card.querySelector('.card-equipment');
-            if (weirdo['equipment'] != null) {
+            if (weirdo['equipment'].length != 0) {
                 for (const equip of weirdo['equipment']) {
                     equip_card.querySelector('.equipment').innerHTML += ` ${equip}&emsp;`;
                 }
+            } else {
+                equip_card.querySelector('.equipment').innerHTML = '&ensp;-'
             }
-            if (weirdo['powers'] != null) {
+            if (weirdo['powers'].length != 0) {
                 for (const power of weirdo['powers']) {
                     equip_card.querySelector('.powers').innerHTML += ` ${power}&emsp;`;
                 }
+            } else {
+                equip_card.querySelector('.powers').innerHTML = '&ensp;-'
             }
             
 

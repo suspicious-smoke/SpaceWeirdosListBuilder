@@ -132,15 +132,12 @@ function loadWeirdoCards(warband, saved=true) {
             } 
             // card weapons
             let weapon_card = new_card.querySelector('.card-weapons');
-            if (weirdo['ranged_weapon'] != null) {
-                weapon_card.querySelector('.ranged').innerHTML = weirdo['ranged_weapon']
-            } 
+            weapon_card.querySelector('.ranged').innerHTML = weirdo['ranged_weapon']
             if (weirdo['firepower'] == 0) {
                 weapon_card.querySelector('.ranged').innerHTML = '&ensp;-'
             }
-            if (weirdo['melee_weapon'] != null) {
-                weapon_card.querySelector('.melee').innerHTML = weirdo['melee_weapon']
-            }
+            weapon_card.querySelector('.melee').innerHTML = weirdo['melee_weapon']
+
             // equipment
             let equip_card = new_card.querySelector('.card-equipment');
             if (weirdo['equipment'].length != 0) {

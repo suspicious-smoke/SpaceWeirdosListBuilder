@@ -103,4 +103,7 @@ class Warband:
         self.melee_weapons = melee_weapons
         self.equipment = equipment
         self.powers = powers
+
+        self.warband_traits_html = '<br><br>'.join(f'<b>{key}</b>: {value}' for key, value in list(warband_traits.items())[1:])
+        self.leader_traits_html = '<br><br>'.join(f'<b>{key}</b>: {value}' for key, value in list(leader_traits.items())[1:])
         

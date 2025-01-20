@@ -1,5 +1,9 @@
 // on warband page load
 window.onload = function() {
+    // setup popovers
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+    
     loadWarband();
     // create new weirdo button
     document.getElementById('create_weirdo').addEventListener('click', function() {

@@ -44,7 +44,7 @@
     <div style="width: 130px"></div> 
     <button id="save_warband" type="button" class="btn btn-success">Save Warband</button>
     <button id="create_weirdo" type="button" class="btn btn-primary ms-3" data-warband_id={{warband.warband_id}} data-bs-toggle="modal" data-bs-target="#weirdo_model">Create Weirdo</button>
-    <button id="print_warband" type="button" class="btn btn-secondary ms-3">Print Warband</button>
+    <a href="{{ url_for('print_warband_page', warband_id=warband.warband_id) }}" target="_blank" class="btn btn-secondary ms-3">Print Warband</a>
     <div id="save_alert" class="p-1 float alert alert-success d-flex mb-0 ms-3" style="opacity: 0; width: fit-content" role="alert">saved warband</div>
 </div>
 

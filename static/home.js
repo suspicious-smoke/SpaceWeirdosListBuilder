@@ -1,4 +1,4 @@
-import {getLocalData, getWarband} from './local_storage.js';
+import {getLocalData, getWarbandPoints} from './local_storage.js';
 
 window.onload = function() {
     loadWarbandTable();
@@ -9,6 +9,7 @@ window.onload = function() {
     });
 
 }
+
 
 function loadWarbandTable() {
     let warbands = getLocalData()['warbands'];
@@ -68,32 +69,9 @@ function loadWarbandTable() {
             }
         });
     });
-    document.getElementById('warband_json_text').value = JSON.stringify(getLocalData());
-    
+    document.getElementById('warband_json_text').value = JSON.stringify(getLocalData());   
 }
 
-function getWarbandPoints(warband_id) {
-    let warband = getWarband(warband_id);
-    const url = points_url;
-    // call controller
-    return fetch(url, 
-        {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json", // Specify JSON format is being sent in body
-            },
-            body: JSON.stringify(warband), // Convert the model object to a JSON string
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok " + response.statusText);
-            }
-            return response.json(); // Parse the JSON response
-        })
-        .catch((error) => {
-            console.error("Fetch error:", error); // Handle errors
-        });
-}
 
 function sendSavedWarbandsToClipboard() {
     const json_warband = getLocalData();
@@ -102,6 +80,7 @@ function sendSavedWarbandsToClipboard() {
     // Alert the copied text
     alert("Copied the text to clipboard:\n\n" + JSON.stringify(json_warband));
 }
+
 
 function loadWarbandJson(saved_list) {
     // get value from textbox

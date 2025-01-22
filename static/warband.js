@@ -1,10 +1,11 @@
-import {getLocalData, getWarband} from './local_storage.js';
+import {getLocalData, getWarband, getWarbandPoints, getWeirdo} from './local_storage.js';
+import {selectedSelect, resetSelect, fadeInOut, fUpper, deleteEventListeners, close_accordions} from './helpers.js';
 
 // on warband page load
 window.onload = function() {
     // setup popovers
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+    [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
     
     loadWarband();
     // create new weirdo button
@@ -48,30 +49,8 @@ window.onload = function() {
             loadWeirdoCards(warband); // reload weirdos
         }
     });
-
     document.getElementById('weirdo_model').addEventListener('change', updateWeirdoPoints);
 }
-
-
-// function getWarband(warband_id) {
-//     let warband = null;
-//     const warbands = getLocalData()['warbands'];
-//     for(const wbnd of warbands) {
-//         if (wbnd['warband_id'] == warband_id) { // found a saved warband
-//             warband = wbnd;
-//         }
-//     }
-//     return warband;
-// }
-
-
-// function getLocalData() {
-//     const json_warband = localStorage.getItem('warbands');
-//     if (json_warband != null) {
-//         return JSON.parse(json_warband);
-//     }
-//     return {warbands:[]};
-// }
 
 
 function loadWarband() {
@@ -156,10 +135,6 @@ function loadWeirdoCards(warband, saved=true) {
             } else {
                 equip_card.querySelector('.powers').innerHTML = '&ensp;-'
             }
-            
-
-
-
             card_container.appendChild(new_card);
         }
         // wire Edit buttons
@@ -223,6 +198,7 @@ function loadWeirdoCards(warband, saved=true) {
     });
 }
 
+
 function load_weirdo_modal(wrdo, warband) {
     // load weirdo into modal
     close_accordions();
@@ -269,15 +245,6 @@ function load_weirdo_modal(wrdo, warband) {
 }
 
 
-// get cost of each weirdo stat and post it in relevant places
-function deleteEventListeners(id) {
-    const items = document.querySelectorAll(id);
-    items.forEach(item => {
-        item.replaceWith(item.cloneNode(true));
-    });
-}
-
-
 function wireSaveWeirdo() {
     document.getElementById('save_weirdo').removeEventListener('click', saveWeirdo);
     document.getElementById('save_weirdo').addEventListener('click', saveWeirdo);
@@ -291,12 +258,6 @@ function updateWeirdoPoints() {
     } 
     total_points += updateWeirdoEquipArea();
     document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
-}
-
-
-// turn first character to upper case
-function fUpper(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
 
@@ -363,23 +324,6 @@ function updateWeirdoEquipArea() {
     });
 
     return equip_points
-}
-
-function close_accordions() {
-    document.querySelectorAll('.accordion .collapse').forEach(function(collapseElement) {
-        const bsCollapse = new bootstrap.Collapse(collapseElement, { toggle: false });
-        bsCollapse.hide(); // Close all accordion items
-    });
-}
-
-function getWeirdo(warband_id, weirdo_id) {
-    let warband = getWarband(warband_id);
-    for (const weirdo of warband['weirdos']) {
-        if (weirdo['weirdo_id'] == weirdo_id) {
-            return weirdo;
-        }
-    }
-    return null;
 }
 
 
@@ -505,85 +449,4 @@ function saveNewWarband(weirdo=null) {
     warband_data['warbands'].push(new_warband);
     localStorage.setItem('warbands', JSON.stringify(warband_data));
     window.location.href = '/warband/'+new_id; //redirect to new page
-}
-
-
-function selectedSelect(list_name, selected_text) {
-    resetSelect(list_name);
-    let select_list = document.getElementById(list_name);
-    for(let i=0; i < select_list.options.length; i++) {
-        if (select_list.options[i].text == selected_text) {
-            select_list.options[i].selected = true;
-        }
-    }
-}
-
-function resetSelect(list_name) {
-    let select_list = document.getElementById(list_name);
-    for(let i=0; i < select_list.options.length; i++) {
-        select_list.options[i].selected = false;
-    }
-    select_list.options[0].selected = true;
-}
-
-function fadeInOut(id) {
-    const alert = document.getElementById(id);
-    // prevent running multiple times
-    if (alert.style.opacity < 0) {
-        alert.style.opacity = 0;
-    }
-    if (alert.style.opacity != 0) {
-        return;
-    }
-    let opacity = 0; // Initial opacity
-    alert.style.display = 'block'; // Make sure the element is visible
-    // Fade in
-    const fadeInEffect = setInterval(() => {
-        if (opacity >= 1) {
-        clearInterval(fadeInEffect); // Stop fade-in
-        setTimeout(() => fadeOut(), 500); // Wait 1 second before starting fade-out
-        } else {
-        opacity += 0.1; // Increase opacity
-        alert.style.opacity = opacity;
-        }
-    }, 50); // Interval of 50ms
-    function fadeOut() {
-        // Fade out
-        const fadeOutEffect = setInterval(() => {
-        if (opacity <= 0) {
-            clearInterval(fadeOutEffect); // Stop fade-out
-            alert.style.display = 'none'; // Hide the element
-        } else {
-            opacity -= 0.1; // Decrease opacity
-            alert.style.opacity = opacity;
-        }
-        }, 50); // Interval of 50ms
-    }
-}
-  
-  
-function getWarbandPoints(warband_id) {
-    let warband = getWarband(warband_id);
-    const url = points_url;
-    // call controller
-    return fetch(url, 
-        {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json", // Specify JSON format is being sent in body
-            },
-            body: JSON.stringify(warband), // Convert the model object to a JSON string
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok " + response.statusText);
-            }
-            return response.json(); // Parse the JSON response
-        })
-        // .then((data) => {
-        //     return data; // this returns data.points to the fetch.
-        // })
-        .catch((error) => {
-            console.error("Fetch error:", error); // Handle errors
-        });
-}
+}  

@@ -1,3 +1,5 @@
+import {getLocalData, getWarband} from './local_storage.js';
+
 // on warband page load
 window.onload = function() {
     // setup popovers
@@ -51,31 +53,31 @@ window.onload = function() {
 }
 
 
-function getWarband(warband_id) {
-    let warband = null;
-    const warbands = getLocalData()['warbands'];
-    for(const wbnd of warbands) {
-        if (wbnd['warband_id'] == warband_id) { // found a saved warband
-            warband = wbnd;
-        }
-    }
-    return warband;
-}
+// function getWarband(warband_id) {
+//     let warband = null;
+//     const warbands = getLocalData()['warbands'];
+//     for(const wbnd of warbands) {
+//         if (wbnd['warband_id'] == warband_id) { // found a saved warband
+//             warband = wbnd;
+//         }
+//     }
+//     return warband;
+// }
 
 
-function getLocalData() {
-    const json_warband = localStorage.getItem('warbands');
-    if (json_warband != null) {
-        return JSON.parse(json_warband);
-    }
-    return {warbands:[]};
-}
+// function getLocalData() {
+//     const json_warband = localStorage.getItem('warbands');
+//     if (json_warband != null) {
+//         return JSON.parse(json_warband);
+//     }
+//     return {warbands:[]};
+// }
 
 
 function loadWarband() {
     // check warband id
     const warband_id = document.getElementById('warband_id').value;
-    warband = getWarband(warband_id);
+    let warband = getWarband(warband_id);
     if (warband != null) {
         // load warband info
         document.getElementById('warband_text').innerHTML = "Edit Warband";
@@ -83,7 +85,7 @@ function loadWarband() {
         document.getElementById('warband_name').value = warband['name'];
         selectedSelect('warband_trait', warband['warband_trait']);
         selectedSelect('leader_trait', warband['leader_trait']);
-        loadWeirdoCards(warband, saved=false); // load weirdos
+        loadWeirdoCards(warband, false); // load weirdos
     } else if (warband_id != 0) { //if id doesn't exist, reload to id 0
         window.location.href = new_warband_url;
     } else {
@@ -94,7 +96,7 @@ function loadWarband() {
 
 function loadWeirdoCards(warband, saved=true) {
     let weirdos = warband['weirdos'];
-    card_container = document.getElementById('weirdo_cards');
+    let card_container = document.getElementById('weirdo_cards');
     // clear old events
     deleteEventListeners('.edit_weirdo');
     deleteEventListeners('.delete_weirdo');
@@ -165,7 +167,7 @@ function loadWeirdoCards(warband, saved=true) {
         edit_btns
         edit_btns.forEach(weirdo => {
             weirdo.addEventListener('click', (wrdo) => {
-                load_weirdo_modal(wrdo);
+                load_weirdo_modal(wrdo, warband);
             });
         });
         // wire delete buttons
@@ -221,11 +223,11 @@ function loadWeirdoCards(warband, saved=true) {
     });
 }
 
-function load_weirdo_modal(wrdo) {
+function load_weirdo_modal(wrdo, warband) {
     // load weirdo into modal
     close_accordions();
     let weirdo_id = wrdo.target.dataset.weirdo_id;
-    let warband_id = warband['warband_id']
+    let warband_id = warband['warband_id'];
     document.getElementById('warband_id').value = warband_id;
     document.getElementById('weirdo_id').value = weirdo_id;
     let weirdo = getWeirdo(warband_id, weirdo_id);
@@ -309,9 +311,9 @@ function updateWeirdoSelectPoint(attribute) {
 
 
 function updateWeirdoEquipArea() {
-    equip_points = 0
+    let equip_points = 0;
     // if firepower is 0, hide ranged weapons and set ranged weapon to auto pistol
-    ranged_list = document.getElementById('ranged-weapons-list');
+    let ranged_list = document.getElementById('ranged-weapons-list');
     if (document.getElementById('firepower_select').selectedIndex == 0) {
         ranged_list.setAttribute("hidden", true);
         document.querySelector('input[value="Auto Pistol"][name="ranged_radios"]').checked = true;
@@ -371,8 +373,8 @@ function close_accordions() {
 }
 
 function getWeirdo(warband_id, weirdo_id) {
-    warband = getWarband(warband_id);
-    for (weirdo of warband['weirdos']) {
+    let warband = getWarband(warband_id);
+    for (const weirdo of warband['weirdos']) {
         if (weirdo['weirdo_id'] == weirdo_id) {
             return weirdo;
         }
@@ -413,7 +415,7 @@ function saveWeirdo() {
     weirdo['melee_weapon'] = document.querySelector('input[name="melee_radios"]:checked').value;
     weirdo['ranged_weapon'] = document.querySelector('input[name="ranged_radios"]:checked').value;
     //equipment
-    equipment = []
+    let equipment = [];
     const equipment_boxes = document.querySelectorAll('input[name="equipment_checkbox"]');
     equipment_boxes.forEach((checkbox) => {
         if (checkbox.checked) {
@@ -423,7 +425,7 @@ function saveWeirdo() {
     weirdo['equipment'] = equipment;
 
     //equipment
-    powers = []
+    let powers = [];
     const powers_checkbox = document.querySelectorAll('input[name="powers_checkbox"]');
     powers_checkbox.forEach((checkbox) => {
         if (checkbox.checked) {
@@ -433,7 +435,7 @@ function saveWeirdo() {
     weirdo['powers'] = powers;
 
     // first load from local storage
-    warband = getWarband(warband_id);   
+    let warband = getWarband(warband_id);   
     // new warband
     if (warband == null) {
         saveNewWarband(weirdo);
@@ -464,7 +466,7 @@ function saveWeirdo() {
             warband['weirdos'].push(weirdo);
         }
         // add warband back into warband list.
-        warband_data = getLocalData();
+        let warband_data = getLocalData();
         for (let i = 0; i < warband_data['warbands'].length; i++) {
             if (warband_data['warbands'][i]['warband_id'] == warband_id) {
                 warband_data['warbands'][i] = warband; // swap warband

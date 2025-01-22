@@ -1,3 +1,5 @@
+import {getLocalData, getWarband} from './local_storage.js';
+
 window.onload = function() {
     loadWarbandTable();
     document.getElementById('save_json_warband').addEventListener('click', sendSavedWarbandsToClipboard);
@@ -6,25 +8,6 @@ window.onload = function() {
         loadWarbandJson(saved_list);
     });
 
-}
-
-function getLocalData() {
-    const json_warband = localStorage.getItem('warbands');
-    if (json_warband != null) {
-        return JSON.parse(json_warband);
-    }
-    return {warbands:[]};
-}
-
-function getWarband(warband_id) {
-    let warband = null;
-    const warbands = getLocalData()['warbands'];
-    for(const wbnd of warbands) {
-        if (wbnd['warband_id'] == warband_id) { // found a saved warband
-            warband = wbnd;
-        }
-    }
-    return warband;
 }
 
 function loadWarbandTable() {
@@ -107,9 +90,6 @@ function getWarbandPoints(warband_id) {
             }
             return response.json(); // Parse the JSON response
         })
-        // .then((data) => {
-        //     return data; // this returns data.points to the fetch.
-        // })
         .catch((error) => {
             console.error("Fetch error:", error); // Handle errors
         });

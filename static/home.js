@@ -41,7 +41,7 @@ function loadWarbandTable() {
         w_name.innerHTML = wbnd['name'];
         
         let w_trait = row.insertCell(2);
-        w_trait.innerHTML = wbnd['trait'];
+        w_trait.innerHTML = wbnd['warband_trait'];
         
         let w_count = row.insertCell(3);
         w_count.innerHTML = wbnd['weirdos'].length;

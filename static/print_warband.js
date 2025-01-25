@@ -1,7 +1,7 @@
 import {getWarband, getWarbandPoints} from './local_storage.js';
 
 
-function getWeirdoEquipmentInfo(warband) {
+function getWeirdoEquipmentInfo(weirdo) {
     // call controller
     return fetch(equip_url, 
         {
@@ -9,7 +9,7 @@ function getWeirdoEquipmentInfo(warband) {
             headers: {
             "Content-Type": "application/json", // Specify JSON format is being sent in body
             },
-            body: JSON.stringify(warband), // Convert the model object to a JSON string
+            body: JSON.stringify(weirdo), // Convert the model object to a JSON string
         })
         .then((response) => {
             if (!response.ok) {
@@ -96,6 +96,9 @@ window.onload = function() {
                 new_card.querySelector(`.card-${att}`).innerHTML = weirdo[att];
             } 
             // card weapons
+            let eq_data = getWeirdoEquipmentInfo(weirdo);
+
+
             new_card.querySelector('.ranged-weapon').innerHTML = weirdo['ranged_weapon']
             if (weirdo['firepower'] == 0) {
                 new_card.querySelector('.ranged-weapon').innerHTML = '&ensp;-'

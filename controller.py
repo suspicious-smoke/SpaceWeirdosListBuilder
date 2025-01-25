@@ -52,15 +52,15 @@ def get_trait_text():
 
 
 def get_weirdo_equipments():
-    warband = request.get_json()
+    weirdo = request.get_json()
     wt_text = ''
     lt_text = ''
     for key, value in warband_traits.items():
-        if key == warband:
+        if key == weirdo:
             wt_text = value
 
     for key, value in leader_traits.items():
-        if key == warband:
+        if key == weirdo:
             lt_text = value
     return jsonify({"wt_text": wt_text, "lt_text": lt_text})
 

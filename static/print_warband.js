@@ -1,6 +1,5 @@
 import {getWarband, getWarbandPoints, getTraitsText, getWeirdoEquipmentInfo} from './local_storage.js';
 
-
 window.onload = function() {
     const warband_id = document.getElementById('warband_id').value;
     let warband = getWarband(warband_id);
@@ -12,7 +11,13 @@ window.onload = function() {
         document.getElementById('warband_trait_text').innerHTML = data.wt_text;
         document.getElementById('leader_trait_text').innerHTML = data.lt_text;
     });
-  
+    loadWeirdoPrintCards(warband); 
+
+    
+} 
+
+
+function loadWeirdoPrintCards(warband) {
     let weirdos = warband['weirdos'];
     let card_container = document.getElementById('weirdo_cards');
     card_container.innerHTML = '';
@@ -80,27 +85,10 @@ window.onload = function() {
                 }
 
             });
-            
-
-        
-            
-            // equipment
-            // if (weirdo['equipment'].length != 0) {
-            //     for (const equip of weirdo['equipment']) {
-            //         new_card.querySelector('.equipment').innerHTML += ` ${equip}<br>`;
-            //     }
-            // } else {
-            //     new_card.querySelector('.equipment').innerHTML = '&ensp;-'
-            // }
-            // if (weirdo['powers'].length != 0) {
-            //     for (const power of weirdo['powers']) {
-            //         new_card.querySelector('.powers').innerHTML += ` ${power}<br>`;
-            //     }
-            // } else {
-            //     new_card.querySelector('.powers').innerHTML = '&ensp;-'
-            // }
             card_container.appendChild(new_card);
         }
     });
-} 
+}
+
+
 

@@ -41,7 +41,7 @@ def get_trait_text():
     traits = request.get_json()
     wt_text = ''
     lt_text = ''
-    for key, value in melee_weapons.items():
+    for key, value in warband_traits.items():
         if key == traits[0]:
             wt_text = value
 

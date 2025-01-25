@@ -1,53 +1,4 @@
-import {getWarband, getWarbandPoints} from './local_storage.js';
-
-
-function getWeirdoEquipmentInfo(weirdo) {
-    // call controller
-    return fetch(equip_url, 
-        {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json", // Specify JSON format is being sent in body
-            },
-            body: JSON.stringify(weirdo), // Convert the model object to a JSON string
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok " + response.statusText);
-            }
-            return response.json(); // Parse the JSON response
-        })
-        .then((data) => {
-            return data; // this returns data to the fetch.
-        })
-        .catch((error) => {
-            console.error("Fetch error:", error); // Handle errors
-        });
-}
-
-function getTraitsText(warband_trait, leader_trait) {
-    // call controller
-    return fetch(traits_url, 
-        {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json", // Specify JSON format is being sent in body
-            },
-            body: JSON.stringify([warband_trait,leader_trait]), // Convert the model object to a JSON string
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok " + response.statusText);
-            }
-            return response.json(); // Parse the JSON response
-        })
-        // .then((data) => {
-        //     return data; // this returns data.points to the fetch.
-        // })
-        .catch((error) => {
-            console.error("Fetch error:", error); // Handle errors
-        });
-}
+import {getWarband, getWarbandPoints, getTraitsText, getWeirdoEquipmentInfo} from './local_storage.js';
 
 
 window.onload = function() {
@@ -96,14 +47,30 @@ window.onload = function() {
                 new_card.querySelector(`.card-${att}`).innerHTML = weirdo[att];
             } 
             // card weapons
-            let eq_data = getWeirdoEquipmentInfo(weirdo);
+            getWeirdoEquipmentInfo(weirdo).then((data) => {
+                let melee = data.melee_weapon;
+                new_card.querySelector('.m_name').innerHTML = melee.name;
+                new_card.querySelector('.m_action').innerHTML = 'act: '+ melee.actions;
+                new_card.querySelector('.m_notes').innerHTML = melee.notes;
 
+                
+                if (weirdo['firepower'] != 0) {
+                    let ranged = data.ranged_weapon;
+                    new_card.querySelector('.r_name').innerHTML = ranged.name;
+                    new_card.querySelector('.r_action').innerHTML = 'act: '+ ranged.actions;
+                    new_card.querySelector('.r_notes').innerHTML = ranged.notes;
+                } else {
+                    new_card.querySelector('.ranged_weapon').setAttribute("hidden", true);
+                }
+                
+            });
+            
 
-            new_card.querySelector('.ranged-weapon').innerHTML = weirdo['ranged_weapon']
-            if (weirdo['firepower'] == 0) {
-                new_card.querySelector('.ranged-weapon').innerHTML = '&ensp;-'
-            }
-            new_card.querySelector('.melee-weapon').innerHTML = weirdo['melee_weapon']
+            // new_card.querySelector('.ranged-weapon').innerHTML = weirdo['ranged_weapon']
+            // if (weirdo['firepower'] == 0) {
+            //     new_card.querySelector('.ranged-weapon').innerHTML = '&ensp;-'
+            // }
+            // new_card.querySelector('.melee-weapon').innerHTML = weirdo['melee_weapon']
 
 
             

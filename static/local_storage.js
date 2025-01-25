@@ -18,30 +18,26 @@ function getWarband(warband_id) {
     return warband;
 }
 
-function getWarbandPoints(warband_id) {
+async function getWarbandPoints(warband_id) {
     let warband = getWarband(warband_id);
     const url = points_url;
     // call controller
-    return fetch(url, 
-        {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json", // Specify JSON format is being sent in body
-            },
-            body: JSON.stringify(warband), // Convert the model object to a JSON string
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok " + response.statusText);
-            }
-            return response.json(); // Parse the JSON response
-        })
-        // .then((data) => {
-        //     return data; // this returns data.points to the fetch.
-        // })
-        .catch((error) => {
-            console.error("Fetch error:", error); // Handle errors
-        });
+    try {
+        const response = await fetch(url,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json", // Specify JSON format is being sent in body
+                },
+                body: JSON.stringify(warband), // Convert the model object to a JSON string
+            });
+        if (!response.ok) {
+            throw new Error("Network response was not ok " + response.statusText);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Fetch error:", error); // Handle errors
+    }
 }
 
 function getWeirdo(warband_id, weirdo_id) {
@@ -54,5 +50,48 @@ function getWeirdo(warband_id, weirdo_id) {
     return null;
 }
 
-export {getLocalData, getWarband, getWarbandPoints, getWeirdo};
+
+async function getWeirdoEquipmentInfo(weirdo) {
+    // call controller
+    try {
+        const response = await fetch(equip_url,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json", // Specify JSON format is being sent in body
+                },
+                body: JSON.stringify(weirdo), // Convert the model object to a JSON string
+            });
+        if (!response.ok) {
+            throw new Error("Network response was not ok " + response.statusText);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Fetch error:", error); // Handle errors
+    }
+}
+
+async function getTraitsText(warband_trait, leader_trait) {
+    // call controller
+    try {
+        const response = await fetch(traits_url,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json", // Specify JSON format is being sent in body
+                },
+                body: JSON.stringify([warband_trait, leader_trait]), // Convert the model object to a JSON string
+            });
+        if (!response.ok) {
+            throw new Error("Network response was not ok " + response.statusText);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Fetch error:", error); // Handle errors
+    }
+}
+
+
+export {getLocalData, getWarband, getWarbandPoints, getWeirdo, getTraitsText, getWeirdoEquipmentInfo};
 

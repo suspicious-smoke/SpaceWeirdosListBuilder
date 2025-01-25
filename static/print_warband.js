@@ -1,6 +1,30 @@
 import {getWarband, getWarbandPoints} from './local_storage.js';
 
 
+function getWeirdoEquipmentInfo(warband) {
+    // call controller
+    return fetch(equip_url, 
+        {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json", // Specify JSON format is being sent in body
+            },
+            body: JSON.stringify(warband), // Convert the model object to a JSON string
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok " + response.statusText);
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then((data) => {
+            return data; // this returns data to the fetch.
+        })
+        .catch((error) => {
+            console.error("Fetch error:", error); // Handle errors
+        });
+}
+
 function getWarbandsEquipmentInfo(warband) {
     // call controller
     return fetch(traits_url, 
@@ -33,7 +57,7 @@ window.onload = function() {
     document.getElementById('warband_trait').innerHTML =  '['+warband.warband_trait+']';
     document.getElementById('leader_trait').innerHTML =  '['+warband.leader_trait+']';
 
-    let data = getTraitsText(warband);
+    let data = getWarbandsEquipmentInfo(warband);
     document.getElementById('warband_trait_text').innerHTML = data.wt_text;
     document.getElementById('leader_trait_text').innerHTML = data.lt_text;
   

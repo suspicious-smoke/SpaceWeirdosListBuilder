@@ -13,12 +13,9 @@ window.onload = function() {
         document.getElementById('leader_trait_text').innerHTML = data.lt_text;
     });
   
-
     let weirdos = warband['weirdos'];
     let card_container = document.getElementById('weirdo_cards');
     card_container.innerHTML = '';
-
-
     getWarbandPoints(warband['warband_id']).then((data) => {
         // create new card for each weirdo
         let first = true;
@@ -62,38 +59,48 @@ window.onload = function() {
                 } else {
                     new_card.querySelector('.ranged_weapon').setAttribute("hidden", true);
                 }
-                
+                // items
+                let equipment_area = new_card.querySelector('.equipment_area');
+                var items_list = data.equipment_list.concat(data.powers_list);
+
+
+                if (items_list.length == 0) {
+                    equipment_area.innerHTML = '&ensp;-'
+                } else {
+                    
+                    for (const item of items_list) {
+                        let template_item = new_card.querySelector('#item_template');
+                        let item_card = template_item.cloneNode(true); // clear out events
+                        item_card.removeAttribute("hidden");
+                        item_card.removeAttribute("id");
+                        item_card.querySelector('.name').innerHTML = `${item.name} (${item.type})`;
+                        item_card.querySelector('.notes').innerHTML = item.notes;
+                        equipment_area.appendChild(item_card)
+                    }
+                }
+
             });
             
 
-            // new_card.querySelector('.ranged-weapon').innerHTML = weirdo['ranged_weapon']
-            // if (weirdo['firepower'] == 0) {
-            //     new_card.querySelector('.ranged-weapon').innerHTML = '&ensp;-'
-            // }
-            // new_card.querySelector('.melee-weapon').innerHTML = weirdo['melee_weapon']
-
-
+        
             
             // equipment
-            if (weirdo['equipment'].length != 0) {
-                for (const equip of weirdo['equipment']) {
-                    new_card.querySelector('.equipment').innerHTML += ` ${equip}<br>`;
-                }
-            } else {
-                new_card.querySelector('.equipment').innerHTML = '&ensp;-'
-            }
-            if (weirdo['powers'].length != 0) {
-                for (const power of weirdo['powers']) {
-                    new_card.querySelector('.powers').innerHTML += ` ${power}<br>`;
-                }
-            } else {
-                new_card.querySelector('.powers').innerHTML = '&ensp;-'
-            }
+            // if (weirdo['equipment'].length != 0) {
+            //     for (const equip of weirdo['equipment']) {
+            //         new_card.querySelector('.equipment').innerHTML += ` ${equip}<br>`;
+            //     }
+            // } else {
+            //     new_card.querySelector('.equipment').innerHTML = '&ensp;-'
+            // }
+            // if (weirdo['powers'].length != 0) {
+            //     for (const power of weirdo['powers']) {
+            //         new_card.querySelector('.powers').innerHTML += ` ${power}<br>`;
+            //     }
+            // } else {
+            //     new_card.querySelector('.powers').innerHTML = '&ensp;-'
+            // }
             card_container.appendChild(new_card);
         }
     });
-
-
-
 } 
 

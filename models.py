@@ -75,14 +75,14 @@ equipment = [
 ]
 
 powers = [
-  {"name": "Fear", "type": "Attack", "effect": "Each enemy model within 1 stick who loses its opposed Will roll must move 1 stick away from the psychic.", "points": 1},
-  {"name": "Healing", "type": "Effect", "effect": "1 model within 1 stick of this model and in LoS becomes ready.", "points": 1},
-  {"name": "Meat Puppet", "type": "Effect", "effect": "Return 1 OoA model to the table and place within 1 stick of the psychic. The returned model’s Spd is reduced by 1 (min 1), and rolls with -1DT for all rolls. A model can only be returned to the table once.", "points": 2},
-  {"name": "Mind Control", "type": "Attack", "effect": "Targeted enemy takes one action of the psychic’s choice.", "points": 2},
-  {"name": "Mind Stab", "type": "Attack", "effect": "Target 1 enemy model within 1 stick. Roll on Under Fire table +3.", "points": 3},
-  {"name": "Prescience", "type": "Effect", "effect": "Choose any model on the table to either gain +1DT or -1DT for all their actions this round.", "points": 1},
-  {"name": "Telekinesis", "type": "Either", "effect": "Effect: move 1 obstacle or ally up to 1 stick. Attack: move an enemy 1 stick.", "points": 1},
-  {"name": "Teleport", "type": "Effect", "effect": "Place the psychic anywhere on the board.", "points": 1}
+  {"name": "Fear", "type": "Attack", 'notes': "Each enemy model within 1 stick who loses its opposed Will roll must move 1 stick away from the psychic.", "points": 1},
+  {"name": "Healing", "type": "Effect", 'notes': "1 model within 1 stick of this model and in LoS becomes ready.", "points": 1},
+  {"name": "Meat Puppet", "type": "Effect", 'notes': "Return 1 OoA model to the table and place within 1 stick of the psychic. The returned model’s Spd is reduced by 1 (min 1), and rolls with -1DT for all rolls. A model can only be returned to the table once.", "points": 2},
+  {"name": "Mind Control", "type": "Attack", 'notes': "Targeted enemy takes one action of the psychic’s choice.", "points": 2},
+  {"name": "Mind Stab", "type": "Attack", 'notes': "Target 1 enemy model within 1 stick. Roll on Under Fire table +3.", "points": 3},
+  {"name": "Prescience", "type": "Effect", 'notes': "Choose any model on the table to either gain +1DT or -1DT for all their actions this round.", "points": 1},
+  {"name": "Telekinesis", "type": "Either", 'notes': "Effect: move 1 obstacle or ally up to 1 stick. Attack: move an enemy 1 stick.", "points": 1},
+  {"name": "Teleport", "type": "Effect", 'notes': "Place the psychic anywhere on the board.", "points": 1}
 ]
 
 

@@ -37,6 +37,20 @@ def item_points(item_list, weirdo_item):
     return 0
 
 
+def get_trait_text():
+    traits = request.get_json()
+    wt_text = ''
+    lt_text = ''
+    for key, value in warband_traits.items():
+        if key == traits[0]:
+            wt_text = value
+
+    for key, value in leader_traits.items():
+        if key == traits[1]:
+            lt_text = value
+    
+    return jsonify({"wt_text": wt_text, "lt_text": lt_text})
+
 # load warband page
 def warband_points():
     # get warband id and selects

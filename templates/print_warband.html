@@ -6,6 +6,7 @@
 <link href="/static/print_warband.css" rel="stylesheet">
 <script>
     const points_url = "{{url_for('warband_points')}}";
+    const traits_url = "{{url_for('get_trait_text')}}";
     const weirdo_attribute = [
         'speed','defense','firepower','prowess','willpower'
     ];
@@ -25,12 +26,12 @@
     <div class="col border">
         <span class="fw-bold ">Warband Trait</span>
         <div id="warband_trait"></div>
-        <div id="warband_trait_text"></div>
+        <div id="warband_trait_text" class="small-font"></div>
     </div>
     <div class="col border">
         <span class="fw-bold ">Leader Trait</span>
         <div id="leader_trait"></div>
-        <div id="leader_trait_text"></div>
+        <div id="leader_trait_text" class="small-font"></div>
     </div>
 </div>
 

@@ -1,13 +1,42 @@
 import {getLocalData, getWarband, getWarbandPoints} from './local_storage.js';
 
+
+function getTraitsText(warband_trait, leader_trait) {
+    // call controller
+    return fetch(traits_url, 
+        {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json", // Specify JSON format is being sent in body
+            },
+            body: JSON.stringify([warband_trait,leader_trait]), // Convert the model object to a JSON string
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok " + response.statusText);
+            }
+            return response.json(); // Parse the JSON response
+        })
+        // .then((data) => {
+        //     return data; // this returns data.points to the fetch.
+        // })
+        .catch((error) => {
+            console.error("Fetch error:", error); // Handle errors
+        });
+}
+
+
 window.onload = function() {
     const warband_id = document.getElementById('warband_id').value;
     let warband = getWarband(warband_id);
     document.getElementById('warband_name').innerHTML =  warband.name;
     document.getElementById('warband_trait').innerHTML =  warband.warband_trait;
     document.getElementById('leader_trait').innerHTML =  warband.leader_trait;
-    
 
+    getTraitsText(warband.warband_trait, warband.leader_trait).then(data => {
+        document.getElementById('warband_trait_text').innerHTML = data.wt_text;
+        document.getElementById('leader_trait_text').innerHTML = data.lt_text;
+    });
 
     let weirdos = warband['weirdos'];
     let card_container = document.getElementById('weirdo_cards');

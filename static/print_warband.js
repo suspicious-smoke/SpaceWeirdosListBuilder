@@ -6,5 +6,11 @@ window.onload = function() {
     document.getElementById('warband_name').innerHTML =  warband.name;
     document.getElementById('warband_trait').innerHTML =  warband.warband_trait;
     document.getElementById('leader_trait').innerHTML =  warband.leader_trait;
-    let x = 4;
+    
+    let weirdo = warband['weirdos'][0];
+    for (const att of weirdo_attribute) {
+        document.getElementById(`warband_${att}`).innerHTML = weirdo[att];
+    } 
+
+
 }

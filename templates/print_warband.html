@@ -2,35 +2,96 @@
 {% block title %}Print Warband{% endblock %}
 
 {% block content %}
-<script type="module" src="/static/print_warband.js"></script>
+<script type="module" media="all" src="/static/print_warband.js"></script>
+
+<script>
+    const weirdo_attribute = [
+        'speed','defense','firepower','prowess','willpower'
+    ];
+ </script>
+
 <input hidden id="warband_id" value={{warband.warband_id}}>
 <div class="container text-center">
     <div class="d-print-none">
         <h1 class="display-10 fw-bold">Printable Warband</h1>
-        <p class="text-danger">
+        <!-- <p class="text-danger">
             This is a print friendly page
-        </p>
+        </p> -->
 
     </div>
-    <!-- <div class="d-none d-print-block">
-        <p class="text-danger">
-            I will be visible only when u will print this webpage
-        </p>
-    </div> -->
 </div>
 <div class="row justify-content-center mb-2">
-    <div class="col">
+    <div class="col border">
         <label class="form-label fw-bold">Warband Name</label>
         <div id="warband_name"></div>
     </div>
-    <div class="col">
+    <div class="col border">
         <label class="form-label fw-bold">Warband Trait</label>
         <div id="warband_trait"></div>
     </div>
-    <div class="col">
+    <div class="col border">
         <label class="form-label fw-bold">Leader Trait</label>
         <div id="leader_trait"></div>
     </div>
 </div>
+
+
+<div class="row g-3">
+    <div class="col border">
+        <label class="form-label fw-bold">Speed</label>
+        <div id="warband_speed"></div>
+    </div>
+    <div class="col border">
+        <label class="form-label fw-bold">Defense</label>
+        <div id="warband_defense"></div>
+    </div>
+    <div class="col border">
+        <label class="form-label fw-bold">Firepower</label>
+        <div id="warband_firepower"></div>
+    </div>
+    <div class="col border">
+        <label class="form-label fw-bold">Prowess</label>
+        <div id="warband_prowess"></div>
+    </div>
+    <div class="col border">
+        <label class="form-label fw-bold">Willpower</label>
+        <div id="warband_willpower"></div>
+    </div>
+</div>
+
+
+
+
+
+<!-- <div class="row">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+          </tr>
+        </tbody>
+      </table>
+</div> -->
 
 {% endblock %}

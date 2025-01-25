@@ -1,7 +1,7 @@
-import {getLocalData, getWarband, getWarbandPoints} from './local_storage.js';
+import {getWarband, getWarbandPoints} from './local_storage.js';
 
 
-function getTraitsText(warband_trait, leader_trait) {
+function getWarbandsEquipmentInfo(warband) {
     // call controller
     return fetch(traits_url, 
         {
@@ -9,7 +9,7 @@ function getTraitsText(warband_trait, leader_trait) {
             headers: {
             "Content-Type": "application/json", // Specify JSON format is being sent in body
             },
-            body: JSON.stringify([warband_trait,leader_trait]), // Convert the model object to a JSON string
+            body: JSON.stringify(warband), // Convert the model object to a JSON string
         })
         .then((response) => {
             if (!response.ok) {
@@ -17,9 +17,9 @@ function getTraitsText(warband_trait, leader_trait) {
             }
             return response.json(); // Parse the JSON response
         })
-        // .then((data) => {
-        //     return data; // this returns data.points to the fetch.
-        // })
+        .then((data) => {
+            return data; // this returns data to the fetch.
+        })
         .catch((error) => {
             console.error("Fetch error:", error); // Handle errors
         });
@@ -30,13 +30,13 @@ window.onload = function() {
     const warband_id = document.getElementById('warband_id').value;
     let warband = getWarband(warband_id);
     document.getElementById('warband_name').innerHTML =  warband.name;
-    document.getElementById('warband_trait').innerHTML =  warband.warband_trait;
-    document.getElementById('leader_trait').innerHTML =  warband.leader_trait;
+    document.getElementById('warband_trait').innerHTML =  '['+warband.warband_trait+']';
+    document.getElementById('leader_trait').innerHTML =  '['+warband.leader_trait+']';
 
-    getTraitsText(warband.warband_trait, warband.leader_trait).then(data => {
-        document.getElementById('warband_trait_text').innerHTML = data.wt_text;
-        document.getElementById('leader_trait_text').innerHTML = data.lt_text;
-    });
+    let data = getTraitsText(warband);
+    document.getElementById('warband_trait_text').innerHTML = data.wt_text;
+    document.getElementById('leader_trait_text').innerHTML = data.lt_text;
+  
 
     let weirdos = warband['weirdos'];
     let card_container = document.getElementById('weirdo_cards');

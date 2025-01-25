@@ -48,7 +48,6 @@ def get_trait_text():
     for key, value in leader_traits.items():
         if key == traits[1]:
             lt_text = value
-    
     return jsonify({"wt_text": wt_text, "lt_text": lt_text})
 
 # load warband page

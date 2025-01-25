@@ -16,31 +16,36 @@
 <input hidden id="warband_id" value={{warband.warband_id}}>
 <div class="text-center d-print-none">
         <h1 class="display-10 fw-bold">Print Warband Page</h1>
+        <p>you should be able to ctrl+p and print the page as normal. You may not see the borders in the print preview, but they will show up if you print it for real or print to pdf.</p>
 </div>
-
-<div class="row justify-content-center med-font">
-    <div class="col border">
-        <span class="fw-bold ">Warband Name</span>
-        <div id="warband_name"></div>
+<div  class="small-font">
+    <div class="row">
+        <div class="col border border-2 border-dark py-1 m-1">
+            <span class="fw-bold ">Warband:</span>
+            <span id="warband_name"></span>
+        </div>
+        <div class="col py-1 m-1"></div>
     </div>
-    <div class="col border">
-        <span class="fw-bold ">Warband Trait</span>
-        <div id="warband_trait"></div>
-        <div id="warband_trait_text" class="small-font"></div>
-    </div>
-    <div class="col border">
-        <span class="fw-bold ">Leader Trait</span>
-        <div id="leader_trait"></div>
-        <div id="leader_trait_text" class="small-font"></div>
+    <div class="row">
+        
+        <div class="col border border-2 border-dark py-1 m-1">
+            <span class="fw-bold">Warband Trait:</span>
+            <span id="warband_trait" class="fw-bold"></span>
+            <span id="warband_trait_text"></span>
+        </div>
+        <div class="col border border-2 border-dark py-1 m-1">
+            <span class="fw-bold ">Leader Trait:</span>
+            <span id="leader_trait" class="fw-bold"></span>
+            <span id="leader_trait_text"></span>
+        </div>
     </div>
 </div>
-
 <div id="weirdo_cards" class="row"></div>
-<div id="card_template" class="mt-1 col-6 weirdo_card px-1" hidden>
-    <div class="card">
-        <div class="card-body small-font">
+<div id="card_template" class="mt-1 col-6 weirdo_card px-1 small-font" hidden>
+    <div class="card border-2 border-dark">
+        <div class="card-body py-1">
             <div class="card-cost float-end">no value</div>
-            <div class="card-title"></div>
+            <div class="card-title mb-1"></div>
             <div class="row mb-1 card-attributes border">
                 <div class="col px-1 border">
                     <span>speed: </span>

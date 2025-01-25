@@ -23,6 +23,9 @@ window.onload = function() {
             template_card.classList.remove('col-12');
         }
         loadWeirdoPrintCards(warband); 
+    });
+    document.getElementById('eq_desc').addEventListener('click', (checkbox) => {
+        loadWeirdoPrintCards(warband); 
 
     });
 } 
@@ -63,15 +66,13 @@ function loadWeirdoPrintCards(warband) {
             getWeirdoEquipmentInfo(weirdo).then((data) => {
                 let melee = data.melee_weapon;
                 new_card.querySelector('.m_name').innerHTML = melee.name;
-                new_card.querySelector('.m_action').innerHTML = 'act: '+ melee.actions;
-                new_card.querySelector('.m_notes').innerHTML = melee.notes;
+                new_card.querySelector('.m_notes').innerHTML = `(actions: ${melee.actions}) ${melee.notes}`;
 
                 
                 if (weirdo['firepower'] != 0) {
                     let ranged = data.ranged_weapon;
                     new_card.querySelector('.r_name').innerHTML = ranged.name;
-                    new_card.querySelector('.r_action').innerHTML = 'act: '+ ranged.actions;
-                    new_card.querySelector('.r_notes').innerHTML = ranged.notes;
+                    new_card.querySelector('.r_notes').innerHTML = `(actions: ${ranged.actions}) ${ranged.notes}`;
                 } else {
                     new_card.querySelector('.ranged_weapon').setAttribute("hidden", true);
                 }
@@ -87,10 +88,15 @@ function loadWeirdoPrintCards(warband) {
                     for (const item of items_list) {
                         let template_item = new_card.querySelector('#item_template');
                         let item_card = template_item.cloneNode(true); // clear out events
+                        let hide_long = ['Effect', 'Attack', 'Action']
                         item_card.removeAttribute("hidden");
                         item_card.removeAttribute("id");
-                        item_card.querySelector('.name').innerHTML = `${item.name} (${item.type})`;
-                        item_card.querySelector('.notes').innerHTML = item.notes;
+                        item_card.querySelector('.name').innerHTML = `${item.name}`;
+                        if (document.getElementById('eq_desc').checked && hide_long.includes(item.type) && item.notes.length > 70) {
+                            item_card.querySelector('.notes').innerHTML = `(${item.type}) Information on how to use in book.` //item.notes.slice(0, 70) + "...";
+                        } else {
+                            item_card.querySelector('.notes').innerHTML = `(${item.type})  ${item.notes}`;
+                        }
                         equipment_area.appendChild(item_card)
                     }
                 }

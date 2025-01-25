@@ -17,7 +17,8 @@
 <input hidden id="warband_id" value={{warband.warband_id}}>
 <div class="d-print-none border">
         <h1 class="display-10 fw-bold text-center ">Print Warband Page</h1>
-        <p>you should be able to ctrl+p and print the page as normal. You may not see the borders in the print preview, but they will show up if you print it for real or print to pdf.</p>
+        <p class="m-1">you should be able to ctrl+p and print the page as normal. You may not see the borders in the print preview, but they will show up if you print it for real or print to pdf. 
+            Consider changing the scale on the print page if part of a card is bleeding to another page.</p>
         <div class="row m-1">
             <div class="col mx-1 border">
                 <input id="one_col_print" class="form-check-input" type="checkbox">
@@ -89,7 +90,11 @@
                 <div class="col-3 px-1 border">
                     <span class="m_name"></span>
                 </div>
-                <div class="col-9 px-1 border">
+                <div class="col-2 px-1 border">
+                    <span class="m_action"></span>
+                </div>
+                <div class="col-7 px-1 border">
+
                     <span class="m_notes"></span>
                 </div>
             </div>
@@ -97,7 +102,10 @@
                 <div class="col-3 px-1 border">
                     <span class="r_name"></span>
                 </div>
-                <div class="col-9 px-1 border">
+                <div class="col-2 px-1 border">
+                    <span class="r_action"></span>
+                </div>
+                <div class="col-7 px-1 border">
                     <span class="r_notes"></span>
                 </div>
             </div>

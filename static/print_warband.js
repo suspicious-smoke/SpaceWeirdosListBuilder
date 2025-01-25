@@ -66,13 +66,15 @@ function loadWeirdoPrintCards(warband) {
             getWeirdoEquipmentInfo(weirdo).then((data) => {
                 let melee = data.melee_weapon;
                 new_card.querySelector('.m_name').innerHTML = melee.name;
-                new_card.querySelector('.m_notes').innerHTML = `(actions: ${melee.actions}) ${melee.notes}`;
+                new_card.querySelector('.m_action').innerHTML = 'act: '+ melee.actions;
+                new_card.querySelector('.m_notes').innerHTML = melee.notes;
 
                 
                 if (weirdo['firepower'] != 0) {
                     let ranged = data.ranged_weapon;
                     new_card.querySelector('.r_name').innerHTML = ranged.name;
-                    new_card.querySelector('.r_notes').innerHTML = `(actions: ${ranged.actions}) ${ranged.notes}`;
+                    new_card.querySelector('.r_action').innerHTML = 'act: '+ ranged.actions;
+                    new_card.querySelector('.r_notes').innerHTML = ranged.notes;
                 } else {
                     new_card.querySelector('.ranged_weapon').setAttribute("hidden", true);
                 }

@@ -89,7 +89,7 @@ powers = [
 class Warband:
     def __init__(self, warband_id):
         self.warband_id = warband_id
-        self.warband_traits=warband_traits # fill the warband traits
+        self.warband_traits = warband_traits # fill the warband traits
         self.leader_traits = leader_traits
         # lists for weirdo selections
         self.speed_list = speed

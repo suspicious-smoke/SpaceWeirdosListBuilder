@@ -424,7 +424,7 @@ function saveWeirdo() {
 function saveNewWarband(weirdo=null) {
     // get new warband id
     let new_id = 1;
-    warband_data = getLocalData();
+    let warband_data = getLocalData();
     for (let i=0; i < warband_data['warbands'].length; i++) {
         if (warband_data['warbands'][i]['warband_id'] >= new_id ) {
             new_id = warband_data['warbands'][i]['warband_id']+1;

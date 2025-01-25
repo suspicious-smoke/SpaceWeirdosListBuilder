@@ -12,8 +12,19 @@ window.onload = function() {
         document.getElementById('leader_trait_text').innerHTML = data.lt_text;
     });
     loadWeirdoPrintCards(warband); 
+    document.getElementById('one_col_print').checked = false;
+    document.getElementById('one_col_print').addEventListener('click', (checkbox) => {
+        const template_card = document.getElementById('card_template');
+        if (document.getElementById('one_col_print').checked) {
+            template_card.classList.remove('col-6');
+            template_card.classList.add('col-12');
+        } else {
+            template_card.classList.add('col-6');
+            template_card.classList.remove('col-12');
+        }
+        loadWeirdoPrintCards(warband); 
 
-    
+    });
 } 
 
 

@@ -39,7 +39,7 @@ window.onload = function() {
             let lt = document.getElementById('leader_trait');
             warband['leader_trait'] = lt.options[lt.selectedIndex].text;
             // add warband back into warband list.
-            warband_data = getLocalData();
+            let warband_data = getLocalData();
             for (let i = 0; i < warband_data['warbands'].length; i++) {
                 if (warband_data['warbands'][i]['warband_id'] == warband_id) {
                     warband_data['warbands'][i] = warband; // swap warband
@@ -80,6 +80,7 @@ function loadWeirdoCards(warband, saved=true) {
     deleteEventListeners('.edit_weirdo');
     deleteEventListeners('.delete_weirdo');
     deleteEventListeners('.duplicate_weirdo');
+    deleteEventListeners('.move_weirdo');
     card_container.innerHTML = '';
     getWarbandPoints(warband['warband_id']).then((data) => {
         // create new card for each weirdo
@@ -100,6 +101,17 @@ function loadWeirdoCards(warband, saved=true) {
             new_card.querySelector('.edit_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
             new_card.querySelector('.delete_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
             new_card.querySelector('.duplicate_weirdo').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
+            new_card.querySelector('.move_right').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
+            new_card.querySelector('.move_left').setAttribute('data-weirdo_id',weirdo['weirdo_id']);
+
+            let weirdo_index = weirdos.findIndex(x => x['weirdo_id'] == weirdo['weirdo_id']);
+            if (weirdo_index == 0) {
+                new_card.querySelector('.move_left').setAttribute('hidden', true);
+            } else if (weirdo_index == weirdos.length-1) {
+                new_card.querySelector('.move_right').setAttribute('hidden', true);
+            }
+
+
             new_card.querySelector('.card-title').innerHTML = weirdo['name'];
             if (first) {
                 new_card.querySelector('.card-title').innerHTML += '&emsp;[leader]';
@@ -165,6 +177,32 @@ function loadWeirdoCards(warband, saved=true) {
                         }
                     }
                 }
+            });
+        });
+        // move buttons wire
+        const move_btns = document.querySelectorAll('.move_weirdo');
+        move_btns.forEach(weirdo => {
+            weirdo.addEventListener('click', (btn_elem) => {
+                let weirdo_id = btn_elem.target.dataset.weirdo_id;
+                //direction to move element in list
+                let dir = (btn_elem.target.classList.contains('move_left') ? -1 : 1)
+                let warband_id = document.getElementById('warband_id').value;
+                let local_data = getLocalData();
+
+                
+                const band_id = local_data['warbands'].findIndex(element => element['warband_id'] == warband_id);
+                const w_id = local_data['warbands'][band_id]['weirdos'].findIndex(x => x['weirdo_id'] == weirdo_id);
+
+                // execute swap entries
+                if (w_id > -1 && band_id > -1) {
+                    const temp_weirdo = {...local_data['warbands'][band_id]['weirdos'][w_id+dir]};
+                    local_data['warbands'][band_id]['weirdos'][w_id+dir] = {...local_data['warbands'][band_id]['weirdos'][w_id]};
+                    local_data['warbands'][band_id]['weirdos'][w_id] = temp_weirdo;
+                    // save and reload
+                    localStorage.setItem('warbands', JSON.stringify(local_data));
+                    loadWeirdoCards(local_data['warbands'][band_id]); // reload weirdos
+                }
+
             });
         });
         const duplicate_btns = document.querySelectorAll('.duplicate_weirdo');

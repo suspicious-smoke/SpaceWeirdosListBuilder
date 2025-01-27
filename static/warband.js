@@ -39,13 +39,12 @@ window.onload = function() {
             let lt = document.getElementById('leader_trait');
             warband['leader_trait'] = lt.options[lt.selectedIndex].text;
             // add warband back into warband list.
-            let warband_data = getLocalData();
-            for (let i = 0; i < warband_data['warbands'].length; i++) {
-                if (warband_data['warbands'][i]['warband_id'] == warband_id) {
-                    warband_data['warbands'][i] = warband; // swap warband
-                }
+            let local_data = getLocalData();
+            const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
+            if (i>-1) {
+                local_data['warbands'][i] = warband; // save warband
             }
-            localStorage.setItem('warbands', JSON.stringify(warband_data));
+            localStorage.setItem('warbands', JSON.stringify(local_data));
             loadWeirdoCards(warband); // reload weirdos
         }
     });
@@ -164,18 +163,11 @@ function loadWeirdoCards(warband, saved=true) {
                 let weirdo_id = btn_elem.target.dataset.weirdo_id;
                 let warband_id = document.getElementById('warband_id').value;
                 let local_data = getLocalData();
-
-                for(let i=0; i < local_data['warbands'].length; i++) {
-                    let warband = local_data['warbands'][i];
-                    if (warband['warband_id'] == warband_id) {
-                        for(let j=0; j < warband['weirdos'].length; j++) {
-                            if (warband['weirdos'][j]['weirdo_id'] == weirdo_id) {
-                                local_data['warbands'][i]['weirdos'].splice(j,1);
-                                localStorage.setItem('warbands', JSON.stringify(local_data));
-                                loadWeirdoCards(warband); // reload weirdos
-                            }
-                        }
-                    }
+                let {i,j} = get_ids(warband_id, weirdo_id, local_data);
+                if (i > -1 && j > -1) {
+                    local_data['warbands'][i]['weirdos'].splice(j,1);
+                    localStorage.setItem('warbands', JSON.stringify(local_data));
+                    loadWeirdoCards(warband); // reload weirdos
                 }
             });
         });
@@ -188,19 +180,15 @@ function loadWeirdoCards(warband, saved=true) {
                 let dir = (btn_elem.target.classList.contains('move_left') ? -1 : 1)
                 let warband_id = document.getElementById('warband_id').value;
                 let local_data = getLocalData();
-
-                
-                const band_id = local_data['warbands'].findIndex(element => element['warband_id'] == warband_id);
-                const w_id = local_data['warbands'][band_id]['weirdos'].findIndex(x => x['weirdo_id'] == weirdo_id);
-
+                let {i,j} = get_ids(warband_id, weirdo_id, local_data);
                 // execute swap entries
-                if (w_id > -1 && band_id > -1) {
-                    const temp_weirdo = {...local_data['warbands'][band_id]['weirdos'][w_id+dir]};
-                    local_data['warbands'][band_id]['weirdos'][w_id+dir] = {...local_data['warbands'][band_id]['weirdos'][w_id]};
-                    local_data['warbands'][band_id]['weirdos'][w_id] = temp_weirdo;
+                if (j > -1 && i > -1) {
+                    const temp_weirdo = {...local_data['warbands'][i]['weirdos'][j+dir]};
+                    local_data['warbands'][i]['weirdos'][j+dir] = {...local_data['warbands'][i]['weirdos'][j]};
+                    local_data['warbands'][i]['weirdos'][j] = temp_weirdo;
                     // save and reload
                     localStorage.setItem('warbands', JSON.stringify(local_data));
-                    loadWeirdoCards(local_data['warbands'][band_id]); // reload weirdos
+                    loadWeirdoCards(local_data['warbands'][i]); // reload weirdos
                 }
 
             });
@@ -211,22 +199,17 @@ function loadWeirdoCards(warband, saved=true) {
                 let weirdo_id = btn_elem.target.dataset.weirdo_id;
                 let warband_id = document.getElementById('warband_id').value;
                 let local_data = getLocalData();
-
-                for(let i=0; i < local_data['warbands'].length; i++) {
+                let {i,j} = get_ids(warband_id, weirdo_id, local_data);
+                // execute swap entries
+                if (j > -1 && i > -1) {
                     let warband = local_data['warbands'][i];
-                    if (warband['warband_id'] == warband_id) {
-                        for(let j=0; j < warband['weirdos'].length; j++) {
-                            if (warband['weirdos'][j]['weirdo_id'] == weirdo_id) {
-                                let new_weirdo = structuredClone(warband['weirdos'][j]);
-                                new_weirdo['weirdo_id'] = getNextWeirdoID(warband);
-                                new_weirdo['name'] += ' (c)'
-                                warband['weirdos'].push(new_weirdo);
-                                localStorage.setItem('warbands', JSON.stringify(local_data));
-                                loadWeirdoCards(warband); // reload weirdos
-                                return;
-                            }
-                        }
-                    }
+                    let new_weirdo = structuredClone(warband['weirdos'][j]);
+                    new_weirdo['weirdo_id'] = getNextWeirdoID(warband);
+                    new_weirdo['name'] += ' (c)'
+                    warband['weirdos'].push(new_weirdo);
+                    localStorage.setItem('warbands', JSON.stringify(local_data));
+                    loadWeirdoCards(warband); // reload weirdos
+                    return;
                 }
             });
         });
@@ -234,6 +217,26 @@ function loadWeirdoCards(warband, saved=true) {
             fadeInOut('save_alert');  
         }
     });
+}
+
+
+function getNextWeirdoID(warband) {
+    let next_weirdo_id = 1;
+    for (let i = 0; i < warband['weirdos'].length; i++) {
+        let _weirdo = warband['weirdos'][i]
+        // increase weirdo id
+        if (_weirdo['weirdo_id'] >= next_weirdo_id) {
+            next_weirdo_id = parseInt(_weirdo['weirdo_id']) + 1;
+        }
+    }
+    return next_weirdo_id;
+}
+
+
+function get_ids(warband_id, weirdo_id, local_data) {
+    const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
+    const j = local_data['warbands'][i]['weirdos'].findIndex(x => x['weirdo_id'] == weirdo_id); // get weirdo
+    return {i,j}
 }
 
 
@@ -365,18 +368,6 @@ function updateWeirdoEquipArea() {
 }
 
 
-function getNextWeirdoID(warband) {
-        let next_weirdo_id = 1;
-        for (let i = 0; i < warband['weirdos'].length; i++) {
-            let _weirdo = warband['weirdos'][i]
-            // increase weirdo id
-            if (_weirdo['weirdo_id'] >= next_weirdo_id) {
-                next_weirdo_id = parseInt(_weirdo['weirdo_id']) + 1;
-            }
-        }
-        return next_weirdo_id;
-}
-
 
 function saveWeirdo() {
     // get weirdo information from modal
@@ -448,13 +439,13 @@ function saveWeirdo() {
             warband['weirdos'].push(weirdo);
         }
         // add warband back into warband list.
-        let warband_data = getLocalData();
-        for (let i = 0; i < warband_data['warbands'].length; i++) {
-            if (warband_data['warbands'][i]['warband_id'] == warband_id) {
-                warband_data['warbands'][i] = warband; // swap warband
-            }
+        let local_data = getLocalData();
+        
+        const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
+        if (i>-1) {
+            local_data['warbands'][i] = warband; // swap warband
         }
-        localStorage.setItem('warbands', JSON.stringify(warband_data));
+        localStorage.setItem('warbands', JSON.stringify(local_data));
         loadWeirdoCards(warband); // reload weirdos   
     }
 }

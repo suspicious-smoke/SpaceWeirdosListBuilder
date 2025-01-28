@@ -26,31 +26,40 @@ window.onload = function() {
     });
     // wire save warband button
     document.getElementById('save_warband').addEventListener('click', function() {
-        let warband_id = document.getElementById('warband_id').value;
-        // try to get warband
-        let warband = getWarband(warband_id);
-        if (warband == null) {
-            saveNewWarband();
-        } else {
-            // just update name and trait and save
-            warband['name'] = document.getElementById('warband_name').value;
-            let t = document.getElementById('warband_trait');
-            warband['warband_trait'] = t.options[t.selectedIndex].text;
-            let lt = document.getElementById('leader_trait');
-            warband['leader_trait'] = lt.options[lt.selectedIndex].text;
-            // add warband back into warband list.
-            let local_data = getLocalData();
-            const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
-            if (i>-1) {
-                local_data['warbands'][i] = warband; // save warband
-            }
-            localStorage.setItem('warbands', JSON.stringify(local_data));
-            loadWeirdoCards(warband); // reload weirdos
-        }
+        saveWarband();
     });
+    document.getElementById('warband_trait').addEventListener('change', function() {
+        saveWarband();
+    });
+    
     document.getElementById('weirdo_model').addEventListener('change', updateWeirdoPoints);
+    
 }
 
+
+function saveWarband() {
+    let warband_id = document.getElementById('warband_id').value;
+    // try to get warband
+    let warband = getWarband(warband_id);
+    if (warband == null) {
+        saveNewWarband();
+    } else {
+        // just update name and trait and save
+        warband['name'] = document.getElementById('warband_name').value;
+        let t = document.getElementById('warband_trait');
+        warband['warband_trait'] = t.options[t.selectedIndex].text;
+        let lt = document.getElementById('leader_trait');
+        warband['leader_trait'] = lt.options[lt.selectedIndex].text;
+        // add warband back into warband list.
+        let local_data = getLocalData();
+        const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
+        if (i>-1) {
+            local_data['warbands'][i] = warband; // save warband
+        }
+        localStorage.setItem('warbands', JSON.stringify(local_data));
+        loadWeirdoCards(warband); // reload weirdos
+    }
+}
 
 function loadWarband() {
     // check warband id

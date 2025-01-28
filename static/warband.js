@@ -304,17 +304,18 @@ function wireSaveWeirdo() {
 }
 
 
+// gets the points for a given weirdo and sets the model cost
 function updateWeirdoPoints() {
     let total_points = 0;
     for (const att of weirdo_attribute) {
-        total_points += updateWeirdoSelectPoint(att);
+        total_points += updateAttributePoints(att);
     } 
-    total_points += updateWeirdoEquipArea();
+    total_points += setModalWeirdoEquipArea();
     document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
 }
 
 
-function updateWeirdoSelectPoint(attribute) {
+function updateAttributePoints(attribute) {
     let text = fUpper(attribute);
     let selector = `${attribute}_select`;
     let s = document.getElementById(selector);
@@ -324,8 +325,35 @@ function updateWeirdoSelectPoint(attribute) {
 }
 
 
-function updateWeirdoEquipArea() {
+function setEquipDiscounts() {
+    let mutant_weapons = ['Claws & Teeth','Horrible Claws & Teeth','Whip/Tail'];
+    let soldiers_equipment = ['Grenade*','Heavy Armor','Medkit*'];
+    // get warband trait
+    let t = document.getElementById('warband_trait');
+    let trait = t.options[t.selectedIndex].text;
+    if (trait == 'Mutants') {
+        // go through list of melee and discount
+        let melee_row = document.querySelectorAll('.melee-row');
+        melee_row.forEach((row) => {
+            let melee_name = row.querySelector('.form-check-input').getAttribute('value');
+            if (mutant_weapons.includes(melee_name.replace(/&amp;/g, "&"))) {
+                let points = parseInt(row.querySelector('.pts').getAttribute('value'))-1;
+                row.querySelector('.pts').setAttribute('value', points);
+                row.querySelector('.pts').innerHTML = `Pts: ${points}`
+            }
+        });
+    } 
+    // else if (trait == 'Heavily Armored') {
+    //     // go through ranged and discount
+    //     document.querySelectorAll('.ranged-row')
+    // } else if (trait == 'Soldier') {
+
+    // }
+}
+
+function setModalWeirdoEquipArea() {
     let equip_points = 0;
+    setEquipDiscounts();
     // if firepower is 0, hide ranged weapons and set ranged weapon to auto pistol
     let ranged_list = document.getElementById('ranged-weapons-list');
     if (document.getElementById('firepower_select').selectedIndex == 0) {
@@ -337,19 +365,19 @@ function updateWeirdoEquipArea() {
 
     // get weapon selected. Copy over points and other values
     let melee_selected = document.querySelector('input[name="melee_radios"]:checked').closest('.row');
-    let _name = melee_selected.querySelector('.form-check-label').innerHTML;
-    document.getElementById('e-melee-name').innerHTML = `(Melee) ${_name}`;
+    let melee_name = melee_selected.querySelector('.form-check-label').innerHTML;
+    document.getElementById('e-melee-name').innerHTML = `(Melee) ${melee_name}`;
     document.getElementById('e-melee-actions').innerHTML = melee_selected.querySelector('.act').innerHTML;
-    let melee_pts_area = melee_selected.querySelector('.pts')
+    let melee_pts_area = melee_selected.querySelector('.pts');
     equip_points += parseInt(melee_pts_area.getAttribute('value'));
     document.getElementById('e-melee-points').innerHTML = melee_pts_area.innerHTML;
     document.getElementById('e-melee-notes').innerHTML = melee_selected.querySelector('.notes').innerHTML;
 
     let ranged_selected = document.querySelector('input[name="ranged_radios"]:checked').closest('.row');
-    let _rname = ranged_selected.querySelector('.form-check-label').innerHTML;
-    document.getElementById('e-ranged-name').innerHTML = `(Ranged) ${_rname}`;
+    let ranged_name = ranged_selected.querySelector('.form-check-label').innerHTML;
+    document.getElementById('e-ranged-name').innerHTML = `(Ranged) ${ranged_name}`;
     document.getElementById('e-ranged-actions').innerHTML = ranged_selected.querySelector('.act').innerHTML;
-    let ranged_pts_area = ranged_selected.querySelector('.pts')
+    let ranged_pts_area = ranged_selected.querySelector('.pts');
     equip_points += parseInt(ranged_pts_area.getAttribute('value'));
     document.getElementById('e-ranged-points').innerHTML = ranged_pts_area.innerHTML;
     document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.notes').innerHTML;

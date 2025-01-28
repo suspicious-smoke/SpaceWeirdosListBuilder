@@ -217,7 +217,7 @@
                           <div id="melee-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
                             <div class="accordion-body">
                                 {% for item in warband.melee_weapons %}
-                                    <div class="row py-1 border">
+                                    <div class="row py-1 border melee-row">
                                         <div class="col-3">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="melee_radios" value="{{item.name}}">
@@ -249,7 +249,7 @@
                             <div id="ranged-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
                                 <div class="accordion-body">
                                     {% for item in warband.ranged_weapons %}
-                                        <div class="row py-1 border">
+                                        <div class="row py-1 border ranged-row">
                                             <div class="col-2">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="ranged_radios" value="{{item.name}}">

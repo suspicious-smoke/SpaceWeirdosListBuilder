@@ -332,7 +332,6 @@ function setEquipDiscounts() {
     let t = document.getElementById('warband_trait');
     let trait = t.options[t.selectedIndex].text;
     if (trait == 'Mutants') {
-        // go through list of melee and discount
         let melee_row = document.querySelectorAll('.melee-row');
         melee_row.forEach((row) => {
             let melee_name = row.querySelector('.form-check-input').getAttribute('value');
@@ -342,11 +341,15 @@ function setEquipDiscounts() {
                 row.querySelector('.pts').innerHTML = `Pts: ${points}`
             }
         });
+    }  else if (trait == 'Heavily Armed') {
+        let ranged_row = document.querySelectorAll('.ranged-row');
+        ranged_row.forEach((row) => {
+            let points = Math.max(0,parseInt(row.querySelector('.pts').getAttribute('value'))-1);
+            row.querySelector('.pts').setAttribute('value', points);
+            row.querySelector('.pts').innerHTML = `Pts: ${points}`
+        });
     } 
-    // else if (trait == 'Heavily Armored') {
-    //     // go through ranged and discount
-    //     document.querySelectorAll('.ranged-row')
-    // } else if (trait == 'Soldier') {
+    // else if (trait == 'Soldier') {
 
     // }
 }

@@ -28,10 +28,10 @@ window.onload = function() {
     document.getElementById('save_warband').addEventListener('click', function() {
         saveWarband();
     });
-    document.getElementById('warband_trait').addEventListener('change', function() {
+    document.getElementById('warband_info').addEventListener('change', function() {
         saveWarband();
     });
-    
+
     document.getElementById('weirdo_model').addEventListener('change', updateWeirdoPoints);
     
 }

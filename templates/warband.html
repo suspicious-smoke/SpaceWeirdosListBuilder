@@ -27,7 +27,7 @@
         <a role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Warband Traits" data-bs-content="{{warband.warband_traits_html}}" data-bs-html="true"><i class="bi bi-question-circle-fill"></i></a>
         <select id="warband_trait" class="form-select">
             {% for name, value in warband.warband_traits.items() %}
-                    <option value="{{name}}">{{name}}</option>
+                    <option value="{{name}}" data-text="{{value}}"">{{name}}</option>
             {% endfor %}
         </select>
     </div>
@@ -36,10 +36,16 @@
         <a role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Leader Traits" data-bs-content="{{warband.leader_traits_html}}" data-bs-html="true"><i class="bi bi-question-circle-fill"></i></a>
         <select id="leader_trait" class="form-select">
             {% for name, value in warband.leader_traits.items() %}
-                    <option value="{{name}}">{{name}}</option>
+                    <option value="{{name}}" data-text="{{value}}">{{name}}</option>
             {% endfor %}
         </select>
     </div>
+</div>
+<div class="row justify-content-center mb-2">
+    <div class="col"></div>
+    <div class="col border"><span class="fw-bold">Warband Trait: </span><span id="warband_trait_text"></span></div>
+    <div class="col border"><span class="fw-bold">Leader Trait: </span><span id="leader_trait_text" ></span></div>
+    <div class="col"></div>
 </div>
 <!-- align-items-end -->
 <div class="d-flex justify-content-center mt-3">

@@ -8,6 +8,7 @@ window.onload = function() {
     [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
     
     loadWarband();
+    setTraitText();
     // create new weirdo button
     document.getElementById('create_weirdo').addEventListener('click', function() {
         const warband_id = this.dataset.warband_id;
@@ -43,6 +44,7 @@ function saveWarband() {
         warband['warband_trait'] = t.options[t.selectedIndex].text;
         let lt = document.getElementById('leader_trait');
         warband['leader_trait'] = lt.options[lt.selectedIndex].text;
+        setTraitText();
         // add warband back into warband list.
         let local_data = getLocalData();
         const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
@@ -52,6 +54,14 @@ function saveWarband() {
         localStorage.setItem('warbands', JSON.stringify(local_data));
         loadWeirdoCards(warband); // reload weirdos
     }
+}
+
+
+function setTraitText() {
+    let t = document.getElementById('warband_trait');
+    document.getElementById('warband_trait_text').innerHTML = t.options[t.selectedIndex].dataset.text;
+    let lt = document.getElementById('leader_trait');
+    document.getElementById('leader_trait_text').innerHTML = lt.options[lt.selectedIndex].dataset.text;
 }
 
 function loadWarband() {

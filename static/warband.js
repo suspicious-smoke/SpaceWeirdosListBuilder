@@ -25,15 +25,8 @@ window.onload = function() {
         updateWeirdoPoints();
     });
     // wire save warband button
-    document.getElementById('save_warband').addEventListener('click', function() {
-        saveWarband();
-    });
-    document.getElementById('warband_info').addEventListener('change', function() {
-        saveWarband();
-    });
-
+    document.getElementById('warband_info').addEventListener('change', saveWarband);
     document.getElementById('weirdo_model').addEventListener('change', updateWeirdoPoints);
-    
 }
 
 

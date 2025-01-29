@@ -96,6 +96,7 @@ function loadWeirdoCards(warband, saved=true) {
     getWarbandPoints(warband['warband_id']).then((data) => {
         // create new card for each weirdo
         let first = true;
+        let total_cost = 0;
         for (const weirdo of weirdos) {
             let weirdo_cost = 0
             // get weirdo points
@@ -130,6 +131,7 @@ function loadWeirdoCards(warband, saved=true) {
             }
             
             new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
+            total_cost += weirdo_cost;
             // card attributes
             for (const att of weirdo_attribute) {
                 new_card.querySelector(`.card-${att}`).innerHTML = weirdo[att];
@@ -160,6 +162,7 @@ function loadWeirdoCards(warband, saved=true) {
             }
             card_container.appendChild(new_card);
         }
+        document.getElementById('total_cost').innerHTML = total_cost;
         // wire Edit buttons
         const edit_btns = document.querySelectorAll('.edit_weirdo');
         edit_btns
@@ -340,7 +343,6 @@ function setEquipDiscounts() {
                 pts.setAttribute('value', points);
                 pts.innerHTML = `Pts: ${points}`;
                 pts.classList.add('text-success');
-
             }
         });
     }  else if (trait == 'Heavily Armed') {

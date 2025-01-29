@@ -182,7 +182,8 @@ function loadWeirdoCards(warband, saved=true) {
                 if (i > -1 && j > -1) {
                     local_data['warbands'][i]['weirdos'].splice(j,1);
                     localStorage.setItem('warbands', JSON.stringify(local_data));
-                    loadWeirdoCards(warband); // reload weirdos
+                    loadWeirdoCards(local_data['warbands'][i]); // reload weirdos
+                    return;
                 }
             });
         });
@@ -204,6 +205,7 @@ function loadWeirdoCards(warband, saved=true) {
                     // save and reload
                     localStorage.setItem('warbands', JSON.stringify(local_data));
                     loadWeirdoCards(local_data['warbands'][i]); // reload weirdos
+                    return;
                 }
 
             });

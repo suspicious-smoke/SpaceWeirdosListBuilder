@@ -8,7 +8,7 @@ window.onload = function() {
     [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
     
     loadWarband();
-    setTraitText();
+    setTraitText(); 
     // create new weirdo button
     document.getElementById('create_weirdo').addEventListener('click', function() {
         const warband_id = this.dataset.warband_id;

@@ -62,7 +62,7 @@ def get_weirdo_equipments():
     return jsonify({"melee_weapon": m_weapon, "ranged_weapon": r_weapon, "equipment_list": equipment_list, "powers_list": powers_list })
 
 
-# load warband page
+# gets points and validation
 def warband_points():
     mutant_weapons = ['Claws & Teeth','Horrible Claws & Teeth','Whip/Tail']
     soldiers_equipment = ['Grenade*','Heavy Armor','Medkit*']
@@ -70,7 +70,8 @@ def warband_points():
     warband = request.get_json()
     points = 0
     weirdo_points_list = []
-    for weirdo in warband['weirdos']:
+    validation = []
+    for index, weirdo in enumerate(warband['weirdos']):
         speed_discount = 1 if warband['warband_trait'] == 'Mutants' else 0
         weirdo_pts = max(0,speed[weirdo['speed']] - speed_discount) + defense[weirdo['defense']] + firepower[weirdo['firepower']] + prowess[weirdo['prowess']] + willpower[weirdo['willpower']]
         
@@ -86,22 +87,36 @@ def warband_points():
         if 'melee_weapon' in weirdo:
             weirdo_pts += max(0, item_points(melee_weapons, weirdo['melee_weapon']) - melee_discount)
         
+        for equip in weirdo['equipment']:
+            if not (warband['warband_trait'] == 'Soldiers' and equip in soldiers_equipment):
+                weirdo_pts += item_points(equipment, equip)
         
-
-        if 'equipment' in weirdo:
-            for equip in weirdo['equipment']:
-                if not (warband['warband_trait'] == 'Soldiers' and equip in soldiers_equipment):
-                    weirdo_pts += item_points(equipment, equip)
         
-        if 'powers' in weirdo:
-            for power in weirdo['powers']:
-                weirdo_pts += item_points(powers, power)
+        for power in weirdo['powers']:
+            weirdo_pts += item_points(powers, power)
 
         points += weirdo_pts
         weirdo_info = {'id': weirdo['weirdo_id'], 'points':weirdo_pts }
         weirdo_points_list.append(weirdo_info)
+
+        # points validation
+        w_name = weirdo['name']
+        if weirdo_pts > 25 and index == 0:
+            validation.append('Leader is over 25 points')
+        elif weirdo_pts > 20 and index > 0:
+            validation.append(f'{w_name} is over 20 points')
+        # equipment validation
+        eq_amnt = 2 if warband['warband_trait'] == 'Cyborg' else 1
+        if index == 0:
+            eq_amnt += 1
+        if len(weirdo['equipment']) > eq_amnt:
+            validation.append(f'{w_name} is over equipment limit of {eq_amnt}')
+    val_text = ''
+    if len(validation) > 0:
+        val_text = '<ul><li>'+'<li>'.join(f'{v}</li>' for v in validation)+'</ul>'
+
     # Return the result as JSON
-    return jsonify({"points": points, "weirdos": weirdo_points_list})
+    return jsonify({"points": points, "weirdos": weirdo_points_list, "validation": val_text})
 
 
 # gets point value for given item equiped to weirdo

@@ -94,6 +94,26 @@ function loadWeirdoCards(warband, saved=true) {
     deleteEventListeners('.move_weirdo');
     card_container.innerHTML = '';
     getWarbandPoints(warband['warband_id']).then((data) => {
+        // validation
+        if (data.validation == '') {
+            document.getElementById('valid_area').removeAttribute('hidden');
+            document.getElementById('invalid_area').setAttribute('hidden', true);
+        } else {
+            let invalid = document.getElementById('invalid_area')
+            invalid.removeAttribute('hidden');
+            document.getElementById('valid_area').setAttribute('hidden', true);
+        
+            // Destroy existing popover
+            let popoverInstance = bootstrap.Popover.getInstance(invalid);
+            if (popoverInstance) {
+                popoverInstance.dispose();
+            }
+            // Update the data-bs-content attribute
+            invalid.setAttribute("data-bs-content", data.validation);
+            // Reinitialize popover
+            new bootstrap.Popover(invalid);
+        }
+        
         // create new card for each weirdo
         let first = true;
         let total_cost = 0;
@@ -222,7 +242,7 @@ function loadWeirdoCards(warband, saved=true) {
                     let warband = local_data['warbands'][i];
                     let new_weirdo = structuredClone(warband['weirdos'][j]);
                     new_weirdo['weirdo_id'] = getNextWeirdoID(warband);
-                    new_weirdo['name'] += ' (c)'
+                    // new_weirdo['name'] += ' (c)' // add copy text
                     warband['weirdos'].push(new_weirdo);
                     localStorage.setItem('warbands', JSON.stringify(local_data));
                     loadWeirdoCards(warband); // reload weirdos
@@ -336,23 +356,35 @@ function setEquipDiscounts() {
     // get warband trait
     let t = document.getElementById('warband_trait');
     let trait = t.options[t.selectedIndex].text;
+    // reset all item points to default
+    let reset_rows = document.querySelectorAll('.ranged-row, .equip-row, .melee-row')
+    reset_rows.forEach((row) => {
+        let pts = row.querySelector('.pts');
+        pts.innerHTML = `Pts: ${pts.getAttribute('value')}`
+        pts.setAttribute('data-discount', pts.getAttribute('value'));
+        pts.classList.remove('text-success');
+    });
+
     if (trait == 'Mutants') {
         document.querySelectorAll('.melee-row').forEach((row) => {
             let melee_name = row.querySelector('.form-check-input').getAttribute('value');
+            let pts = row.querySelector('.pts');
             if (mutant_weapons.includes(melee_name.replace(/&amp;/g, "&"))) {
-                let points = parseInt(row.querySelector('.pts').getAttribute('value'))-1;
-                let pts = row.querySelector('.pts');
-                pts.setAttribute('value', points);
+                let points = parseInt(pts.getAttribute('value'))-1;
                 pts.innerHTML = `Pts: ${points}`;
+                pts.setAttribute('data-discount', points);
                 pts.classList.add('text-success');
+            } else {
+                pts.setAttribute('data-discount', pts.getAttribute('value'));
             }
         });
     }  else if (trait == 'Heavily Armed') {
         document.querySelectorAll('.ranged-row').forEach((row) => {
-            let points = Math.max(0,parseInt(row.querySelector('.pts').getAttribute('value'))-1);
             let pts = row.querySelector('.pts');
-            pts.setAttribute('value', points);
+            let points = Math.max(0,parseInt(pts.getAttribute('value'))-1);
+            
             pts.innerHTML = `Pts: ${points}`
+            pts.setAttribute('data-discount', points);
             pts.classList.add('text-success');
         });
     } else if (trait == 'Soldiers') {
@@ -360,12 +392,15 @@ function setEquipDiscounts() {
             let equip_name = row.querySelector('.form-check-input').getAttribute('value');
             if (soldiers_equipment.includes(equip_name.replace(/&amp;/g, "&"))) {
                 let pts = row.querySelector('.pts');
-                pts.setAttribute('value', 0);
+                pts.setAttribute('data-discount', 0);
                 pts.innerHTML = `Pts: 0`;
                 pts.classList.add('text-success');
+            } else {
+                pts.setAttribute('data-discount', pts.getAttribute('value'));
             }
         });
     }
+    
 }
 
 function setModalWeirdoEquipArea() {
@@ -386,7 +421,7 @@ function setModalWeirdoEquipArea() {
     document.getElementById('e-melee-name').innerHTML = `(Melee) ${melee_name}`;
     document.getElementById('e-melee-actions').innerHTML = melee_selected.querySelector('.act').innerHTML;
     let melee_pts_area = melee_selected.querySelector('.pts');
-    equip_points += parseInt(melee_pts_area.getAttribute('value'));
+    equip_points += parseInt(melee_pts_area.getAttribute('data-discount'));
     document.getElementById('e-melee-points').innerHTML = melee_pts_area.innerHTML;
     document.getElementById('e-melee-notes').innerHTML = melee_selected.querySelector('.notes').innerHTML;
 
@@ -395,7 +430,7 @@ function setModalWeirdoEquipArea() {
     document.getElementById('e-ranged-name').innerHTML = `(Ranged) ${ranged_name}`;
     document.getElementById('e-ranged-actions').innerHTML = ranged_selected.querySelector('.act').innerHTML;
     let ranged_pts_area = ranged_selected.querySelector('.pts');
-    equip_points += parseInt(ranged_pts_area.getAttribute('value'));
+    equip_points += parseInt(ranged_pts_area.getAttribute('data-discount'));
     document.getElementById('e-ranged-points').innerHTML = ranged_pts_area.innerHTML;
     document.getElementById('e-ranged-notes').innerHTML = ranged_selected.querySelector('.notes').innerHTML;
 
@@ -405,7 +440,7 @@ function setModalWeirdoEquipArea() {
     let equipment_boxes = document.querySelectorAll('input[name="equipment_checkbox"]:checked');
     equipment_boxes.forEach((checkbox) => {
         let row = checkbox.closest('.row');
-        let points = row.querySelector('.pts').getAttribute('value');
+        let points = row.querySelector('.pts').getAttribute('data-discount');
         equip_points += parseInt(points);
         eq_area.innerHTML += row.querySelector('.form-check-label').innerHTML + ` [${points}]&emsp;`;
     });

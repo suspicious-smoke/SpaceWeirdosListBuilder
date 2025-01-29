@@ -13,8 +13,11 @@
         'speed','defense','firepower','prowess','willpower'
     ];
  </script>
- <!-- <i class="bi bi-exclamation-circle-fill"></i> -->
- <div class="float-end"> <a tabindex="0" id="validation_area" role="button" style="color:darkgreen;"  data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="bottom" data-bs-content="Valid List" data-bs-html="true">Valid List <i class="bi bi-check-circle-fill"></i></a></div>
+ <!--  -->
+ <div class="float-end"> 
+    <a tabindex="0" id="valid_area" hidden role="button" style="color:darkgreen;"  data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="bottom" data-bs-content="Valid List" data-bs-html="true">Valid List <i class="bi bi-check-circle-fill"></i></a>
+    <a tabindex="0" id="invalid_area" hidden role="button" style="color:darkred;"  data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="bottom" data-bs-content="Valid List" data-bs-html="true">Invalid List <i class="bi bi-exclamation-circle-fill"></i></a>
+</div>
  <h1 id="warband_text" class="display-10 fw-bold text-center"></h1>
  
 <div id="warband_info" class="row justify-content-center mb-2">
@@ -123,9 +126,9 @@
                 <button type="button" class="btn btn-sm btn-outline-secondary ms-2 delete_weirdo" title="Delete Weirdo"><i style="color:darkred;" class="bi bi-trash"></i></button>
             </div>
             <div class="position-absolute bottom-0 start-0"><!-- hstack -->
-                <button type="button" class="btn btn-sm move_weirdo move_left px-2 py-1" title="Move Weirdo Left"><i class="bi bi-arrow-left"></i></button>
+                <button type="button" class="btn btn-sm move_weirdo move_left px-2 py-1" title="Move Weirdo Back"><i class="bi bi-arrow-left"></i></button>
                 <!-- <div class="vr"></div> -->
-                <button type="button" class="btn btn-sm move_weirdo move_right px-2 py-1" title="Move Weirdo Right"><i class="bi bi-arrow-right"></i></button>
+                <button type="button" class="btn btn-sm move_weirdo move_right px-2 py-1" title="Move Weirdo Forward"><i class="bi bi-arrow-right"></i></button>
             </div>
         </div>
     </div>
@@ -230,7 +233,7 @@
                                         <div class="col-2 act">
                                             Actions: {{item.actions}}
                                         </div>
-                                        <div class="col-1 pts" value = {{item.points}}>
+                                        <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
                                             Pts: {{item.points}}
                                         </div>
                                         <div class="col-4 notes">
@@ -262,7 +265,7 @@
                                             <div class="col-2 act">
                                                 Actions: {{item.actions}}
                                             </div>
-                                            <div class="col-1 pts" value = {{item.points}}>
+                                            <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
                                                 Pts: {{item.points}}
                                             </div>
                                             <div class="col-7 notes">
@@ -292,7 +295,7 @@
                                         <div class="col-1">
                                             {{item.type}}
                                         </div>
-                                        <div class="col-1 pts" value = {{item.points}}>
+                                        <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
                                             Pts: {{item.points}}
                                         </div>
                                         <div class="col-8">

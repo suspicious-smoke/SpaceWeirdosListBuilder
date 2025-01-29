@@ -332,26 +332,36 @@ function setEquipDiscounts() {
     let t = document.getElementById('warband_trait');
     let trait = t.options[t.selectedIndex].text;
     if (trait == 'Mutants') {
-        let melee_row = document.querySelectorAll('.melee-row');
-        melee_row.forEach((row) => {
+        document.querySelectorAll('.melee-row').forEach((row) => {
             let melee_name = row.querySelector('.form-check-input').getAttribute('value');
             if (mutant_weapons.includes(melee_name.replace(/&amp;/g, "&"))) {
                 let points = parseInt(row.querySelector('.pts').getAttribute('value'))-1;
-                row.querySelector('.pts').setAttribute('value', points);
-                row.querySelector('.pts').innerHTML = `Pts: ${points}`
+                let pts = row.querySelector('.pts');
+                pts.setAttribute('value', points);
+                pts.innerHTML = `Pts: ${points}`;
+                pts.classList.add('text-success');
+
             }
         });
     }  else if (trait == 'Heavily Armed') {
-        let ranged_row = document.querySelectorAll('.ranged-row');
-        ranged_row.forEach((row) => {
+        document.querySelectorAll('.ranged-row').forEach((row) => {
             let points = Math.max(0,parseInt(row.querySelector('.pts').getAttribute('value'))-1);
-            row.querySelector('.pts').setAttribute('value', points);
-            row.querySelector('.pts').innerHTML = `Pts: ${points}`
+            let pts = row.querySelector('.pts');
+            pts.setAttribute('value', points);
+            pts.innerHTML = `Pts: ${points}`
+            pts.classList.add('text-success');
         });
-    } 
-    // else if (trait == 'Soldier') {
-
-    // }
+    } else if (trait == 'Soldiers') {
+        document.querySelectorAll('.equip-row').forEach((row) => {
+            let equip_name = row.querySelector('.form-check-input').getAttribute('value');
+            if (soldiers_equipment.includes(equip_name.replace(/&amp;/g, "&"))) {
+                let pts = row.querySelector('.pts');
+                pts.setAttribute('value', 0);
+                pts.innerHTML = `Pts: 0`;
+                pts.classList.add('text-success');
+            }
+        });
+    }
 }
 
 function setModalWeirdoEquipArea() {

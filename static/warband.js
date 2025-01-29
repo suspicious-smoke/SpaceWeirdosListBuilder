@@ -329,13 +329,13 @@ function wireSaveWeirdo() {
 }
 
 
-// gets the points for a given weirdo and sets the model cost
+// gets the points for a given weirdo and sets the modal cost
 function updateWeirdoPoints() {
     let total_points = 0;
+    total_points += setModalWeirdoEquipArea();
     for (const att of weirdo_attribute) {
         total_points += updateAttributePoints(att);
     } 
-    total_points += setModalWeirdoEquipArea();
     document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
 }
 
@@ -344,7 +344,7 @@ function updateAttributePoints(attribute) {
     let text = fUpper(attribute);
     let selector = `${attribute}_select`;
     let s = document.getElementById(selector);
-    let cost = s.options[s.selectedIndex].value;
+    let cost = s.options[s.selectedIndex].getAttribute('data-discount');
     document.querySelector(`label[for="${selector}"]`).innerHTML = `${text} [${cost}]`
     return parseInt(cost);
 }
@@ -364,8 +364,20 @@ function setEquipDiscounts() {
         pts.setAttribute('data-discount', pts.getAttribute('value'));
         pts.classList.remove('text-success');
     });
+    
+    const selectList = document.getElementById('speed_select').options;
+    for (let i = 0; i < selectList.length; i++) {
+        selectList[i].setAttribute('data-discount', selectList[i].getAttribute('value'));
+      }
+      document.querySelector('label[for="speed_select"]').classList.remove('text-success');
 
     if (trait == 'Mutants') {
+        const selectList = document.getElementById('speed_select').options;
+        for (let i = 0; i < selectList.length; i++) {
+            selectList[i].setAttribute('data-discount', Math.max(0,selectList[i].getAttribute('value')-1));
+        }
+        document.querySelector('label[for="speed_select"]').classList.add('text-success');
+        
         document.querySelectorAll('.melee-row').forEach((row) => {
             let melee_name = row.querySelector('.form-check-input').getAttribute('value');
             let pts = row.querySelector('.pts');

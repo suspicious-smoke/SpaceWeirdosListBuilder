@@ -165,7 +165,7 @@
                         <select id="speed_select" class="form-select form-select-sm">
                             <!-- name is the dice,  -->
                             {% for num, cost in warband.speed_list.items() %}
-                                    <option value="{{cost}}">{{num}}</option>
+                                    <option value="{{cost}}" data-discount="{{cost}}">{{num}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -174,7 +174,7 @@
                         <select id="defense_select" class="form-select form-select-sm">
                             <!-- name is the dice,  -->
                             {% for die, cost in warband.defense_list.items() %}
-                                    <option value="{{cost}}">{{die}}</option>
+                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -183,7 +183,7 @@
                         <select id="firepower_select" class="form-select form-select-sm">
                             <!-- name is the dice,  -->
                             {% for die, cost in warband.firepower_list.items() %}
-                                    <option value="{{cost}}">{{die}}</option>
+                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -192,7 +192,7 @@
                         <select id="prowess_select" class="form-select form-select-sm">
                             <!-- name is the dice,  -->
                             {% for die, cost in warband.prowess_list.items() %}
-                                    <option value="{{cost}}">{{die}}</option>
+                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -201,7 +201,7 @@
                         <select id="willpower_select" class="form-select form-select-sm">
                             <!-- name is the dice,  -->
                             {% for die, cost in warband.willpower_list.items() %}
-                                    <option value="{{cost}}">{{die}}</option>
+                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
                             {% endfor %}
                         </select>
                     </div>

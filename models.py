@@ -71,7 +71,7 @@ equipment = [
   {'name': 'Grenade*', 'type': 'Action', 'notes': 'Targets point up to 1 stick from attacker, Blast AOE, 2d10 FP , +1 to Under Fire rolls', 'points': 1},
   {'name': 'Jump Pack', 'type': 'Passive', 'notes': 'The model can ignore terrain and other models when taking Move actions', 'points': 1},
   {'name': 'Medkit*', 'type': 'Action', 'notes': '1 model touching this model becomes ready', 'points': 1},
-  {'name': 'Stealth Suit', 'type': 'Passive', 'notes': 'If this model’s base touches a piece of terrain, enemy models do not have LoS unless they are within 1 stick of the stealthy model', 'points': 1}
+  {'name': 'Stealth Suit', 'type': 'Passive', 'notes': 'If this model’s base touches a piece of terrain, enemy models do not have LoS unless they are within 1 stick of the stealthy model', 'points': 2}
 ]
 
 powers = [

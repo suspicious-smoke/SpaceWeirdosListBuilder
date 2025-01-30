@@ -13,6 +13,8 @@ window.onload = function() {
     document.getElementById('create_weirdo').addEventListener('click', function() {
         const warband_id = this.dataset.warband_id;
         // clear form for new weirdo
+        // TODO cleanup this code with loadWeirdoModal
+        close_accordions();
         document.getElementById('warband_id').value = warband_id;
         document.getElementById('weirdo_id').value = 0;
         document.getElementById('weirdo_name').value = '';
@@ -22,6 +24,18 @@ window.onload = function() {
         // default weapons
         document.querySelector('input[value="Unarmed"][name="melee_radios"]').checked = true;
         document.querySelector('input[value="Auto Pistol"][name="ranged_radios"]').checked = true;
+        // clear all checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        document.getElementById('weirdo_copies').value = 1;
+        let warband = getWarband(warband_id);
+        if (warband != null && warband['weirdos'].length > 0) {
+            document.getElementById('copies_area').removeAttribute('hidden');
+        } else {
+            document.getElementById('copies_area').setAttribute('hidden', true);
+        }
+        
         wireSaveWeirdo();
         updateWeirdoPoints();
     });
@@ -285,8 +299,6 @@ function loadWeirdoModal(wrdo, warband) {
     document.getElementById('warband_id').value = warband_id;
     document.getElementById('weirdo_id').value = weirdo_id;
     let weirdo = getWeirdo(warband_id, weirdo_id);
-    
-    const weirdo_index = warband['weirdos'].findIndex(x => x.weirdo_id == weirdo_id);
 
     document.getElementById('weirdo_name').value = weirdo['name'];
     // attributes
@@ -321,7 +333,7 @@ function loadWeirdoModal(wrdo, warband) {
         }
     }
 
-    
+    const weirdo_index = warband['weirdos'].findIndex(x => x.weirdo_id == weirdo_id);
     if (weirdo_index == 0) {
         document.getElementById('weirdo_copies').value = 1;
         document.getElementById('copies_area').setAttribute('hidden', true);
@@ -531,8 +543,10 @@ function saveWeirdo() {
     let warband = getWarband(warband_id);   
     // new warband
     if (warband == null) {
+        weirdo['copies'] = 1;
         saveNewWarband(weirdo);
     } else {
+        
         // warband exists:
         warband['name'] = document.getElementById('warband_name').value;
         let t = document.getElementById('warband_trait');

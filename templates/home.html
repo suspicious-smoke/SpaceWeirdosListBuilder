@@ -19,7 +19,7 @@
     <a href="{{ url_for('warband_page', warband_id=0) }}" class="btn btn-primary">Create New Warband</a>
     <button id="save_json_warband" type="button" class="ms-1 btn btn-success">Copy Warbands to Clipboard</button>
 </div>
-<div class="col-lg-8 mx-auto border">
+<div id="table_area" class="col-lg-8 mx-auto border">
     <table id="warband_table" class="table table-striped">
         <thead>
         <tr>
@@ -35,7 +35,6 @@
     </table>
 </div>
 <div id="accordion" class="mt-3">
-
     <div class="card">
         <div class="card-header d-flex justify-content-center">
             <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#collapseOne">Load Warbands From Saved Text</a>

@@ -16,6 +16,9 @@ function loadWarbandTable() {
     let w_table = document.getElementById('warband_table');
     deleteEventListeners('.delete_warband');
     deleteEventListeners('.duplicate_warband');
+    if (warbands.length == 0) {
+        document.getElementById('table_area').setAttribute('hidden',true);
+    }
     for(const wbnd of warbands) {
         // build table rows
         let warband_id = wbnd['warband_id']

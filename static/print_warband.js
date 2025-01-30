@@ -28,16 +28,31 @@ window.onload = function() {
     });
     document.getElementById('eq_desc').addEventListener('click', (checkbox) => {
         loadWeirdoPrintCards(warband); 
+    });
+
+    document.getElementById('hide_validation_summary').addEventListener('click', (checkbox) => {
+        if (document.getElementById('hide_validation_summary').checked) {
+            document.getElementById('validation_row').classList.add('hide_validation');
+        } else {
+            document.getElementById('validation_row').classList.remove('hide_validation');
+        }
+        loadWeirdoPrintCards(warband)
 
     });
 } 
-
 
 function loadWeirdoPrintCards(warband) {
     let weirdos = warband['weirdos'];
     let card_container = document.getElementById('weirdo_cards');
     card_container.innerHTML = '';
     getWarbandPoints(warband['warband_id']).then((data) => {
+        document.getElementById('total_cost').innerHTML = data.points;
+        if (data.validation != '' && !document.getElementById('validation_row').classList.contains('hide_validation')) {
+            document.getElementById('validation_row').removeAttribute('hidden');
+            document.getElementById('validation_text').innerHTML = data.validation;
+        } else {
+            document.getElementById('validation_row').setAttribute('hidden',true);
+        }
         // create new card for each weirdo
         let first = true;
         for (const weirdo of weirdos) {
@@ -59,7 +74,10 @@ function loadWeirdoPrintCards(warband) {
                 first = false;
             }
             
-            new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
+            new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost} (x${weirdo['copies']})`;
+            if (weirdo['copies']==1) {
+                new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
+            }
             // card attributes
             for (const att of weirdo_attribute) {
                 new_card.querySelector(`.card-${att}`).innerHTML = weirdo[att];

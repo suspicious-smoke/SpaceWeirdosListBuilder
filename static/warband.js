@@ -430,7 +430,7 @@ function setModalWeirdoEquipArea() {
     // get weapon selected. Copy over points and other values
     let melee_selected = document.querySelector('input[name="melee_radios"]:checked').closest('.row');
     let melee_name = melee_selected.querySelector('.form-check-label').innerHTML;
-    document.getElementById('e-melee-name').innerHTML = `(Melee) ${melee_name}`;
+    document.getElementById('e-melee-name').innerHTML = `Melee: ${melee_name}`;
     document.getElementById('e-melee-actions').innerHTML = melee_selected.querySelector('.act').innerHTML;
     let melee_pts_area = melee_selected.querySelector('.pts');
     equip_points += parseInt(melee_pts_area.getAttribute('data-discount'));
@@ -439,7 +439,7 @@ function setModalWeirdoEquipArea() {
 
     let ranged_selected = document.querySelector('input[name="ranged_radios"]:checked').closest('.row');
     let ranged_name = ranged_selected.querySelector('.form-check-label').innerHTML;
-    document.getElementById('e-ranged-name').innerHTML = `(Ranged) ${ranged_name}`;
+    document.getElementById('e-ranged-name').innerHTML = `Ranged: ${ranged_name}`;
     document.getElementById('e-ranged-actions').innerHTML = ranged_selected.querySelector('.act').innerHTML;
     let ranged_pts_area = ranged_selected.querySelector('.pts');
     equip_points += parseInt(ranged_pts_area.getAttribute('data-discount'));

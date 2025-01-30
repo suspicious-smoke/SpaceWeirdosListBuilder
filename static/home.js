@@ -23,25 +23,25 @@ function loadWarbandTable() {
         // build table rows
         let warband_id = wbnd['warband_id']
         let row = w_table.insertRow();
-        let w_id = row.insertCell(0);
-        w_id.innerHTML = warband_id;
+        // let w_id = row.insertCell(0);
+        // w_id.innerHTML = warband_id;
 
-        let w_name = row.insertCell(1);
+        let w_name = row.insertCell(0);
         w_name.innerHTML = wbnd['name'];
         
-        let w_trait = row.insertCell(2);
+        let w_trait = row.insertCell(1);
         w_trait.innerHTML = wbnd['warband_trait'];
         
-        let w_count = row.insertCell(3);
+        let w_count = row.insertCell(2);
         w_count.innerHTML = wbnd['weirdos'].length;
 
-        let w_points = row.insertCell(4);
+        let w_points = row.insertCell(3);
         getWarbandPoints(warband_id).then((pts) => {
             w_points.innerHTML =  pts.points;
           });
         
 
-        let buttons = row.insertCell(5);
+        let buttons = row.insertCell(4);
         let editbtn = document.createElement('a');
         editbtn.setAttribute('href',"/warband/"+warband_id);
         editbtn.classList.add('btn', 'btn-sm', 'btn-outline-secondary');
@@ -62,6 +62,17 @@ function loadWarbandTable() {
         deletebtn.innerHTML = `<i style="color:darkred;" class="bi bi-trash"></i>`;
         deletebtn.title = 'Delete Warband';
         buttons.appendChild(deletebtn);
+
+
+        let printbtn = document.createElement('a');
+        printbtn.setAttribute('href',"/print_warband/"+warband_id);
+        // <a href="{{ url_for('print_warband_page', warband_id=warband.warband_id) }}" target="_blank" class="btn btn-secondary ms-3">Print Warband</a>
+        printbtn.classList.add('btn', 'btn-sm', 'btn-outline-secondary', 'ms-1', 'print_warband');
+        printbtn.innerHTML = `<i class="text-primary bi bi-printer"></i>`;
+        printbtn.target = '_blank'
+        printbtn.title = 'Print Warband';
+        buttons.appendChild(printbtn);
+
     }
     // wire event listener for delete
     const delete_btns = document.querySelectorAll('.delete_warband');

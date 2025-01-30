@@ -1,5 +1,5 @@
 import {getLocalData, getWarbandPoints} from './local_storage.js';
-
+import { deleteEventListeners } from './helpers.js';
 window.onload = function() {
     loadWarbandTable();
     document.getElementById('save_json_warband').addEventListener('click', sendSavedWarbandsToClipboard);
@@ -14,6 +14,8 @@ window.onload = function() {
 function loadWarbandTable() {
     let warbands = getLocalData()['warbands'];
     let w_table = document.getElementById('warband_table');
+    deleteEventListeners('.delete_warband');
+    deleteEventListeners('.duplicate_warband');
     for(const wbnd of warbands) {
         // build table rows
         let warband_id = wbnd['warband_id']
@@ -39,14 +41,23 @@ function loadWarbandTable() {
         let buttons = row.insertCell(5);
         let editbtn = document.createElement('a');
         editbtn.setAttribute('href',"/warband/"+warband_id);
-        editbtn.classList.add('btn', 'btn-sm', 'btn-primary');
-        editbtn.innerText = "edit";
+        editbtn.classList.add('btn', 'btn-sm', 'btn-outline-secondary');
+        editbtn.innerHTML = `<i style="color:darkgreen;" class="bi bi-pencil-square"></i>`;
+        editbtn.title = 'Edit Warband';
         buttons.appendChild(editbtn);
+
+        let duplicatebtn = document.createElement('button');
+        duplicatebtn.setAttribute('data-warband_id',warband_id);
+        duplicatebtn.classList.add('btn', 'btn-sm', 'btn-outline-secondary', 'ms-1', 'duplicate_warband');
+        duplicatebtn.innerHTML = `<i style="color:darkgoldenrod;" class="bi bi-copy"></i>`;
+        duplicatebtn.title = 'Duplicate Warband';
+        buttons.appendChild(duplicatebtn);
 
         let deletebtn = document.createElement('button');
         deletebtn.setAttribute('data-warband_id',warband_id);
-        deletebtn.classList.add('btn', 'btn-sm', 'btn-danger', 'ms-1', 'delete_warband');
-        deletebtn.innerText = "delete";
+        deletebtn.classList.add('btn', 'btn-sm', 'btn-outline-secondary', 'ms-1', 'delete_warband');
+        deletebtn.innerHTML = `<i style="color:darkred;" class="bi bi-trash"></i>`;
+        deletebtn.title = 'Delete Warband';
         buttons.appendChild(deletebtn);
     }
     // wire event listener for delete
@@ -57,18 +68,36 @@ function loadWarbandTable() {
             if (!confirmed) {
                 return; // Prevent the default action (e.g., form submission)
               }
-            let _warband_id = btn_elem.target.dataset.warband_id;
+            let warband_id = btn_elem.target.dataset.warband_id;
             let local_data = getLocalData();
-            for(let i=0; i < local_data['warbands'].length; i++) {
-                if (local_data['warbands'][i]['warband_id'] == _warband_id) { // found a saved warband
-                    // remove entry from warband
-                    local_data['warbands'].splice(i,1);
-                    localStorage.setItem('warbands', JSON.stringify(local_data));
-                    location.reload(); // reload page
-                }
+            const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
+            if (i>-1) {
+                // remove entry from warband
+                local_data['warbands'].splice(i,1);
+                localStorage.setItem('warbands', JSON.stringify(local_data));
+                location.reload(); // reload page
             }
         });
     });
+
+
+    const duplicate_btns = document.querySelectorAll('.duplicate_warband');
+    duplicate_btns.forEach(weirdo => {
+        weirdo.addEventListener('click', (btn_elem) => {
+            let warband_id = btn_elem.target.dataset.warband_id;
+            let local_data = getLocalData();
+            const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
+            let warband = {...local_data['warbands'][i]}; // copy warband   
+            // get the max id and increase it by 1
+            const newId = Math.max(...local_data['warbands'].map(x => x.warband_id))+1;
+            warband['warband_id'] = newId;
+            local_data['warbands'].push(warband);
+            localStorage.setItem('warbands', JSON.stringify(local_data));
+            location.reload(); // reload page
+        });
+    });
+
+
     document.getElementById('warband_json_text').value = JSON.stringify(getLocalData());   
 }
 

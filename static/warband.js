@@ -27,7 +27,7 @@ window.onload = function() {
     });
     // wire save warband button
     document.getElementById('warband_info').addEventListener('change', saveWarband);
-    document.getElementById('weirdo_model').addEventListener('change', updateWeirdoPoints);
+    document.getElementById('weirdo_modal').addEventListener('change', updateWeirdoPoints);
 }
 
 
@@ -116,7 +116,6 @@ function loadWeirdoCards(warband, saved=true) {
         
         // create new card for each weirdo
         let first = true;
-        let total_cost = 0;
         for (const weirdo of weirdos) {
             let weirdo_cost = 0
             // get weirdo points
@@ -143,15 +142,15 @@ function loadWeirdoCards(warband, saved=true) {
                 new_card.querySelector('.move_right').setAttribute('hidden', true);
             }
 
-
             new_card.querySelector('.card-title').innerHTML = weirdo['name'];
             if (first) {
                 new_card.querySelector('.card-title').innerHTML += '&emsp;[leader]';
                 first = false;
             }
-            
-            new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
-            total_cost += weirdo_cost;
+            new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost} (x${weirdo['copies']})`;
+            if (weirdo['copies']==1) {
+                new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
+            }
             // card attributes
             for (const att of weirdo_attribute) {
                 new_card.querySelector(`.card-${att}`).innerHTML = weirdo[att];
@@ -182,7 +181,7 @@ function loadWeirdoCards(warband, saved=true) {
             }
             card_container.appendChild(new_card);
         }
-        document.getElementById('total_cost').innerHTML = total_cost;
+        document.getElementById('total_cost').innerHTML = data.points;
         // wire Edit buttons
         const edit_btns = document.querySelectorAll('.edit_weirdo');
         edit_btns
@@ -318,6 +317,10 @@ function load_weirdo_modal(wrdo, warband) {
         }
     }
 
+    if (weirdo['copies'] != null) {
+        document.getElementById('weirdo_copies').value = weirdo['copies'];
+    }
+
     updateWeirdoPoints();         
     wireSaveWeirdo();
 }
@@ -336,7 +339,7 @@ function updateWeirdoPoints() {
     for (const att of weirdo_attribute) {
         total_points += updateAttributePoints(att);
     } 
-    document.querySelector('.weirdo_cost').innerHTML = `Cost: ${total_points}`;   
+    document.querySelector('.weirdo_cost').innerHTML = `Individual Cost: ${total_points}`;   
 }
 
 
@@ -478,9 +481,11 @@ function saveWeirdo() {
     let warband_id = document.getElementById('warband_id').value;
     let weirdo_id = document.getElementById('weirdo_id').value;
     let weirdo_name = document.getElementById('weirdo_name').value;
+    let copies = document.getElementById('weirdo_copies').value;
     const weirdo = {
         weirdo_id:weirdo_id,
-        name:weirdo_name
+        name:weirdo_name,
+        copies:copies,
     }
     // load attributes into weirdo
     for (const att of weirdo_attribute) {

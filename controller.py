@@ -95,7 +95,7 @@ def warband_points():
         for power in weirdo['powers']:
             weirdo_pts += item_points(powers, power)
 
-        points += weirdo_pts
+        points += weirdo_pts*int(weirdo['copies'])
         weirdo_info = {'id': weirdo['weirdo_id'], 'points':weirdo_pts }
         weirdo_points_list.append(weirdo_info)
 

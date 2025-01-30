@@ -187,7 +187,7 @@ function loadWeirdoCards(warband, saved=true) {
         edit_btns
         edit_btns.forEach(weirdo => {
             weirdo.addEventListener('click', (wrdo) => {
-                load_weirdo_modal(wrdo, warband);
+                loadWeirdoModal(wrdo, warband);
             });
         });
         // wire delete buttons
@@ -222,6 +222,7 @@ function loadWeirdoCards(warband, saved=true) {
                     local_data['warbands'][i]['weirdos'][j+dir] = {...local_data['warbands'][i]['weirdos'][j]};
                     local_data['warbands'][i]['weirdos'][j] = temp_weirdo;
                     // save and reload
+                    local_data['warbands'][i]['weirdos'][0]['copies'] = 1; // set copies to 1.
                     localStorage.setItem('warbands', JSON.stringify(local_data));
                     loadWeirdoCards(local_data['warbands'][i]); // reload weirdos
                     return;
@@ -276,7 +277,7 @@ function get_ids(warband_id, weirdo_id, local_data) {
 }
 
 
-function load_weirdo_modal(wrdo, warband) {
+function loadWeirdoModal(wrdo, warband) {
     // load weirdo into modal
     close_accordions();
     let weirdo_id = wrdo.target.dataset.weirdo_id;
@@ -284,6 +285,9 @@ function load_weirdo_modal(wrdo, warband) {
     document.getElementById('warband_id').value = warband_id;
     document.getElementById('weirdo_id').value = weirdo_id;
     let weirdo = getWeirdo(warband_id, weirdo_id);
+    
+    const weirdo_index = warband['weirdos'].findIndex(x => x.weirdo_id == weirdo_id);
+
     document.getElementById('weirdo_name').value = weirdo['name'];
     // attributes
     for (const att of weirdo_attribute) {
@@ -317,9 +321,16 @@ function load_weirdo_modal(wrdo, warband) {
         }
     }
 
-    if (weirdo['copies'] != null) {
+    
+    if (weirdo_index == 0) {
+        document.getElementById('weirdo_copies').value = 1;
+        document.getElementById('copies_area').setAttribute('hidden', true);
+    } else {
+        document.getElementById('copies_area').removeAttribute('hidden');
         document.getElementById('weirdo_copies').value = weirdo['copies'];
     }
+    
+    
 
     updateWeirdoPoints();         
     wireSaveWeirdo();

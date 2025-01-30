@@ -8,14 +8,8 @@ function getLocalData() {
 
 
 function getWarband(warband_id) {
-    let warband = null;
     const warbands = getLocalData()['warbands'];
-    for(const wbnd of warbands) {
-        if (wbnd['warband_id'] == warband_id) { // found a saved warband
-            warband = wbnd;
-        }
-    }
-    return warband;
+    return warbands.find(wbnd => wbnd.warband_id == warband_id);
 }
 
 async function getWarbandPoints(warband_id) {
@@ -42,12 +36,7 @@ async function getWarbandPoints(warband_id) {
 
 function getWeirdo(warband_id, weirdo_id) {
     let warband = getWarband(warband_id);
-    for (const weirdo of warband['weirdos']) {
-        if (weirdo['weirdo_id'] == weirdo_id) {
-            return weirdo;
-        }
-    }
-    return null;
+    return warband['weirdos'].find(x => x.weirdo_id == weirdo_id);
 }
 
 

@@ -386,7 +386,7 @@ function setEquipDiscounts() {
     let reset_rows = document.querySelectorAll('.ranged-row, .equip-row, .melee-row')
     reset_rows.forEach((row) => {
         let pts = row.querySelector('.pts');
-        pts.innerHTML = `Pts: ${pts.getAttribute('value')}`
+        pts.innerHTML = `Cost:  ${pts.getAttribute('value')}`
         pts.setAttribute('data-discount', pts.getAttribute('value'));
         pts.classList.remove('text-success');
     });
@@ -409,7 +409,7 @@ function setEquipDiscounts() {
             let pts = row.querySelector('.pts');
             if (mutant_weapons.includes(melee_name.replace(/&amp;/g, "&"))) {
                 let points = parseInt(pts.getAttribute('value'))-1;
-                pts.innerHTML = `Pts: ${points}`;
+                pts.innerHTML = `Cost:  ${points}`;
                 pts.setAttribute('data-discount', points);
                 pts.classList.add('text-success');
             } else {
@@ -421,7 +421,7 @@ function setEquipDiscounts() {
             let pts = row.querySelector('.pts');
             let points = Math.max(0,parseInt(pts.getAttribute('value'))-1);
             
-            pts.innerHTML = `Pts: ${points}`
+            pts.innerHTML = `Cost:  ${points}`
             pts.setAttribute('data-discount', points);
             pts.classList.add('text-success');
         });
@@ -431,7 +431,7 @@ function setEquipDiscounts() {
             if (soldiers_equipment.includes(equip_name.replace(/&amp;/g, "&"))) {
                 let pts = row.querySelector('.pts');
                 pts.setAttribute('data-discount', 0);
-                pts.innerHTML = `Pts: 0`;
+                pts.innerHTML = `Cost:  0`;
                 pts.classList.add('text-success');
             } else {
                 pts.setAttribute('data-discount', pts.getAttribute('value'));

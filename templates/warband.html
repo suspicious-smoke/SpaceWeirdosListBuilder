@@ -219,8 +219,8 @@
                             <!-- weapons list -->
                             <button class="accordion-button collapsed py-3" type="button" data-bs-toggle="collapse" data-bs-target="#melee-collapse" aria-controls="melee-collapse">
                                 <div class="col-3" id="e-melee-name"></div>
-                                <div class="col-2" id="e-melee-actions"></div>
                                 <div class="col-1" id="e-melee-points"></div>
+                                <div class="col-2" id="e-melee-actions"></div>
                                 <div class="col-4" id="e-melee-notes"></div>
                             </button>
                           </h2>
@@ -234,11 +234,11 @@
                                                 <label class="form-check-label">{{ item.name }}</label>
                                             </div>
                                         </div>
+                                        <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
+                                            Cost: {{item.points}}
+                                        </div>
                                         <div class="col-2 act">
                                             Actions: {{item.actions}}
-                                        </div>
-                                        <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
-                                            Pts: {{item.points}}
                                         </div>
                                         <div class="col-4 notes">
                                             {{item.notes}}
@@ -253,7 +253,10 @@
                             <h2 class="accordion-header" id="ranged-heading">
                               <!-- weapons list -->
                               <button class="accordion-button collapsed py-3" type="button" data-bs-toggle="collapse" data-bs-target="#ranged-collapse" aria-controls="ranged-collapse">
-                                    <div class="col-3" id="e-ranged-name"></div><div class="col-2" id="e-ranged-actions"></div><div class="col-1" id="e-ranged-points"></div><div class="col-4" id="e-ranged-notes"></div>
+                                    <div class="col-3" id="e-ranged-name"></div>
+                                    <div class="col-1" id="e-ranged-points"></div>
+                                    <div class="col-2" id="e-ranged-actions"></div>
+                                    <div class="col-4" id="e-ranged-notes"></div>
                               </button>
                             </h2>
                             <div id="ranged-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
@@ -266,11 +269,11 @@
                                                     <label class="form-check-label">{{ item.name }}</label>
                                                 </div>
                                             </div>
+                                            <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
+                                                Cost: {{item.points}}
+                                            </div>
                                             <div class="col-2 act">
                                                 Actions: {{item.actions}}
-                                            </div>
-                                            <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
-                                                Pts: {{item.points}}
                                             </div>
                                             <div class="col-7 notes">
                                                 {{item.notes}}
@@ -296,11 +299,11 @@
                                                 <label class="form-check-label">{{ item.name }}</label>
                                             </div>
                                         </div>
+                                        <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
+                                            Cost: {{item.points}}
+                                        </div>
                                         <div class="col-1">
                                             {{item.type}}
-                                        </div>
-                                        <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
-                                            Pts: {{item.points}}
                                         </div>
                                         <div class="col-8">
                                             {{item.notes}}
@@ -326,11 +329,11 @@
                                                   <label class="form-check-label">{{ item.name }}</label>
                                               </div>
                                           </div>
+                                          <div class="col-1 pts" value = {{item.points}}>
+                                              Cost: {{item.points}}
+                                          </div>
                                           <div class="col-1">
                                               {{item.type}}
-                                          </div>
-                                          <div class="col-1 pts" value = {{item.points}}>
-                                              Pts: {{item.points}}
                                           </div>
                                           <div class="col-7">
                                             {{item.notes}}

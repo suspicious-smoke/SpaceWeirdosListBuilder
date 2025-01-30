@@ -161,9 +161,9 @@ function loadWeirdoCards(warband, saved=true) {
                 new_card.querySelector('.card-title').innerHTML += '&emsp;[leader]';
                 first = false;
             }
-            new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost} (x${weirdo['copies']})`;
+            new_card.querySelector('.card-cost').innerHTML = `Cost: ${weirdo_cost} (x${weirdo['copies']})`;
             if (weirdo['copies']==1) {
-                new_card.querySelector('.card-cost').innerHTML = `cost: ${weirdo_cost}`;
+                new_card.querySelector('.card-cost').innerHTML = `Cost: ${weirdo_cost}`;
             }
             // card attributes
             for (const att of weirdo_attribute) {

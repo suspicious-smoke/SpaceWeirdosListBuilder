@@ -1,3 +1,31 @@
+
+const sample_data = { warbands:[
+    {
+      warband_id: 4,
+      name: "Robot Legion",
+      warband_trait: "Undead",
+      leader_trait: "Monstrous",
+      weirdos: [
+        { weirdo_id: 1, name: "Overlord", copies: 1, speed: 3, defense: "2d10", firepower: "2d8", prowess: "2d8", willpower: "2d10", melee_weapon: "Claws & Teeth", ranged_weapon: "Auto Pistol", equipment: [], powers: [] },
+        { weirdo_id: 2, name: "Deathmark", copies: 1, speed: 3, defense: "2d8", firepower: "2d8", prowess: "2d6", willpower: "2d8", melee_weapon: "Melee Weapon", ranged_weapon: "Sniper Rifle", equipment: ["Targeting Reticule"], powers: [] },
+        { weirdo_id: 3, name: "Warrior", copies: 4, speed: 2, defense: "2d8", firepower: "2d8", prowess: "2d8", willpower: "2d6", melee_weapon: "Melee Weapon", ranged_weapon: "Auto Rifle", equipment: [], powers: [] },
+        { weirdo_id: 4, name: "Immortal", copies: 1, speed: 2, defense: "2d10", firepower: "2d10", prowess: "2d6", willpower: "2d6", melee_weapon: "Melee Weapon", ranged_weapon: "Heavy Rifle", equipment: [], powers: [] }
+      ]
+    },
+    {
+      warband_id: 5,
+      name: "Forces of Sol",
+      warband_trait: "Fanatics",
+      leader_trait: "Tactician",
+      weirdos: [
+        { weirdo_id: 1, name: "Commander", copies: 1, speed: 3, defense: "2d8", firepower: "2d10", prowess: "2d8", willpower: "2d8", melee_weapon: "Powered Weapon", ranged_weapon: "Energy Pistol", equipment: ["Cybernetics", "Targeting Reticule"], powers: [] },
+        { weirdo_id: 3, name: "Trooper", copies: 4, speed: 2, defense: "2d6", firepower: "2d8", prowess: "2d8", willpower: "2d8", melee_weapon: "Melee Weapon", ranged_weapon: "Auto Rifle", equipment: [], powers: [] },
+        { weirdo_id: 4, name: "Rocket Launcher", copies: 1, speed: 2, defense: "2d8", firepower: "2d10", prowess: "2d8", willpower: "2d6", melee_weapon: "Melee Weapon", ranged_weapon: "Rocket Launcher", equipment: ["Heavy Armor"], powers: [] },
+        { weirdo_id: 5, name: "Sniper", copies: 1, speed: 2, defense: "2d8", firepower: "2d10", prowess: "2d6", willpower: "2d8", melee_weapon: "Melee Weapon", ranged_weapon: "Sniper Rifle", equipment: ["Targeting Reticule"], powers: [] }
+      ]
+    }
+  ]};
+
 function getLocalData() {
     const json_warband = localStorage.getItem('warbands');
     if (json_warband != null) {
@@ -82,5 +110,5 @@ async function getTraitsText(warband_trait, leader_trait) {
 }
 
 
-export {getLocalData, getWarband, getWarbandPoints, getWeirdo, getTraitsText, getWeirdoEquipmentInfo};
+export {getLocalData, getWarband, getWarbandPoints, getWeirdo, getTraitsText, getWeirdoEquipmentInfo, sample_data};
 

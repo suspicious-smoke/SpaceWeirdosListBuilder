@@ -32,7 +32,7 @@ function loadWarbandTable() {
         w_trait.innerHTML = wbnd['warband_trait'];
         
         let w_count = row.insertCell(2);
-        w_count.innerHTML = wbnd['weirdos'].length;
+        w_count.innerHTML = wbnd['weirdos'].reduce((running_sum, weirdo) => running_sum + parseInt(weirdo.copies),0);
 
         let w_points = row.insertCell(3);
         getWarbandPoints(warband_id).then((pts) => {

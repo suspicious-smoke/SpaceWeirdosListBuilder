@@ -1,6 +1,6 @@
 # Space Weirdos List Builder
 ## Overview
-This is my Space Weirdos list builder site. It's currently hosted on the free tier on render, so be warned it may take some time and refreshes for it to load if it's been sleeping. Once it does load, it should be fairly snappy. This is licensed by the  basic MIT open source license.
+This is my Space Weirdos list builder site. It's currently hosted on the free tier on render, so be warned it may take some time and refreshes for it to load if it's been sleeping. Once it does load, it should be fairly snappy. This is licensed by the  basic MIT open source license if anyone wants to mess around with the source code.
 
 [List Builder Hosted on Render Site](https://spaceweirdoslistbuilder.onrender.com/)
 

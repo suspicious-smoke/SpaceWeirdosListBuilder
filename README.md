@@ -1,4 +1,6 @@
-# Open Source Space Weirdos List Builder
+# Open Source Space Weirdos List Builder<img src="https://raw.githubusercontent.com/starbuck8844/SpaceWeirdosListBuilder/master/static/icon.svg" alt="Alt text" width="70" height="70">
+
+
 ## Overview
 To start out, please support Garske Games for making this awesome game [Buy Space Weirdos](https://www.wargamevault.com/product/359157/Space-Weirdos). It is an one of my most played wargame. This is my Space Weirdos list builder site. It's currently hosted on the free tier on render, so be warned it may take some time and refreshes for it to load if the site has been sleeping. Once it does load, it should be fairly snappy. This is licensed by the  basic MIT open source license, so anyone is welcome to mess around with and copy the source code within that framework. Have fun!
 

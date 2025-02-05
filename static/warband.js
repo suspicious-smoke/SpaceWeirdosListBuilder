@@ -403,12 +403,11 @@ function setEquipDiscounts() {
             selectList[i].setAttribute('data-discount', Math.max(0,selectList[i].getAttribute('value')-1));
         }
         document.querySelector('label[for="speed_select"]').classList.add('text-success');
-        
         document.querySelectorAll('.melee-row').forEach((row) => {
             let melee_name = row.querySelector('.form-check-input').getAttribute('value');
             let pts = row.querySelector('.pts');
+            let points = parseInt(pts.getAttribute('value'))-1;
             if (mutant_weapons.includes(melee_name.replace(/&amp;/g, "&"))) {
-                let points = parseInt(pts.getAttribute('value'))-1;
                 pts.innerHTML = `Cost:  ${points}`;
                 pts.setAttribute('data-discount', points);
                 pts.classList.add('text-success');
@@ -420,7 +419,6 @@ function setEquipDiscounts() {
         document.querySelectorAll('.ranged-row').forEach((row) => {
             let pts = row.querySelector('.pts');
             let points = Math.max(0,parseInt(pts.getAttribute('value'))-1);
-            
             pts.innerHTML = `Cost:  ${points}`
             pts.setAttribute('data-discount', points);
             pts.classList.add('text-success');
@@ -428,8 +426,8 @@ function setEquipDiscounts() {
     } else if (trait == 'Soldiers') {
         document.querySelectorAll('.equip-row').forEach((row) => {
             let equip_name = row.querySelector('.form-check-input').getAttribute('value');
+            let pts = row.querySelector('.pts');
             if (soldiers_equipment.includes(equip_name.replace(/&amp;/g, "&"))) {
-                let pts = row.querySelector('.pts');
                 pts.setAttribute('data-discount', 0);
                 pts.innerHTML = `Cost:  0`;
                 pts.classList.add('text-success');

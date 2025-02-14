@@ -59,7 +59,7 @@
             <span id="total_cost">0</span>
     </div> 
     <button id="create_weirdo" type="button" class="btn btn-primary ms-3" data-warband_id={{warband.warband_id}} data-bs-toggle="modal" data-bs-target="#weirdo_modal">Create Weirdo</button>
-    <button id="weirdo_list" type="button" class="btn btn-success ms-3" data-warband_id={{warband.warband_id}} data-bs-toggle="modal" data-bs-target="#weirdo_list_modal">Add a Favorited Weirdo</button>
+    <button id="fav_weirdo_list_btn" type="button" class="btn btn-success ms-3" data-warband_id={{warband.warband_id}} data-bs-toggle="modal" data-bs-target="#fav_weirdo_list_modal"><i style="color:gold;" class="bi bi-star"></i> Add a Favorited Weirdo</button>
     <a href="{{ url_for('print_warband_page', warband_id=warband.warband_id) }}" target="_blank" class="btn btn-secondary ms-3">Print Warband</a>
     <div id="save_alert" class="p-1 float alert alert-success d-flex mb-0 ms-3" style="opacity: 0; width: fit-content" role="alert">saved warband</div>
 </div>
@@ -135,18 +135,30 @@
     </div>
 </div>
 
- <!-- --------------Weirdo List Modal-------------- -->
-<div class="modal fade" id="weirdo_list_modal" tabindex="-1">
+ <!-- --------------Favorited Weirdo Modal-------------- -->
+<div class="modal fade" id="fav_weirdo_list_modal" tabindex="-1">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header container pb-1">
                 <div class="container mb-1">
                     <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <h4>Add Favorited Weirdo</h4>
+                    <h4>Add a Favorited Weirdo</h4>
+
                 </div>
             </div>
             <div class="modal-body">
-               
+                <div id="table_area" class="col-lg-8 mx-auto border">
+                    <table id="favorited_table" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Weirdo Name</th>
+                            <th scope="col">Cost</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
                 
                
             </div>
@@ -161,7 +173,7 @@
             <div class="modal-header container pb-1">
                 <div class="container mb-1">
                     <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <span class="float-end me-5 weirdo_cost">Cost:</span>
+                    <span class="float-end me-5 weirdo_cost"></span>
                     
                     <button id="favorite_weirdo" type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal" title="Copy to Favorite List"><i style="color:gold;" class="bi bi-star"></i></button>
                     <button id="save_weirdo" type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Save Weirdo</button>

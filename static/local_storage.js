@@ -34,12 +34,13 @@ function getLocalData() {
     return {warbands:[]};
 }
 
+// return a list of favorite weirdos
 function getLocalFavoriteData() {
     const json_favorites = localStorage.getItem('favorites');
     if (json_favorites != null) {
         return JSON.parse(json_favorites);
     }
-    return {favorites:[]};
+    return {};
 }
 
 

@@ -5,6 +5,8 @@ import {selectedSelect, resetSelect, fadeInOut, fUpper, deleteEventListeners, cl
 // on warband page load
 window.onload = function() {
     // setup popovers
+    document.getElementById('html_warband_traits').setAttribute('data-bs-content', warband_traits_html);
+    document.getElementById('html_leader_traits').setAttribute('data-bs-content',leader_traits_html);
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
     
@@ -83,6 +85,20 @@ function loadSpecificDropDowns() {
         let new_row = cloneWeaponRow("template_ranged_row", item);
         ranged_container.appendChild(new_row);
     }
+
+    let powers_container = document.getElementById('powers-list');
+    powers_container.innerHTML = '';
+    for (const item of powers) {
+        let new_row = cloneEquipmentRow("template_powers_row", item);
+        powers_container.appendChild(new_row);
+    }
+
+    let equipment_container = document.getElementById('equipment-list');
+    equipment_container.innerHTML = '';
+    for (const item of equipment) {
+        let new_row = cloneEquipmentRow("template_equipment_row", item);
+        equipment_container.appendChild(new_row);
+    }
 }
 
 function cloneWeaponRow(template_row_id, item) {
@@ -94,16 +110,30 @@ function cloneWeaponRow(template_row_id, item) {
         new_row.querySelector('.form-check-input').id = `item_${item['name']}`;
         new_row.querySelector('.form-check-label').innerHTML = item['name'];
         new_row.querySelector('.form-check-label').setAttribute('for', `item_${item['name']}`);
-
         new_row.querySelector('.pts').innerHTML = `Cost: ${item['points']}`;
         new_row.querySelector('.pts').setAttribute('value', item['points']);
         new_row.querySelector('.pts').setAttribute('data-discount', item['points']);
-
         new_row.querySelector('.act').innerHTML = `Actions: ${item['actions']}`;
         new_row.querySelector('.notes').innerHTML = item['notes'];
         return new_row;
 }
 
+function cloneEquipmentRow(template_row_id, item) {
+    let template_row = document.getElementById(template_row_id);
+    let new_row = template_row.cloneNode(true); // clear out events
+    new_row.removeAttribute("hidden");
+    new_row.removeAttribute("id");
+    new_row.querySelector('.form-check-input').setAttribute('value', item['name']);
+    new_row.querySelector('.form-check-input').id = `item_${item['name']}`;
+    new_row.querySelector('.form-check-label').innerHTML = item['name'];
+    new_row.querySelector('.form-check-label').setAttribute('for', `item_${item['name']}`);
+    new_row.querySelector('.pts').innerHTML = `Cost: ${item['points']}`;
+    new_row.querySelector('.pts').setAttribute('value', item['points']);
+    new_row.querySelector('.pts').setAttribute('data-discount', item['points']);
+    new_row.querySelector('.type').innerHTML = item['type'];
+    new_row.querySelector('.notes').innerHTML = item['notes'];
+    return new_row;
+}
 
 function populateDropdown(selectElement, data) {
     for (const [name, value] of Object.entries(data)) {

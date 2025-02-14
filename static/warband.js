@@ -500,7 +500,7 @@ function setModalWeirdoEquipArea() {
 function getWeirdoFormInfo() {
     // load attributes into weirdo
     let weirdo = {
-        weirdo_name:document.getElementById('weirdo_name').value,
+        name:document.getElementById('weirdo_name').value,
     }
     for (const att of weirdo_attribute) {
         let s = document.getElementById(`${att}_select`);
@@ -536,7 +536,7 @@ function saveWeirdo() {
     let weirdo = getWeirdoFormInfo();
     weirdo['copies'] = document.getElementById('weirdo_copies').value;
     weirdo['weirdo_id'] = document.getElementById('weirdo_id').value;
-    weirdo['warband_id'] = document.getElementById('warband_id').value;
+    let warband_id = document.getElementById('warband_id').value;
 
     // first load from local storage
     let warband = getWarband(warband_id);   

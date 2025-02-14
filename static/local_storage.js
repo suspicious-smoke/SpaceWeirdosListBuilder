@@ -34,6 +34,15 @@ function getLocalData() {
     return {warbands:[]};
 }
 
+// return a list of favorite weirdos
+function getLocalFavoriteData() {
+    const json_favorites = localStorage.getItem('favorites');
+    if (json_favorites != null) {
+        return JSON.parse(json_favorites);
+    }
+    return [];
+}
+
 
 function getWarband(warband_id) {
     const warbands = getLocalData()['warbands'];
@@ -110,5 +119,5 @@ async function getTraitsText(warband_trait, leader_trait) {
 }
 
 
-export {getLocalData, getWarband, getWarbandPoints, getWeirdo, getTraitsText, getWeirdoEquipmentInfo, sample_data};
+export {getLocalData, getLocalFavoriteData, getWarband, getWarbandPoints, getWeirdo, getTraitsText, getWeirdoEquipmentInfo, sample_data};
 

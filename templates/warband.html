@@ -59,6 +59,7 @@
             <span id="total_cost">0</span>
     </div> 
     <button id="create_weirdo" type="button" class="btn btn-primary ms-3" data-warband_id={{warband.warband_id}} data-bs-toggle="modal" data-bs-target="#weirdo_modal">Create Weirdo</button>
+    <button id="weirdo_list" type="button" class="btn btn-success ms-3" data-warband_id={{warband.warband_id}} data-bs-toggle="modal" data-bs-target="#weirdo_list_modal">Add a Saved Weirdo</button>
     <a href="{{ url_for('print_warband_page', warband_id=warband.warband_id) }}" target="_blank" class="btn btn-secondary ms-3">Print Warband</a>
     <div id="save_alert" class="p-1 float alert alert-success d-flex mb-0 ms-3" style="opacity: 0; width: fit-content" role="alert">saved warband</div>
 </div>
@@ -134,9 +135,27 @@
     </div>
 </div>
 
+ <!-- --------------Weirdo List Modal-------------- -->
+<div class="modal fade" id="weirdo_list_modal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header container pb-1">
+                <div class="container mb-1">
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h4>Add Saved Weirdo</h4>
+                </div>
+            </div>
+            <div class="modal-body">
+               
+                
+               
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- --------------Weirdo Modal-------------- -->
-<div class="modal fade" id="weirdo_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="weirdo_modal" tabindex="-1">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header container pb-1">
@@ -147,7 +166,7 @@
                     <!-- <h4>Weirdo</h4> -->
                     <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
                     <button id="save_weirdo" type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Save Weirdo</button>
-                    
+                    <button id="add_weirdo_to_list" type="button" class="btn btn-success btn-sm" data-bs-dismiss="modal">Add to Saved Weirdos list</button>
                 </div>
                 
             </div>

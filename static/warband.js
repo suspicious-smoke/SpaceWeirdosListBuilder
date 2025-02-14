@@ -17,7 +17,6 @@ window.onload = function() {
     document.getElementById('create_weirdo').addEventListener('click', function() {
         const warband_id = this.dataset.warband_id;
         // clear form for new weirdo
-        // TODO cleanup this code with loadWeirdoModal
         close_accordions();
         document.getElementById('warband_id').value = warband_id;
         document.getElementById('weirdo_id').value = 0;
@@ -57,16 +56,54 @@ window.onload = function() {
 function dropdownSetup() {
     populateDropdown(document.getElementById('warband_trait'), warband_traits);
     populateDropdown(document.getElementById('leader_trait'), leader_traits);
-    populateDropdown(document.getElementById('speed_select'), speed);
-    populateDropdown(document.getElementById('defense_select'), defense);
-    populateDropdown(document.getElementById('firepower_select'), firepower);
-    populateDropdown(document.getElementById('prowess_select'), prowess);
-    populateDropdown(document.getElementById('willpower_select'), willpower);
-    // populateDropdown(document.getElementById('melee_select'), melee_weapons);
-    // populateDropdown(document.getElementById('ranged_select'), ranged_weapons);
-    // populateDropdown(document.getElementById('equipment_select'), equipment);
-    // populateDropdown(document.getElementById('powers_select'), powers);
+
+    populateAttribute(document.getElementById('speed_select'), speed);
+    populateAttribute(document.getElementById('defense_select'), defense);
+    populateAttribute(document.getElementById('firepower_select'), firepower);
+    populateAttribute(document.getElementById('prowess_select'), prowess);
+    populateAttribute(document.getElementById('willpower_select'), willpower);
+    loadSpecificDropDowns();
+    //  ranged_weapons
+    // equipment
+    // powers
 }
+
+
+function loadSpecificDropDowns() {
+    let melee_container = document.getElementById('melee-list');
+    melee_container.innerHTML = '';
+    for (const item of melee_weapons) {
+        let new_row = cloneWeaponRow("template_melee_row", item);
+        melee_container.appendChild(new_row);
+    }
+
+    let ranged_container = document.getElementById('ranged-list');
+    ranged_container.innerHTML = '';
+    for (const item of ranged_weapons) {
+        let new_row = cloneWeaponRow("template_ranged_row", item);
+        ranged_container.appendChild(new_row);
+    }
+}
+
+function cloneWeaponRow(template_row_id, item) {
+    let template_row = document.getElementById(template_row_id);
+        let new_row = template_row.cloneNode(true); // clear out events
+        new_row.removeAttribute("hidden");
+        new_row.removeAttribute("id");
+        new_row.querySelector('.form-check-input').setAttribute('value', item['name']);
+        new_row.querySelector('.form-check-input').id = `item_${item['name']}`;
+        new_row.querySelector('.form-check-label').innerHTML = item['name'];
+        new_row.querySelector('.form-check-label').setAttribute('for', `item_${item['name']}`);
+
+        new_row.querySelector('.pts').innerHTML = `Cost: ${item['points']}`;
+        new_row.querySelector('.pts').setAttribute('value', item['points']);
+        new_row.querySelector('.pts').setAttribute('data-discount', item['points']);
+
+        new_row.querySelector('.act').innerHTML = `Actions: ${item['actions']}`;
+        new_row.querySelector('.notes').innerHTML = item['notes'];
+        return new_row;
+}
+
 
 function populateDropdown(selectElement, data) {
     for (const [name, value] of Object.entries(data)) {
@@ -74,6 +111,16 @@ function populateDropdown(selectElement, data) {
       option.value = name;
       option.dataset.text = value;
       option.textContent = name;
+      selectElement.appendChild(option);
+    }
+  }
+
+  function populateAttribute(selectElement, data) {
+    for (const [die, cost] of Object.entries(data)) {
+      const option = document.createElement('option');
+      option.value = cost;
+      option.dataset.discount = cost;
+      option.textContent = die;
       selectElement.appendChild(option);
     }
   }

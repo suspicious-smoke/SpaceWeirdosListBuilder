@@ -220,29 +220,22 @@
                                 <div class="col-4" id="e-melee-notes"></div>
                             </button>
                           </h2>
-                          <div id="melee-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
-                            <div class="accordion-body">
-                                {% for item in warband.melee_weapons %}
-                                    <div class="row py-1 border melee-row">
-                                        <div class="col-3">
-                                            <div class="form-check">
-                                                <input id="item_{{item.name}}" class="form-check-input" type="radio" name="melee_radios" value="{{item.name}}">
-                                                <label for="item_{{item.name}}" class="form-check-label">{{ item.name }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
-                                            Cost: {{item.points}}
-                                        </div>
-                                        <div class="col-2 act">
-                                            Actions: {{item.actions}}
-                                        </div>
-                                        <div class="col-4 notes">
-                                            {{item.notes}}
-                                        </div>
-                                    </div>
-                                {% endfor %}
+                        <!-- template melee row -->
+                        <div id="template_melee_row" class="row py-1 border melee-row" hidden>
+                            <div class="col-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="melee_radios">
+                                    <label class="form-check-label"></label>
+                                </div>
                             </div>
-                          </div>
+                            <div class="col-1 pts"></div>
+                            <div class="col-2 act"></div>
+                            <div class="col-4 notes"></div>
+                        </div>
+                        <div id="melee-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading"
+                            data-bs-parent="#melee-weapon-list">
+                            <div id="melee-list" class="accordion-body"></div>
+                        </div>
                         </div>
                         
                         <div class="accordion-item" id="ranged-weapons-list"> <!-- add hidden here to hide ranged weapons -->
@@ -255,28 +248,20 @@
                                     <div class="col-4" id="e-ranged-notes"></div>
                               </button>
                             </h2>
-                            <div id="ranged-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
-                                <div class="accordion-body">
-                                    {% for item in warband.ranged_weapons %}
-                                        <div class="row py-1 border ranged-row">
-                                            <div class="col-2">
-                                                <div class="form-check">
-                                                    <input id="item_{{item.name}}" class="form-check-input" type="radio" name="ranged_radios" value="{{item.name}}">
-                                                    <label for="item_{{item.name}}" class="form-check-label">{{ item.name }}</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
-                                                Cost: {{item.points}}
-                                            </div>
-                                            <div class="col-2 act">
-                                                Actions: {{item.actions}}
-                                            </div>
-                                            <div class="col-7 notes">
-                                                {{item.notes}}
-                                            </div>
-                                        </div>
-                                    {% endfor %}
+                            <!-- template ranged row -->
+                            <div id="template_ranged_row" class="row py-1 border ranged-row" hidden>
+                                <div class="col-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="ranged_radios">
+                                        <label class="form-check-label"></label>
+                                    </div>
                                 </div>
+                                <div class="col-1 pts"></div>
+                                <div class="col-2 act"></div>
+                                <div class="col-7 notes"></div>
+                            </div>
+                            <div id="ranged-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
+                                <div id="ranged-list" class="accordion-body"></div>
                             </div>
                           </div>
                         <div class="accordion-item">

@@ -250,7 +250,7 @@ function loadWeirdoCards(warband, saved=true) {
                 let weirdo_id = btn_elem.target.dataset.weirdo_id;
                 let warband_id = document.getElementById('warband_id').value;
                 let local_data = getLocalData();
-                let {i,j} = get_ids(warband_id, weirdo_id, local_data);
+                let {i,j} = get_ids(warband_id, weirdo_id, local_data); // get weirdo and warband id
                 // execute swap entries
                 if (j > -1 && i > -1) {
                     let warband = local_data['warbands'][i];
@@ -352,6 +352,8 @@ function loadWeirdoModal(wrdo, warband) {
 function wireSaveWeirdo() {
     document.getElementById('save_weirdo').removeEventListener('click', saveWeirdo);
     document.getElementById('save_weirdo').addEventListener('click', saveWeirdo);
+    document.getElementById('favorite_weirdo').removeEventListener('click', favoriteWeirdo);
+    document.getElementById('favorite_weirdo').addEventListener('click', favoriteWeirdo);
 }
 
 
@@ -495,20 +497,11 @@ function setModalWeirdoEquipArea() {
     return equip_points
 }
 
-
-
-function saveWeirdo() {
-    // get weirdo information from modal
-    let warband_id = document.getElementById('warband_id').value;
-    let weirdo_id = document.getElementById('weirdo_id').value;
-    let weirdo_name = document.getElementById('weirdo_name').value;
-    let copies = document.getElementById('weirdo_copies').value;
-    const weirdo = {
-        weirdo_id:weirdo_id,
-        name:weirdo_name,
-        copies:copies,
-    }
+function getWeirdoFormInfo() {
     // load attributes into weirdo
+    let weirdo = {
+        weirdo_name:document.getElementById('weirdo_name').value,
+    }
     for (const att of weirdo_attribute) {
         let s = document.getElementById(`${att}_select`);
         let item = s.options[s.selectedIndex].text;
@@ -536,6 +529,14 @@ function saveWeirdo() {
         }
     });
     weirdo['powers'] = powers;
+    return weirdo;
+}
+
+function saveWeirdo() {
+    let weirdo = getWeirdoFormInfo();
+    weirdo['copies'] = document.getElementById('weirdo_copies').value;
+    weirdo['weirdo_id'] = document.getElementById('weirdo_id').value;
+    weirdo['warband_id'] = document.getElementById('warband_id').value;
 
     // first load from local storage
     let warband = getWarband(warband_id);   
@@ -611,3 +612,14 @@ function saveNewWarband(weirdo=null) {
     localStorage.setItem('warbands', JSON.stringify(warband_data));
     window.location.href = '/warband/'+new_id; //redirect to new page
 }  
+
+// saves a favorited weirdo to the favorites local storage and then saves the weirdo.
+function favoriteWeirdo() {
+    // add favorited weirdo to local storage
+    let local_data = getLocalFavoriteData();
+    let weirdo = getWeirdoFormInfo();
+    local_data['favorites'].push(weirdo);
+    localStorage.setItem('favorites', JSON.stringify(local_data['favorites']));
+    // now save the weirdo as normal
+    saveWeirdo();
+}

@@ -1,4 +1,4 @@
-import {getLocalData, getWarbandPoints, sample_data} from './local_storage.js';
+import {getLocalData, getWarbandPoints} from './local_storage.js';
 import { deleteEventListeners } from './helpers.js';
 window.onload = function() {
     loadWarbandTable();

@@ -28,21 +28,13 @@
     <div class="col-2">
         <label for="warband_trait" class="form-label">Warband Trait&ensp;</label>
         <a tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Warband Traits" data-bs-content="{{warband.warband_traits_html}}" data-bs-html="true"><i class="bi bi-question-circle-fill"></i></a>
-        <select id="warband_trait" class="form-select">
-            {% for name, value in warband.warband_traits.items() %}
-                    <option value="{{name}}" data-text="{{value}}"">{{name}}</option>
-            {% endfor %}
-        </select>
+        <select id="warband_trait" class="form-select"></select>
     </div>
     <div class="col-2">
         <label for="leader_trait" class="form-label">Leader Trait&ensp;</label>
         <!-- tab index allows it to stay open -->
         <a tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Leader Traits" data-bs-content="{{warband.leader_traits_html}}" data-bs-html="true"><i class="bi bi-question-circle-fill"></i></a>
-        <select id="leader_trait" class="form-select">
-            {% for name, value in warband.leader_traits.items() %}
-                    <option value="{{name}}" data-text="{{value}}">{{name}}</option>
-            {% endfor %}
-        </select>
+        <select id="leader_trait" class="form-select"></select>
     </div>
 </div>
 <div class="row justify-content-center mb-2">
@@ -191,48 +183,23 @@
                 <div class="row g-3">
                     <div class="col-md-2">
                         <label for="speed_select" class="form-label">Speed</label>
-                        <select id="speed_select" class="form-select form-select-sm">
-                            <!-- name is the dice,  -->
-                            {% for num, cost in warband.speed_list.items() %}
-                                    <option value="{{cost}}" data-discount="{{cost}}">{{num}}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="speed_select" class="form-select form-select-sm"></select>
                     </div>
                     <div class="col-md-2">
                         <label for="defense_select" class="form-label">Defense</label>
-                        <select id="defense_select" class="form-select form-select-sm">
-                            <!-- name is the dice,  -->
-                            {% for die, cost in warband.defense_list.items() %}
-                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="defense_select" class="form-select form-select-sm"></select>
                     </div>
                     <div class="col-md-2">
                         <label for="firepower_select" class="form-label">Firepower</label>
-                        <select id="firepower_select" class="form-select form-select-sm">
-                            <!-- name is the dice,  -->
-                            {% for die, cost in warband.firepower_list.items() %}
-                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="firepower_select" class="form-select form-select-sm"></select>
                     </div>
                     <div class="col-md-2">
                         <label for="prowess_select" class="form-label">Prowess</label>
-                        <select id="prowess_select" class="form-select form-select-sm">
-                            <!-- name is the dice,  -->
-                            {% for die, cost in warband.prowess_list.items() %}
-                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="prowess_select" class="form-select form-select-sm"></select>
                     </div>
                     <div class="col-md-2">
                         <label for="willpower_select" class="form-label">Willpower</label>
-                        <select id="willpower_select" class="form-select form-select-sm">
-                            <!-- name is the dice,  -->
-                            {% for die, cost in warband.willpower_list.items() %}
-                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="willpower_select" class="form-select form-select-sm"></select>
                     </div>
                     <div id="copies_area" class="col-md-1">
                         <label for="weirdo_copies" class="form-label">Copies</label>

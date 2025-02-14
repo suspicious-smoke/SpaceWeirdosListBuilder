@@ -1,3 +1,4 @@
+import {warband_traits_html, leader_traits_html, warband_traits, leader_traits, speed, defense, firepower, prowess, willpower, melee_weapons, ranged_weapons, equipment, powers} from './formdata.js';
 import {getLocalData, getLocalFavoriteData, getWarband, getWarbandPoints, getWeirdo} from './local_storage.js';
 import {selectedSelect, resetSelect, fadeInOut, fUpper, deleteEventListeners, close_accordions} from './helpers.js';
 
@@ -7,6 +8,9 @@ window.onload = function() {
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
     
+    // populate dropdowns
+    dropdownSetup();
+
     loadWarband();
     setTraitText(); 
     // create new weirdo button
@@ -44,10 +48,35 @@ window.onload = function() {
         loadFavoritesTable();
     });
 
+
     // wire save warband button
     document.getElementById('warband_info').addEventListener('change', saveWarband);
     document.getElementById('weirdo_modal').addEventListener('change', updateWeirdoPoints);
 }
+
+function dropdownSetup() {
+    populateDropdown(document.getElementById('warband_trait'), warband_traits);
+    populateDropdown(document.getElementById('leader_trait'), leader_traits);
+    populateDropdown(document.getElementById('speed_select'), speed);
+    populateDropdown(document.getElementById('defense_select'), defense);
+    populateDropdown(document.getElementById('firepower_select'), firepower);
+    populateDropdown(document.getElementById('prowess_select'), prowess);
+    populateDropdown(document.getElementById('willpower_select'), willpower);
+    // populateDropdown(document.getElementById('melee_select'), melee_weapons);
+    // populateDropdown(document.getElementById('ranged_select'), ranged_weapons);
+    // populateDropdown(document.getElementById('equipment_select'), equipment);
+    // populateDropdown(document.getElementById('powers_select'), powers);
+}
+
+function populateDropdown(selectElement, data) {
+    for (const [name, value] of Object.entries(data)) {
+      const option = document.createElement('option');
+      option.value = name;
+      option.dataset.text = value;
+      option.textContent = name;
+      selectElement.appendChild(option);
+    }
+  }
 
 
 function saveWarband() {

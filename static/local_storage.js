@@ -40,7 +40,7 @@ function getLocalFavoriteData() {
     if (json_favorites != null) {
         return JSON.parse(json_favorites);
     }
-    return {};
+    return [];
 }
 
 

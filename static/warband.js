@@ -542,6 +542,7 @@ function saveWeirdo() {
     let weirdo = getWeirdoFormInfo();
     weirdo['copies'] = document.getElementById('weirdo_copies').value;
     weirdo['weirdo_id'] = document.getElementById('weirdo_id').value;
+    let weirdo_id = weirdo['weirdo_id'];
     let warband_id = document.getElementById('warband_id').value;
 
     // first load from local storage
@@ -625,6 +626,11 @@ function favoriteWeirdo() {
     let favorites_data = getLocalFavoriteData();
     let weirdo = getWeirdoFormInfo();
     weirdo['cost'] = document.querySelector('.weirdo_cost').getAttribute('data-points');
+    let newWeirdoId = 1;
+    if (favorites_data.length > 0) {
+        newWeirdoId = Math.max(...favorites_data.map(x => x.id))+1;
+    }
+    weirdo['id'] = newWeirdoId;
     favorites_data.push(weirdo);
     localStorage.setItem('favorites', JSON.stringify(favorites_data));
     // now save the weirdo as normal
@@ -634,23 +640,28 @@ function favoriteWeirdo() {
 // favorited_table
 
 function loadFavoritesTable() {
+    const warband_id = document.getElementById('warband_id').value;
+    let fav_notice = document.getElementById('fav-notice');
+    fav_notice.innerHTML = '';
+    document.getElementById('table_area').removeAttribute('hidden');
+    if (warband_id == 0) {
+        document.getElementById('table_area').setAttribute('hidden',true);
+        fav_notice.innerHTML = 'Please save your warband before adding favorites.';
+        return;
+    }
     let favorites_data = getLocalFavoriteData();
     let fav_table = document.getElementById('favorited_table').tBodies[0];
     deleteEventListeners('.delete_fav');
     deleteEventListeners('.add_fav');
-    const warband_id = document.getElementById('warband_id').value;
+    
     // clear table if has elements
     let tableBody = document.querySelector('#favorited_table tbody'); // Select the table body
     tableBody.innerHTML = ''; // Set the inner HTML to an empty string
 
-    // let table = document.getElementById("myTable");
-    // while (table.rows.length > 0) {
-    //     table.deleteRow(0);
-    // }
-
-
     if (favorites_data.length == 0) {
         document.getElementById('table_area').setAttribute('hidden',true);
+        fav_notice.innerHTML = 'No favorites set yet.';
+        return;
     }
     for(const favorite of favorites_data) {
         // build table rows
@@ -668,7 +679,8 @@ function loadFavoritesTable() {
 
         let addFavorite = document.createElement('button');
         addFavorite.setAttribute('data-warband_id',warband_id);
-        addFavorite.setAttribute('data-name',favorite['name']);
+        addFavorite.setAttribute('data-id',favorite['id']);
+        addFavorite.setAttribute('data-bs-dismiss',"modal"); // close modal
         addFavorite.classList.add('btn', 'btn-sm', 'btn-outline-secondary', 'ms-1', 'add_fav');
         addFavorite.innerHTML = `<i style="color:gold;" class="bi bi-star"></i>`;
         addFavorite.title = 'Add Favorite';
@@ -676,7 +688,7 @@ function loadFavoritesTable() {
 
         let deletebtn = document.createElement('button');
         deletebtn.setAttribute('data-warband_id',warband_id);
-        deletebtn.setAttribute('data-name',favorite['name']);
+        deletebtn.setAttribute('data-id',favorite['id']);
         deletebtn.classList.add('btn', 'btn-sm', 'btn-outline-secondary', 'ms-1', 'delete_fav');
         deletebtn.innerHTML = `<i style="color:darkred;" class="bi bi-trash"></i>`;
         deletebtn.title = 'Delete Warband';
@@ -690,11 +702,9 @@ function loadFavoritesTable() {
             if (!confirmed) {
                 return; // Prevent the default action (e.g., form submission)
               }
-            let weirdo_name = btn_elem.target.dataset.name; // delete based on name
+            let fav_id = btn_elem.target.dataset.id; // delete based on name
             let favorites_data = getLocalFavoriteData();
-            favorites_data.forEach(x => console.log(x['name'], x['name'] === weirdo_name));
-
-            const i = favorites_data.findIndex(x => x['name'] === weirdo_name); // get weirdo index
+            const i = favorites_data.findIndex(x => x['id'] == fav_id); // get weirdo index
             if (i>-1) {
                 // remove entry from favorite
                 favorites_data.splice(i,1);
@@ -705,21 +715,41 @@ function loadFavoritesTable() {
     });
 
 
-    // const duplicate_btns = document.querySelectorAll('.duplicate_warband');
-    // duplicate_btns.forEach(weirdo => {
-    //     weirdo.addEventListener('click', (btn_elem) => {
-    //         let warband_id = btn_elem.target.dataset.warband_id;
-    //         let local_data = getLocalData();
-    //         const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
-    //         let warband = {...local_data['warbands'][i]}; // copy warband   
-    //         // get the max id and increase it by 1
-    //         const newId = Math.max(...local_data['warbands'].map(x => x.warband_id))+1;
-    //         warband['warband_id'] = newId;
-    //         local_data['warbands'].push(warband);
-    //         localStorage.setItem('warbands', JSON.stringify(local_data));
-    //         location.reload(); // reload page
-    //     });
-    // });
+    const add_fav_btns = document.querySelectorAll('.add_fav');
+    add_fav_btns.forEach(weirdo => {
+        weirdo.addEventListener('click', (btn_elem) => {
+            let fav_id = btn_elem.target.dataset.id;
+            let favorites_data = getLocalFavoriteData();
+            const wi = favorites_data.findIndex(x => x['id'] == fav_id); // get fav index
+            if (wi<0) {
+                console.log('Error: Weirdo not found in favorites');
+                return; 
+            }
+
+            // remove entry from favorite
+            weirdo = favorites_data[wi]
+            weirdo['copies'] = 1; 
+            delete weirdo['id']; // remove fav id
+            loadFavoritesTable(); // reload table
+
+            // add weirdo to warband
+            let warband_id = btn_elem.target.dataset.warband_id;
+            let local_data = getLocalData();
+            const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
+            
+            // get the max id and increase it by 1
+            let newWeirdoId = 1;
+            if (local_data['warbands'][i]['weirdos'].length > 0) {
+                newWeirdoId = Math.max(...local_data['warbands'][i]['weirdos'].map(x => x.weirdo_id))+1;
+            }
+            weirdo['weirdo_id'] = newWeirdoId;
+            // push new weirdo to warband and save it
+            local_data['warbands'][i]['weirdos'].push(weirdo);
+            localStorage.setItem('warbands', JSON.stringify(local_data));
+            loadWeirdoCards(local_data['warbands'][i]); // reload weirdos
+
+        });
+    });
 
 
       

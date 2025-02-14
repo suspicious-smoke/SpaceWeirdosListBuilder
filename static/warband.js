@@ -663,6 +663,7 @@ function loadFavoritesTable() {
         fav_notice.innerHTML = 'No favorites set yet.';
         return;
     }
+    favorites_data.sort((a, b) => a.cost - b.cost);
     for(const favorite of favorites_data) {
         // build table rows
 

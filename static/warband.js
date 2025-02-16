@@ -65,9 +65,6 @@ function dropdownSetup() {
     populateAttribute(document.getElementById('prowess_select'), prowess);
     populateAttribute(document.getElementById('willpower_select'), willpower);
     loadSpecificDropDowns();
-    //  ranged_weapons
-    // equipment
-    // powers
 }
 
 

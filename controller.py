@@ -20,6 +20,32 @@ def print_warband_page(warband_id):
     _warband = Warband(warband_id)
     return make_response(render_template('print_warband.html', warband = _warband))
 
+# def get_weirdo_equipments():
+#     weirdo = request.get_json()
+#     m_weapon = None
+#     r_weapon = None
+#     equipment_list = []
+#     powers_list = []
+#     for m_wpn in melee_weapons:
+#         if m_wpn['name'] == weirdo['melee_weapon']:
+#             m_weapon = m_wpn
+
+#     for r_wpn in ranged_weapons:
+#         if r_wpn['name'] == weirdo['ranged_weapon']:
+#             r_weapon = r_wpn
+
+#     for eq in weirdo['equipment']:
+#         for list_eq in equipment:
+#             if eq == list_eq['name']:
+#                 equipment_list.append(list_eq)
+
+#     for pwr in weirdo['powers']:
+#         for list_pwr in powers:
+#             if pwr == list_pwr['name']:
+#                 powers_list.append(list_pwr)
+
+#     return jsonify({"melee_weapon": m_weapon, "ranged_weapon": r_weapon, "equipment_list": equipment_list, "powers_list": powers_list })
+
 
 # gets points and validation
 def warband_points():

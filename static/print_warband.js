@@ -1,5 +1,5 @@
-import {getWarband, getWarbandPoints, getWeirdoEquipmentInfo} from './local_storage.js';
-import { warband_traits, leader_traits } from './formdata.js';
+import { warband_traits, leader_traits, speed, defense, firepower, prowess, willpower, melee_weapons, ranged_weapons, equipment, powers} from './formdata.js';
+import { getWarband, getWarbandPoints } from './local_storage.js';
 window.onload = function() {
     
     const warband_id = document.getElementById('warband_id').value;
@@ -83,47 +83,64 @@ function loadWeirdoPrintCards(warband) {
                 new_card.querySelector(`.card-${att}`).innerHTML = weirdo[att];
             } 
             // card weapons
-            getWeirdoEquipmentInfo(weirdo).then((data) => {
-                let melee = data.melee_weapon;
-                new_card.querySelector('.m_name').innerHTML = melee.name;
-                new_card.querySelector('.m_action').innerHTML = 'act: '+ melee.actions;
-                new_card.querySelector('.m_notes').innerHTML = melee.notes;
+            
+            let melee = melee_weapons.find(weapon => weapon.name === weirdo['melee_weapon']);
+            new_card.querySelector('.m_name').innerHTML = melee.name;
+            new_card.querySelector('.m_action').innerHTML = 'act: '+ melee.actions;
+            new_card.querySelector('.m_notes').innerHTML = melee.notes;
 
-                
-                if (weirdo['firepower'] != 0) {
-                    let ranged = data.ranged_weapon;
-                    new_card.querySelector('.r_name').innerHTML = ranged.name;
-                    new_card.querySelector('.r_action').innerHTML = 'act: '+ ranged.actions;
-                    new_card.querySelector('.r_notes').innerHTML = ranged.notes;
-                } else {
-                    new_card.querySelector('.ranged_weapon').setAttribute("hidden", true);
+            
+            if (weirdo['firepower'] != 0) {
+                let ranged = ranged_weapons.find(weapon => weapon.name === weirdo['ranged_weapon']);
+                new_card.querySelector('.r_name').innerHTML = ranged.name;
+                new_card.querySelector('.r_action').innerHTML = 'act: '+ ranged.actions;
+                new_card.querySelector('.r_notes').innerHTML = ranged.notes;
+            } else {
+                new_card.querySelector('.ranged_weapon').setAttribute("hidden", true);
+            }
+            // items
+            let equipment_area = new_card.querySelector('.equipment_area');
+            
+            // Get list of equipment
+            let equipment_list =  [];
+            weirdo.equipment.forEach(eq => {
+                const matchingEquipment = equipment.find(list_eq => list_eq.name === eq);
+                if (matchingEquipment) {
+                    equipment_list.push(matchingEquipment);
                 }
-                // items
-                let equipment_area = new_card.querySelector('.equipment_area');
-                var items_list = data.equipment_list.concat(data.powers_list);
-
-
-                if (items_list.length == 0) {
-                    equipment_area.innerHTML = '&ensp;-'
-                } else {
-                    
-                    for (const item of items_list) {
-                        let template_item = new_card.querySelector('#item_template');
-                        let item_card = template_item.cloneNode(true); // clear out events
-                        let hide_long = ['Effect', 'Attack', 'Action']
-                        item_card.removeAttribute("hidden");
-                        item_card.removeAttribute("id");
-                        item_card.querySelector('.name').innerHTML = `${item.name}`;
-                        if (document.getElementById('eq_desc').checked && hide_long.includes(item.type) && item.notes.length > 70) {
-                            item_card.querySelector('.notes').innerHTML = `(${item.type}) Information on how to use in book.` //item.notes.slice(0, 70) + "...";
-                        } else {
-                            item_card.querySelector('.notes').innerHTML = `(${item.type})  ${item.notes}`;
-                        }
-                        equipment_area.appendChild(item_card)
-                    }
-                }
-
             });
+
+            // get list of powers
+            let powers_list = [];
+            weirdo.powers.forEach(pwr => {
+                const matchingPower = powers.find(list_pwr => list_pwr.name === pwr);
+                if (matchingPower) {
+                    powers_list.push(matchingPower);
+                }
+            });
+
+            // combine powers and equipment to one list
+            let items_list = equipment_list.concat(powers_list);
+
+            if (items_list.length == 0) {
+                equipment_area.innerHTML = '&ensp;-'
+            } else {
+                for (const item of items_list) {
+                    let template_item = new_card.querySelector('#item_template');
+                    let item_card = template_item.cloneNode(true); // clear out events
+                    let hide_long = ['Effect', 'Attack', 'Action']
+                    item_card.removeAttribute("hidden");
+                    item_card.removeAttribute("id");
+                    item_card.querySelector('.name').innerHTML = `${item.name}`;
+                    if (document.getElementById('eq_desc').checked && hide_long.includes(item.type) && item.notes.length > 70) {
+                        item_card.querySelector('.notes').innerHTML = `(${item.type}) Information on how to use in book.` //item.notes.slice(0, 70) + "...";
+                    } else {
+                        item_card.querySelector('.notes').innerHTML = `(${item.type})  ${item.notes}`;
+                    }
+                    equipment_area.appendChild(item_card)
+                }
+            }
+
             card_container.appendChild(new_card);
         }
     });

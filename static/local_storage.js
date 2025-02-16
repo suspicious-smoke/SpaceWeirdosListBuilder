@@ -48,28 +48,5 @@ function getWeirdo(warband_id, weirdo_id) {
     return warband['weirdos'].find(x => x.weirdo_id == weirdo_id);
 }
 
-
-async function getWeirdoEquipmentInfo(weirdo) {
-    // call controller
-    try {
-        const response = await fetch(equip_url,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json", // Specify JSON format is being sent in body
-                },
-                body: JSON.stringify(weirdo), // Convert the model object to a JSON string
-            });
-        if (!response.ok) {
-            throw new Error("Network response was not ok " + response.statusText);
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("Fetch error:", error); // Handle errors
-    }
-}
-
-
-export {getLocalData, getLocalFavoriteData, getWarband, getWarbandPoints, getWeirdo, getWeirdoEquipmentInfo };
+export {getLocalData, getLocalFavoriteData, getWarband, getWarbandPoints, getWeirdo };
 

@@ -64,8 +64,7 @@ function loadWarbandTable() {
 
 
         let printbtn = document.createElement('a');
-        printbtn.setAttribute('href',"/print_warband/"+warband_id);
-        // <a href="{{ url_for('print_warband_page', warband_id=warband.warband_id) }}" target="_blank" class="btn btn-secondary ms-3">Print Warband</a>
+        printbtn.setAttribute('href',`/print_warband?warband_id=${warband_id}`);
         printbtn.classList.add('btn', 'btn-sm', 'btn-outline-secondary', 'ms-1', 'print_warband');
         printbtn.innerHTML = `<i class="text-primary bi bi-printer"></i>`;
         printbtn.target = '_blank'

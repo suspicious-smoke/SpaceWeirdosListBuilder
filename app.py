@@ -10,7 +10,6 @@ def create_app():
     # load up and connect each webpage to their views
     _app.add_url_rule("/", view_func=controller.home_page, methods=["GET"])
     _app.add_url_rule("/warband/<int:warband_id>", view_func=controller.warband_page, methods=["GET"])
-    _app.add_url_rule("/get_warband_points/", view_func=controller.warband_points, methods=["POST"])
     _app.add_url_rule("/print_warband/<int:warband_id>", view_func=controller.print_warband_page, methods=["GET"])
     return _app
 

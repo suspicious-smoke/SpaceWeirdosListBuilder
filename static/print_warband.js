@@ -1,5 +1,5 @@
-import {getWarband, getWarbandPoints, getTraitsText, getWeirdoEquipmentInfo} from './local_storage.js';
-
+import {getWarband, getWarbandPoints, getWeirdoEquipmentInfo} from './local_storage.js';
+import { warband_traits, leader_traits } from './formdata.js';
 window.onload = function() {
     
     const warband_id = document.getElementById('warband_id').value;
@@ -9,10 +9,10 @@ window.onload = function() {
     document.getElementById('warband_trait').innerHTML =  '['+warband.warband_trait+']';
     document.getElementById('leader_trait').innerHTML =  '['+warband.leader_trait+']';
 
-    getTraitsText(warband.warband_trait, warband.leader_trait).then(data => {
-        document.getElementById('warband_trait_text').innerHTML = data.wt_text;
-        document.getElementById('leader_trait_text').innerHTML = data.lt_text;
-    });
+    document.getElementById('warband_trait_text').innerHTML = warband_traits[warband.warband_trait];
+    document.getElementById('leader_trait_text').innerHTML = leader_traits[warband.leader_trait];
+
+
     loadWeirdoPrintCards(warband); 
     document.getElementById('one_col_print').checked = false;
     document.getElementById('one_col_print').addEventListener('click', (checkbox) => {

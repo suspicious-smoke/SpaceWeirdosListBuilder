@@ -20,21 +20,6 @@ def print_warband_page(warband_id):
     _warband = Warband(warband_id)
     return make_response(render_template('print_warband.html', warband = _warband))
 
-
-def get_trait_text():
-    traits = request.get_json()
-    wt_text = ''
-    lt_text = ''
-    for key, value in warband_traits.items():
-        if key == traits[0]:
-            wt_text = value
-
-    for key, value in leader_traits.items():
-        if key == traits[1]:
-            lt_text = value
-    return jsonify({"wt_text": wt_text, "lt_text": lt_text})
-
-
 def get_weirdo_equipments():
     weirdo = request.get_json()
     m_weapon = None

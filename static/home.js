@@ -42,7 +42,7 @@ function loadWarbandTable() {
 
         let buttons = row.insertCell(4);
         let editbtn = document.createElement('a');
-        editbtn.setAttribute('href',"/warband/"+warband_id);
+        editbtn.setAttribute('href',`/warband?warband_id=${warband_id}`);
         editbtn.classList.add('btn', 'btn-sm', 'btn-outline-secondary');
         editbtn.innerHTML = `<i style="color:darkgreen;" class="bi bi-pencil-square"></i>`;
         editbtn.title = 'Edit Warband';

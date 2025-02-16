@@ -1,19 +1,30 @@
 import os
 from flask import Flask
-import controller
-
+from flask import render_template, request
 
 def create_app():
     _app = Flask(__name__)
     _app.config.from_object("settings")  # Loads the settings from settings.py
 
-    # load up and connect each webpage to their views
-    _app.add_url_rule("/", view_func=controller.home_page, methods=["GET"])
-    _app.add_url_rule("/warband/<int:warband_id>", view_func=controller.warband_page, methods=["GET"])
-    _app.add_url_rule("/print_warband/<int:warband_id>", view_func=controller.print_warband_page, methods=["GET"])
+    @_app.route("/")
+    def home_page():
+        return render_template('home.html')
+
+    @_app.route("/warband")
+    def warband_page():
+        warband_id = request.args.get("warband_id", default=0, type=int)
+        return render_template("warband.html", warband_id=warband_id)
+
+    @_app.route("/print_warband")
+    def print_warband_page():
+        warband_id = request.args.get("warband_id", default=0, type=int)
+        return render_template("print_warband.html", warband_id=warband_id)
+
     return _app
 
+
 app = create_app()
+
 
 if __name__ == "__main__":
     port = app.config.get("PORT", 5000)

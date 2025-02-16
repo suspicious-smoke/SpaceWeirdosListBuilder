@@ -720,7 +720,7 @@ function saveNewWarband(weirdo=null) {
     }
     warband_data['warbands'].push(new_warband);
     localStorage.setItem('warbands', JSON.stringify(warband_data));
-    window.location.href = '/warband/'+new_id; //redirect to new page
+    window.location.href = `/warband?warband_id=${new_id}`; //redirect to new page
 }  
 
 // saves a favorited weirdo to the favorites local storage and then saves the weirdo.

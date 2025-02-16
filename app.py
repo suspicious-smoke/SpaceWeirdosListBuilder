@@ -12,9 +12,6 @@ def create_app():
     _app.add_url_rule("/warband/<int:warband_id>", view_func=controller.warband_page, methods=["GET"])
     _app.add_url_rule("/get_warband_points/", view_func=controller.warband_points, methods=["POST"])
     _app.add_url_rule("/print_warband/<int:warband_id>", view_func=controller.print_warband_page, methods=["GET"])
-    _app.add_url_rule("/get_equipment_values/", view_func=controller.get_weirdo_equipments, methods=["POST"])
-    # _app.add_url_rule("/get_weirdo/<int:warband_id>/<int:weirdo_id>",view_func=controller.get_weirdo, methods=["GET", "POST"])
-    # _app.add_url_rule("/create-warband", view_func=controller.warband_create_page, methods=["GET", "POST"])
     return _app
 
 app = create_app()

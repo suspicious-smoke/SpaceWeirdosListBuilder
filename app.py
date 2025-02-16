@@ -9,15 +9,15 @@ def create_app():
     def home_page():
         return render_template('home.html')
 
-    @_app.route("/warband")
+    @_app.route("/warband/")
     def warband_page():
-        warband_id = request.args.get("warband_id", default=0, type=int)
-        return render_template("warband.html", warband_id=warband_id)
+        # warband_id = request.args.get("warband_id", default=0, type=int)
+        return render_template("warband.html") #, warband_id=warband_id)
 
-    @_app.route("/print_warband")
+    @_app.route("/print_warband/")
     def print_warband_page():
-        warband_id = request.args.get("warband_id", default=0, type=int)
-        return render_template("print_warband.html", warband_id=warband_id)
+        # warband_id = request.args.get("warband_id", default=0, type=int)
+        return render_template("print_warband.html") #, warband_id=warband_id)
 
     return _app
 

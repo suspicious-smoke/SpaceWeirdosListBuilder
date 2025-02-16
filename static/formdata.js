@@ -1,5 +1,4 @@
-# uses python 3.11.2
-warband_traits = {
+const warband_traits = {
 'No Trait': '',
  'Cyborgs': 'All members of the Warband can purchase 1 additional piece of equipment.',
  'Fanatics': 'Roll Willpower with +1DT for all rolls except Psychic Powers.',
@@ -10,7 +9,7 @@ warband_traits = {
  'Undead': 'A second staggered condition does not take models in thisWarband out of action.'
 }
 
-leader_traits = {
+const leader_traits = {
   'No Trait': '',
   'Bounty Hunter': 'Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action.',
   'Healer': 'During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT.' ,
@@ -21,13 +20,13 @@ leader_traits = {
   'Tactician': '+1DT to Initiative rolls.'
 }
 
-speed={"1": 0, "2": 1, "3": 3 }
-defense={"2d6": 2, "2d8": 4, "2d10": 8}
-firepower={"0": 0, "2d8": 2, "2d10": 4}
-prowess={"2d6": 2, "2d8": 4, "2d10": 6}
-willpower={"2d6": 2, "2d8": 4, "2d10": 6}
+const speed={"1": 0, "2": 1, "3": 3 }
+const defense={"2d6": 2, "2d8": 4, "2d10": 8}
+const firepower={"0": 0, "2d8": 2, "2d10": 4}
+const prowess={"2d6": 2, "2d8": 4, "2d10": 6}
+const willpower={"2d6": 2, "2d8": 4, "2d10": 6}
 
-melee_weapons = [
+const melee_weapons = [
     {'name':'Unarmed', 'actions':'3', 'notes':'-1DT to Prw rolls', 'points':0},
     {'name':'Claws & Teeth', 'actions':'3', 'notes':'-', 'points':2},
     {'name':'Horrible Claws & Teeth', 'actions':'3', 'notes':'+1 to Under Attack rolls', 'points':3},
@@ -38,7 +37,7 @@ melee_weapons = [
     {'name':'Whip/Tail', 'actions':'2', 'notes':'Can target enemies up to 1 stick away', 'points':2}
 ]
 
-ranged_weapons = [
+const ranged_weapons = [
     {'name':'Auto Pistol', 'actions':'3', 'notes':'-1DT range > 1 stick', 'points':0},
     {'name':'Heavy Pistol', 'actions':'2', 'notes':'+1 to Under Fire rolls, -1DT past 1 stick', 'points':1},
     {'name':'Energy Pistol', 'actions':'3', 'notes':'Reroll FP rolls of 1, -1DT range > 1 stick', 'points':2},
@@ -52,18 +51,7 @@ ranged_weapons = [
     {'name':'Auto-Cannon', 'actions':'3', 'notes':'Reroll FP rolls of 1 or 2', 'points':3},
 ]
 
-leader_traits = {
-  'No Trait': '',
-  'Bounty Hunter': 'Once per round, when a model from your warband is touching a down or staggered enemy, it can take a Use Item action to make the enemy model out of action.',
-  'Healer': 'During the Initiative Phase, one of your models within one stick of your leader may make a free Stand or Recover action with +1DT.' ,
-  'Majestic': 'Any time one of your warband has to make a Willpower roll, that model may use the Leader’s Willpower instead.',
-  'Monstrous': 'Non-Leader models must win a Willpower roll vs. your leader to move into contact.',
-  'Political Officer': 'During the Initiative Phase, before rolling, take one of your Warband within LOS of your leader out of action to make all other models in the Warband ready, remove the broken condition from your warband, and gain +1DT to this Initiative roll.',
-  'Sorcerer': 'Psychic Powers actions cost 1 action instead of 2, but may still only use 1 per turn.',
-  'Tactician': '+1DT to Initiative rolls.'
-}
-
-equipment = [
+const equipment = [
   {'name': 'Cybernetics', 'type': 'Passive', 'notes': '+1 to Prw rolls', 'points': 1},
   {'name': 'Psychic Focus', 'type': 'Passive', 'notes': '+1 to Will rolls', 'points': 1},
   {'name': 'Targeting Reticule', 'type': 'Passive', 'notes': '+1 to FP rolls', 'points': 1},
@@ -74,7 +62,7 @@ equipment = [
   {'name': 'Stealth Suit', 'type': 'Passive', 'notes': 'If this model’s base touches a piece of terrain, enemy models do not have LoS unless they are within 1 stick of the stealthy model', 'points': 2}
 ]
 
-powers = [
+const powers = [
   {"name": "Fear", "type": "Attack", 'notes': "Each enemy model within 1 stick who loses its opposed Will roll must move 1 stick away from the psychic.", "points": 1},
   {"name": "Healing", "type": "Effect", 'notes': "1 model within 1 stick of this model and in LoS becomes ready.", "points": 1},
   {"name": "Meat Puppet", "type": "Effect", 'notes': "Return 1 OoA model to the table and place within 1 stick of the psychic. The returned model’s Spd is reduced by 1 (min 1), and rolls with -1DT for all rolls. A model can only be returned to the table once.", "points": 2},
@@ -85,25 +73,14 @@ powers = [
   {"name": "Teleport", "type": "Effect", 'notes': "Place the psychic anywhere on the board.", "points": 1}
 ]
 
+const warband_traits_html = Object.entries(warband_traits)
+    .slice(1) // Skip the first entry 
+    .map(([key, value]) => `<b>${key}</b>: ${value}`) // Format each key-value pair
+    .join("<br><br>"); // Join with <br><br>
 
-class Warband:
-    def __init__(self, warband_id):
-        self.warband_id = warband_id
-        self.warband_traits = warband_traits # fill the warband traits
-        self.leader_traits = leader_traits
-        # lists for weirdo selections
-        self.speed_list = speed
-        self.defense_list = defense
-        self.firepower_list = firepower
-        self.prowess_list = prowess
-        self.willpower_list = willpower
-        
-        # weapons
-        self.ranged_weapons = ranged_weapons
-        self.melee_weapons = melee_weapons
-        self.equipment = equipment
-        self.powers = powers
+const leader_traits_html = Object.entries(leader_traits)
+    .slice(1) // Skip the first entry 
+    .map(([key, value]) => `<b>${key}</b>: ${value}`) // Format each key-value pair
+    .join("<br><br>"); // Join with <br><br>
 
-        self.warband_traits_html = '<br><br>'.join(f'<b>{key}</b>: {value}' for key, value in list(warband_traits.items())[1:])
-        self.leader_traits_html = '<br><br>'.join(f'<b>{key}</b>: {value}' for key, value in list(leader_traits.items())[1:])
-        
+export {warband_traits_html, leader_traits_html, warband_traits, leader_traits, speed, defense, firepower, prowess, willpower, melee_weapons, ranged_weapons, equipment, powers};

@@ -5,16 +5,13 @@
 <script type="module" media="all" src="/static/print_warband.js"></script>
 <link href="/static/print_warband.css" rel="stylesheet">
 <script>
-    const points_url = "{{url_for('warband_points')}}";
-    const traits_url = "{{url_for('get_trait_text')}}";
-    const equip_url = "{{url_for('get_weirdo_equipments')}}";
     const weirdo_attribute = [
         'speed','defense','firepower','prowess','willpower'
     ];
  </script>
 
 
-<input hidden id="warband_id" value={{warband.warband_id}}>
+<input hidden id="warband_id" value={{warband_id}}>
 <div class="d-print-none mb-4">
     <h1 class="display-10 fw-bold text-center">Print Warband Page</h1>
     <div class="row justify-content-center">

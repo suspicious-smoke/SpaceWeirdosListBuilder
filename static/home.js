@@ -1,4 +1,4 @@
-import {getLocalData, getWarbandPoints, sample_data} from './local_storage.js';
+import {getLocalData, getWarbandPoints} from './local_storage.js';
 import { deleteEventListeners } from './helpers.js';
 window.onload = function() {
     loadWarbandTable();
@@ -42,7 +42,7 @@ function loadWarbandTable() {
 
         let buttons = row.insertCell(4);
         let editbtn = document.createElement('a');
-        editbtn.setAttribute('href',"/warband/"+warband_id);
+        editbtn.setAttribute('href',`/warband?warband_id=${warband_id}`);
         editbtn.classList.add('btn', 'btn-sm', 'btn-outline-secondary');
         editbtn.innerHTML = `<i style="color:darkgreen;" class="bi bi-pencil-square"></i>`;
         editbtn.title = 'Edit Warband';
@@ -64,8 +64,7 @@ function loadWarbandTable() {
 
 
         let printbtn = document.createElement('a');
-        printbtn.setAttribute('href',"/print_warband/"+warband_id);
-        // <a href="{{ url_for('print_warband_page', warband_id=warband.warband_id) }}" target="_blank" class="btn btn-secondary ms-3">Print Warband</a>
+        printbtn.setAttribute('href',`/print_warband?warband_id=${warband_id}`);
         printbtn.classList.add('btn', 'btn-sm', 'btn-outline-secondary', 'ms-1', 'print_warband');
         printbtn.innerHTML = `<i class="text-primary bi bi-printer"></i>`;
         printbtn.target = '_blank'

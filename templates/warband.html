@@ -7,8 +7,7 @@
 
 <!-- New Weirdo Button -->
  <script>
-    const new_warband_url = "{{url_for('warband_page', warband_id=0)}}";
-    const points_url = "{{url_for('warband_points')}}";
+    const new_warband_url = "{{ url_for('warband_page', warband_id=0) }}";
     const weirdo_attribute = [
         'speed','defense','firepower','prowess','willpower'
     ];
@@ -27,22 +26,14 @@
     </div>
     <div class="col-2">
         <label for="warband_trait" class="form-label">Warband Trait&ensp;</label>
-        <a tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Warband Traits" data-bs-content="{{warband.warband_traits_html}}" data-bs-html="true"><i class="bi bi-question-circle-fill"></i></a>
-        <select id="warband_trait" class="form-select">
-            {% for name, value in warband.warband_traits.items() %}
-                    <option value="{{name}}" data-text="{{value}}"">{{name}}</option>
-            {% endfor %}
-        </select>
+        <a id="html_warband_traits" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Warband Traits" data-bs-html="true"><i class="bi bi-question-circle-fill"></i></a>
+        <select id="warband_trait" class="form-select"></select>
     </div>
     <div class="col-2">
         <label for="leader_trait" class="form-label">Leader Trait&ensp;</label>
         <!-- tab index allows it to stay open -->
-        <a tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Leader Traits" data-bs-content="{{warband.leader_traits_html}}" data-bs-html="true"><i class="bi bi-question-circle-fill"></i></a>
-        <select id="leader_trait" class="form-select">
-            {% for name, value in warband.leader_traits.items() %}
-                    <option value="{{name}}" data-text="{{value}}">{{name}}</option>
-            {% endfor %}
-        </select>
+        <a id="html_leader_traits" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Leader Traits"  data-bs-html="true"><i class="bi bi-question-circle-fill"></i></a>
+        <select id="leader_trait" class="form-select"></select>
     </div>
 </div>
 <div class="row justify-content-center mb-2">
@@ -58,13 +49,13 @@
             <span class="">Total Points: </span>
             <span id="total_cost">0</span>
     </div> 
-    <button id="create_weirdo" type="button" class="btn btn-primary ms-3" data-warband_id={{warband.warband_id}} data-bs-toggle="modal" data-bs-target="#weirdo_modal">Create Weirdo</button>
-    <button id="fav_weirdo_list_btn" type="button" class="btn btn-success ms-3" data-warband_id={{warband.warband_id}} data-bs-toggle="modal" data-bs-target="#fav_weirdo_list_modal"><i style="color:gold;" class="bi bi-star"></i> Add a Favorited Weirdo</button>
-    <a href="{{ url_for('print_warband_page', warband_id=warband.warband_id) }}" target="_blank" class="btn btn-secondary ms-3">Print Warband</a>
+    <button id="create_weirdo" type="button" class="btn btn-primary ms-3" data-warband_id="{{warband_id}}" data-bs-toggle="modal" data-bs-target="#weirdo_modal">Create Weirdo</button>
+    <button id="fav_weirdo_list_btn" type="button" class="btn btn-success ms-3" data-warband_id="{{warband_id}}" data-bs-toggle="modal" data-bs-target="#fav_weirdo_list_modal"><i style="color:gold;" class="bi bi-star"></i> Add a Favorited Weirdo</button>
+    <a href="{{ url_for('print_warband_page', warband_id=warband_id) }}" target="_blank" class="btn btn-secondary ms-3">Print Warband</a>
     <div id="save_alert" class="p-1 float alert alert-success d-flex mb-0 ms-3" style="opacity: 0; width: fit-content" role="alert">saved warband</div>
 </div>
 
-<input hidden id="warband_id" value={{warband.warband_id}}>
+<input hidden id="warband_id" value={{warband_id}}>
 <!-- this will fill with the weirdo cards from warband.js -->
 <div id="weirdo_cards" class="row"></div>
 <div id="card_template" class="mt-3 col-sm-6 weirdo_card" hidden>
@@ -191,48 +182,23 @@
                 <div class="row g-3">
                     <div class="col-md-2">
                         <label for="speed_select" class="form-label">Speed</label>
-                        <select id="speed_select" class="form-select form-select-sm">
-                            <!-- name is the dice,  -->
-                            {% for num, cost in warband.speed_list.items() %}
-                                    <option value="{{cost}}" data-discount="{{cost}}">{{num}}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="speed_select" class="form-select form-select-sm"></select>
                     </div>
                     <div class="col-md-2">
                         <label for="defense_select" class="form-label">Defense</label>
-                        <select id="defense_select" class="form-select form-select-sm">
-                            <!-- name is the dice,  -->
-                            {% for die, cost in warband.defense_list.items() %}
-                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="defense_select" class="form-select form-select-sm"></select>
                     </div>
                     <div class="col-md-2">
                         <label for="firepower_select" class="form-label">Firepower</label>
-                        <select id="firepower_select" class="form-select form-select-sm">
-                            <!-- name is the dice,  -->
-                            {% for die, cost in warband.firepower_list.items() %}
-                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="firepower_select" class="form-select form-select-sm"></select>
                     </div>
                     <div class="col-md-2">
                         <label for="prowess_select" class="form-label">Prowess</label>
-                        <select id="prowess_select" class="form-select form-select-sm">
-                            <!-- name is the dice,  -->
-                            {% for die, cost in warband.prowess_list.items() %}
-                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="prowess_select" class="form-select form-select-sm"></select>
                     </div>
                     <div class="col-md-2">
                         <label for="willpower_select" class="form-label">Willpower</label>
-                        <select id="willpower_select" class="form-select form-select-sm">
-                            <!-- name is the dice,  -->
-                            {% for die, cost in warband.willpower_list.items() %}
-                                    <option value="{{cost}}" data-discount="{{cost}}">{{die}}</option>
-                            {% endfor %}
-                        </select>
+                        <select id="willpower_select" class="form-select form-select-sm"></select>
                     </div>
                     <div id="copies_area" class="col-md-1">
                         <label for="weirdo_copies" class="form-label">Copies</label>
@@ -253,29 +219,22 @@
                                 <div class="col-4" id="e-melee-notes"></div>
                             </button>
                           </h2>
-                          <div id="melee-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
-                            <div class="accordion-body">
-                                {% for item in warband.melee_weapons %}
-                                    <div class="row py-1 border melee-row">
-                                        <div class="col-3">
-                                            <div class="form-check">
-                                                <input id="item_{{item.name}}" class="form-check-input" type="radio" name="melee_radios" value="{{item.name}}">
-                                                <label for="item_{{item.name}}" class="form-check-label">{{ item.name }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
-                                            Cost: {{item.points}}
-                                        </div>
-                                        <div class="col-2 act">
-                                            Actions: {{item.actions}}
-                                        </div>
-                                        <div class="col-4 notes">
-                                            {{item.notes}}
-                                        </div>
-                                    </div>
-                                {% endfor %}
+                        <!-- template melee row -->
+                        <div id="template_melee_row" class="row py-1 border melee-row" hidden>
+                            <div class="col-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="melee_radios">
+                                    <label class="form-check-label"></label>
+                                </div>
                             </div>
-                          </div>
+                            <div class="col-1 pts"></div>
+                            <div class="col-2 act"></div>
+                            <div class="col-4 notes"></div>
+                        </div>
+                        <div id="melee-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading"
+                            data-bs-parent="#melee-weapon-list">
+                            <div id="melee-list" class="accordion-body"></div>
+                        </div>
                         </div>
                         
                         <div class="accordion-item" id="ranged-weapons-list"> <!-- add hidden here to hide ranged weapons -->
@@ -288,28 +247,20 @@
                                     <div class="col-4" id="e-ranged-notes"></div>
                               </button>
                             </h2>
-                            <div id="ranged-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
-                                <div class="accordion-body">
-                                    {% for item in warband.ranged_weapons %}
-                                        <div class="row py-1 border ranged-row">
-                                            <div class="col-2">
-                                                <div class="form-check">
-                                                    <input id="item_{{item.name}}" class="form-check-input" type="radio" name="ranged_radios" value="{{item.name}}">
-                                                    <label for="item_{{item.name}}" class="form-check-label">{{ item.name }}</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
-                                                Cost: {{item.points}}
-                                            </div>
-                                            <div class="col-2 act">
-                                                Actions: {{item.actions}}
-                                            </div>
-                                            <div class="col-7 notes">
-                                                {{item.notes}}
-                                            </div>
-                                        </div>
-                                    {% endfor %}
+                            <!-- template ranged row -->
+                            <div id="template_ranged_row" class="row py-1 border ranged-row" hidden>
+                                <div class="col-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="ranged_radios">
+                                        <label class="form-check-label"></label>
+                                    </div>
                                 </div>
+                                <div class="col-1 pts"></div>
+                                <div class="col-2 act"></div>
+                                <div class="col-7 notes"></div>
+                            </div>
+                            <div id="ranged-collapse" class="accordion-collapse collapse" aria-labelledby="weapon-heading" data-bs-parent="#melee-weapon-list">
+                                <div id="ranged-list" class="accordion-body"></div>
                             </div>
                           </div>
                         <div class="accordion-item">
@@ -318,28 +269,20 @@
                               <div class="col-3">Equipment:</div><div class="col-8" id="equipments-area"></div>
                             </button>
                           </h2>
-                          <div id="equipment-collapse" class="accordion-collapse collapse" aria-labelledby="equipment-heading" data-bs-parent="#melee-weapon-list">
-                            <div class="accordion-body">
-                                {% for item in warband.equipment %}
-                                    <div class="row py-1 border equip-row">
-                                        <div class="col-2">
-                                            <div class="form-check">
-                                                <input id="item_{{item.name}}" class="form-check-input" type="checkbox" name="equipment_checkbox" value="{{item.name}}">
-                                                <label for="item_{{item.name}}" class="form-check-label">{{ item.name }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-1 pts" value = {{item.points}} data-discount = {{item.points}}>
-                                            Cost: {{item.points}}
-                                        </div>
-                                        <div class="col-1">
-                                            {{item.type}}
-                                        </div>
-                                        <div class="col-8">
-                                            {{item.notes}}
-                                        </div>
-                                    </div>
-                                {% endfor %}
+                            <!-- template equipment row -->
+                          <div id="template_equipment_row" class="row py-1 border equip-row" hidden>
+                            <div class="col-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="equipment_checkbox">
+                                    <label class="form-check-label"></label>
+                                </div>
                             </div>
+                            <div class="col-1 pts"></div>
+                            <div class="col-1 type"></div>
+                            <div class="col-7 notes"></div>
+                        </div>
+                          <div id="equipment-collapse" class="accordion-collapse collapse" aria-labelledby="equipment-heading" data-bs-parent="#melee-weapon-list">
+                            <div id="equipment-list" class="accordion-body"></div>
                           </div>
                         </div>
                         <div class="accordion-item">
@@ -348,28 +291,20 @@
                                 <div class="col-3">Powers:</div><div class="col-8" id="powers-area"></div>
                               </button>
                             </h2>
+                            <!-- template powers row -->
+                            <div id="template_powers_row" class="row py-1 border" hidden>
+                                <div class="col-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="powers_checkbox">
+                                        <label class="form-check-label"></label>
+                                    </div>
+                                </div>
+                                <div class="col-1 pts"></div>
+                                <div class="col-1 type"></div>
+                                <div class="col-7 notes"></div>
+                            </div>
                             <div id="powers-collapse" class="accordion-collapse collapse" aria-labelledby="powers-heading" data-bs-parent="#melee-weapon-list">
-                              <div class="accordion-body">
-                                  {% for item in warband.powers %}
-                                      <div class="row py-1 border">
-                                          <div class="col-2">
-                                              <div class="form-check">
-                                                  <input id="item_{{item.name}}" class="form-check-input" type="checkbox" name="powers_checkbox" value="{{item.name}}">
-                                                  <label for="item_{{item.name}}" class="form-check-label">{{ item.name }}</label>
-                                              </div>
-                                          </div>
-                                          <div class="col-1 pts" value = {{item.points}}>
-                                              Cost: {{item.points}}
-                                          </div>
-                                          <div class="col-1">
-                                              {{item.type}}
-                                          </div>
-                                          <div class="col-7">
-                                            {{item.notes}}
-                                        </div>
-                                      </div>
-                                  {% endfor %}
-                              </div>
+                              <div id="powers-list" class="accordion-body"></div>
                             </div>
                           </div>
                       </div>

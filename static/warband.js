@@ -1,19 +1,26 @@
+import {warband_traits_html, leader_traits_html, warband_traits, leader_traits, speed, defense, firepower, prowess, willpower, melee_weapons, ranged_weapons, equipment, powers} from './formdata.js';
 import {getLocalData, getLocalFavoriteData, getWarband, getWarbandPoints, getWeirdo} from './local_storage.js';
 import {selectedSelect, resetSelect, fadeInOut, fUpper, deleteEventListeners, close_accordions} from './helpers.js';
 
 // on warband page load
 window.onload = function() {
     // setup popovers
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById('warband_id').value = urlParams.get('warband_id');
+    document.getElementById('html_warband_traits').setAttribute('data-bs-content', warband_traits_html);
+    document.getElementById('html_leader_traits').setAttribute('data-bs-content',leader_traits_html);
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
     
+    // populate dropdowns
+    dropdownSetup();
+
     loadWarband();
     setTraitText(); 
     // create new weirdo button
     document.getElementById('create_weirdo').addEventListener('click', function() {
         const warband_id = this.dataset.warband_id;
         // clear form for new weirdo
-        // TODO cleanup this code with loadWeirdoModal
         close_accordions();
         document.getElementById('warband_id').value = warband_id;
         document.getElementById('weirdo_id').value = 0;
@@ -44,10 +51,108 @@ window.onload = function() {
         loadFavoritesTable();
     });
 
+
     // wire save warband button
     document.getElementById('warband_info').addEventListener('change', saveWarband);
     document.getElementById('weirdo_modal').addEventListener('change', updateWeirdoPoints);
 }
+
+function dropdownSetup() {
+    populateDropdown(document.getElementById('warband_trait'), warband_traits);
+    populateDropdown(document.getElementById('leader_trait'), leader_traits);
+
+    populateAttribute(document.getElementById('speed_select'), speed);
+    populateAttribute(document.getElementById('defense_select'), defense);
+    populateAttribute(document.getElementById('firepower_select'), firepower);
+    populateAttribute(document.getElementById('prowess_select'), prowess);
+    populateAttribute(document.getElementById('willpower_select'), willpower);
+    loadSpecificDropDowns();
+}
+
+
+function loadSpecificDropDowns() {
+    let melee_container = document.getElementById('melee-list');
+    melee_container.innerHTML = '';
+    for (const item of melee_weapons) {
+        let new_row = cloneWeaponRow("template_melee_row", item);
+        melee_container.appendChild(new_row);
+    }
+
+    let ranged_container = document.getElementById('ranged-list');
+    ranged_container.innerHTML = '';
+    for (const item of ranged_weapons) {
+        let new_row = cloneWeaponRow("template_ranged_row", item);
+        ranged_container.appendChild(new_row);
+    }
+
+    let powers_container = document.getElementById('powers-list');
+    powers_container.innerHTML = '';
+    for (const item of powers) {
+        let new_row = cloneEquipmentRow("template_powers_row", item);
+        powers_container.appendChild(new_row);
+    }
+
+    let equipment_container = document.getElementById('equipment-list');
+    equipment_container.innerHTML = '';
+    for (const item of equipment) {
+        let new_row = cloneEquipmentRow("template_equipment_row", item);
+        equipment_container.appendChild(new_row);
+    }
+}
+
+function cloneWeaponRow(template_row_id, item) {
+    let template_row = document.getElementById(template_row_id);
+        let new_row = template_row.cloneNode(true); // clear out events
+        new_row.removeAttribute("hidden");
+        new_row.removeAttribute("id");
+        new_row.querySelector('.form-check-input').setAttribute('value', item['name']);
+        new_row.querySelector('.form-check-input').id = `item_${item['name']}`;
+        new_row.querySelector('.form-check-label').innerHTML = item['name'];
+        new_row.querySelector('.form-check-label').setAttribute('for', `item_${item['name']}`);
+        new_row.querySelector('.pts').innerHTML = `Cost: ${item['points']}`;
+        new_row.querySelector('.pts').setAttribute('value', item['points']);
+        new_row.querySelector('.pts').setAttribute('data-discount', item['points']);
+        new_row.querySelector('.act').innerHTML = `Actions: ${item['actions']}`;
+        new_row.querySelector('.notes').innerHTML = item['notes'];
+        return new_row;
+}
+
+function cloneEquipmentRow(template_row_id, item) {
+    let template_row = document.getElementById(template_row_id);
+    let new_row = template_row.cloneNode(true); // clear out events
+    new_row.removeAttribute("hidden");
+    new_row.removeAttribute("id");
+    new_row.querySelector('.form-check-input').setAttribute('value', item['name']);
+    new_row.querySelector('.form-check-input').id = `item_${item['name']}`;
+    new_row.querySelector('.form-check-label').innerHTML = item['name'];
+    new_row.querySelector('.form-check-label').setAttribute('for', `item_${item['name']}`);
+    new_row.querySelector('.pts').innerHTML = `Cost: ${item['points']}`;
+    new_row.querySelector('.pts').setAttribute('value', item['points']);
+    new_row.querySelector('.pts').setAttribute('data-discount', item['points']);
+    new_row.querySelector('.type').innerHTML = item['type'];
+    new_row.querySelector('.notes').innerHTML = item['notes'];
+    return new_row;
+}
+
+function populateDropdown(selectElement, data) {
+    for (const [name, value] of Object.entries(data)) {
+      const option = document.createElement('option');
+      option.value = name;
+      option.dataset.text = value;
+      option.textContent = name;
+      selectElement.appendChild(option);
+    }
+  }
+
+  function populateAttribute(selectElement, data) {
+    for (const [die, cost] of Object.entries(data)) {
+      const option = document.createElement('option');
+      option.value = cost;
+      option.dataset.discount = cost;
+      option.textContent = die;
+      selectElement.appendChild(option);
+    }
+  }
 
 
 function saveWarband() {
@@ -617,7 +722,7 @@ function saveNewWarband(weirdo=null) {
     }
     warband_data['warbands'].push(new_warband);
     localStorage.setItem('warbands', JSON.stringify(warband_data));
-    window.location.href = '/warband/'+new_id; //redirect to new page
+    window.location.href = `/warband?warband_id=${new_id}`; //redirect to new page
 }  
 
 // saves a favorited weirdo to the favorites local storage and then saves the weirdo.

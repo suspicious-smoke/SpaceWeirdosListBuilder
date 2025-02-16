@@ -5,6 +5,8 @@ import {selectedSelect, resetSelect, fadeInOut, fUpper, deleteEventListeners, cl
 // on warband page load
 window.onload = function() {
     // setup popovers
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById('warband_id').value = urlParams.get('warband_id');
     document.getElementById('html_warband_traits').setAttribute('data-bs-content', warband_traits_html);
     document.getElementById('html_leader_traits').setAttribute('data-bs-content',leader_traits_html);
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');

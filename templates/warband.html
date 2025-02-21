@@ -49,13 +49,13 @@
             <span class="">Total Points: </span>
             <span id="total_cost">0</span>
     </div> 
-    <button id="create_weirdo" type="button" class="btn btn-primary ms-3" data-warband_id="{{warband_id}}" data-bs-toggle="modal" data-bs-target="#weirdo_modal">Create Weirdo</button>
-    <button id="fav_weirdo_list_btn" type="button" class="btn btn-success ms-3" data-warband_id="{{warband_id}}" data-bs-toggle="modal" data-bs-target="#fav_weirdo_list_modal"><i style="color:gold;" class="bi bi-star"></i> Add a Favorited Weirdo</button>
-    <a href="{{ url_for('print_warband_page', warband_id=warband_id) }}" target="_blank" class="btn btn-secondary ms-3">Print Warband</a>
+    <button id="create_weirdo" type="button" class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#weirdo_modal">Create Weirdo</button>
+    <button id="fav_weirdo_list_btn" type="button" class="btn btn-success ms-3" data-bs-toggle="modal" data-bs-target="#fav_weirdo_list_modal"><i style="color:gold;" class="bi bi-star"></i> Add a Favorited Weirdo</button>
+    <a id="print-warband-link" target="_blank" class="btn btn-secondary ms-3">Print Warband</a>
     <div id="save_alert" class="p-1 float alert alert-success d-flex mb-0 ms-3" style="opacity: 0; width: fit-content" role="alert">saved warband</div>
 </div>
 
-<input hidden id="warband_id" value={{warband_id}}>
+<input hidden id="warband_id">
 <!-- this will fill with the weirdo cards from warband.js -->
 <div id="weirdo_cards" class="row"></div>
 <div id="card_template" class="mt-3 col-sm-6 weirdo_card" hidden>

@@ -2,7 +2,6 @@ import { warband_traits, leader_traits, speed, defense, firepower, prowess, will
 import { getWarband, getWarbandPoints } from './local_storage.js';
 window.onload = function() {
     
-
     const urlParams = new URLSearchParams(window.location.search);
     const warband_id = urlParams.get('warband_id');
     document.getElementById('warband_id').value = warband_id;

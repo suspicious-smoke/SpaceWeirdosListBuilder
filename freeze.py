@@ -4,3 +4,4 @@ from app import app
 
 freezer = Freezer(app)
 freezer.freeze()
+print('frozen!')

@@ -6,7 +6,9 @@ import {selectedSelect, resetSelect, fadeInOut, fUpper, deleteEventListeners, cl
 window.onload = function() {
     // setup popovers
     const urlParams = new URLSearchParams(window.location.search);
-    document.getElementById('warband_id').value = urlParams.get('warband_id');
+    const warband_id = urlParams.get('warband_id');
+    document.getElementById('warband_id').value = warband_id;
+    document.getElementById('print-warband-link').href = `/print_warband?warband_id=${warband_id}`;
     document.getElementById('html_warband_traits').setAttribute('data-bs-content', warband_traits_html);
     document.getElementById('html_leader_traits').setAttribute('data-bs-content',leader_traits_html);
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
@@ -19,10 +21,8 @@ window.onload = function() {
     setTraitText(); 
     // create new weirdo button
     document.getElementById('create_weirdo').addEventListener('click', function() {
-        const warband_id = this.dataset.warband_id;
         // clear form for new weirdo
         close_accordions();
-        document.getElementById('warband_id').value = warband_id;
         document.getElementById('weirdo_id').value = 0;
         document.getElementById('weirdo_name').value = '';
         for (const att of weirdo_attribute) {
@@ -56,6 +56,7 @@ window.onload = function() {
     document.getElementById('warband_info').addEventListener('change', saveWarband);
     document.getElementById('weirdo_modal').addEventListener('change', updateWeirdoPoints);
 }
+
 
 function dropdownSetup() {
     populateDropdown(document.getElementById('warband_trait'), warband_traits);
@@ -839,7 +840,7 @@ function loadFavoritesTable() {
             loadFavoritesTable(); // reload table
 
             // add weirdo to warband
-            let warband_id = btn_elem.target.dataset.warband_id;
+            let warband_id = document.getElementById('warband_id').value;
             let local_data = getLocalData();
             const i = local_data['warbands'].findIndex(x => x['warband_id'] == warband_id); // get warband
             

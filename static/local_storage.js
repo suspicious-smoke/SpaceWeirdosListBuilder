@@ -44,7 +44,7 @@ function calculateWeirdoPoints(warband) {
     let points = 0;
     let weirdoPointsList = [];
     let validation = [];
-
+    let firstOver20 = false;
     warband.weirdos.forEach((weirdo, index) => {
         let speedDiscount = warband.warband_trait === 'Mutants' ? 1 : 0;
         let weirdoPts = Math.max(0, speed[weirdo.speed] - speedDiscount) +
@@ -83,10 +83,12 @@ function calculateWeirdoPoints(warband) {
 
         // Points validation
         let wName = weirdo.name;
-        if (weirdoPts > 25 && index === 0) {
-            validation.push('Leader is over 25 points');
-        } else if (weirdoPts > 20 && index > 0) {
-            validation.push(`${wName} is over 20 points`);
+        if (weirdoPts > 20) {
+            if (firstOver20) {
+                validation.push(`${wName} is over 20 points.`);
+            } else {
+                firstOver20 = true;
+            }
         }
 
         // Equipment validation

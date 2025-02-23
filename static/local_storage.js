@@ -83,9 +83,11 @@ function calculateWeirdoPoints(warband) {
 
         // Points validation
         let wName = weirdo.name;
-        if (weirdoPts > 20) {
+        if (weirdoPts > 25) {
+            validation.push(`${wName} is over 25 points.`);
+        } else if (weirdoPts > 20) {
             if (firstOver20) {
-                validation.push(`${wName} is over 20 points.`);
+                validation.push(`${wName} is over 20 points (only one is allowed to be over 20).`);
             } else {
                 firstOver20 = true;
             }

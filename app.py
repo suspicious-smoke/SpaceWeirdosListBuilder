@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template, request
-
+#test
 def create_app():
     _app = Flask(__name__)
     _app.config.from_object("settings")  # Loads the settings from settings.py

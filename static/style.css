@@ -30,6 +30,11 @@
 i {
   pointer-events: none;
 }
+
+.weirdo_card {
+  break-inside: avoid;
+}
+
 /*body {
   margin: 25px;
   background-color: rgb(240,240,240);

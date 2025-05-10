@@ -519,14 +519,16 @@ function setEquipDiscounts() {
         document.querySelector('label[for="speed_select"]').classList.add('text-success');
         document.querySelectorAll('.melee-row').forEach((row) => {
             let melee_name = row.querySelector('.form-check-input').getAttribute('value');
-            let pts = row.querySelector('.pts');
-            let points = parseInt(pts.getAttribute('value'))-1;
-            if (mutant_weapons.includes(melee_name.replace(/&amp;/g, "&"))) {
-                pts.innerHTML = `Cost:  ${points}`;
-                pts.setAttribute('data-discount', points);
-                pts.classList.add('text-success');
-            } else {
-                pts.setAttribute('data-discount', pts.getAttribute('value'));
+            if (melee_name != null) {
+                let pts = row.querySelector('.pts');
+                let points = parseInt(pts.getAttribute('value'))-1;
+                if (mutant_weapons.includes(melee_name.replace(/&amp;/g, "&"))) {
+                    pts.innerHTML = `Cost:  ${points}`;
+                    pts.setAttribute('data-discount', points);
+                    pts.classList.add('text-success');
+                } else {
+                    pts.setAttribute('data-discount', pts.getAttribute('value'));
+                }
             }
         });
     }  else if (trait == 'Heavily Armed') {
@@ -541,12 +543,14 @@ function setEquipDiscounts() {
         document.querySelectorAll('.equip-row').forEach((row) => {
             let equip_name = row.querySelector('.form-check-input').getAttribute('value');
             let pts = row.querySelector('.pts');
-            if (soldiers_equipment.includes(equip_name.replace(/&amp;/g, "&"))) {
-                pts.setAttribute('data-discount', 0);
-                pts.innerHTML = `Cost:  0`;
-                pts.classList.add('text-success');
-            } else {
-                pts.setAttribute('data-discount', pts.getAttribute('value'));
+            if (equip_name != null) {
+                if (soldiers_equipment.includes(equip_name.replace(/&amp;/g, "&"))) {
+                    pts.setAttribute('data-discount', 0);
+                    pts.innerHTML = `Cost:  0`;
+                    pts.classList.add('text-success');
+                } else {
+                    pts.setAttribute('data-discount', pts.getAttribute('value'));
+                }
             }
         });
     }

@@ -94,7 +94,7 @@ function calculateWeirdoPoints(warband) {
         }
 
         // Equipment validation
-        let eqAmnt = warband.warband_trait === 'Cyborg' ? 2 : 1;
+        let eqAmnt = warband.warband_trait === 'Cyborgs' ? 2 : 1;
         if (index === 0) {
             eqAmnt += 1;
         }
